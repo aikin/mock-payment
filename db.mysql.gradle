@@ -1,0 +1,14 @@
+flyway {
+    driver = 'com.mysql.jdbc.Driver'
+    url = "jdbc:mysql://127.0.0.1:3306/mock_payment?zeroDateTimeBehavior=convertToNull&characterEncoding=UTF-8&allowMultiQueries=true"
+    user = 'mysql'
+    password = 'mysql'
+    table = 'withdraw_schema_version'
+    initOnMigrate = true
+    locations = ["filesystem:${projectDir}/src/main/resources/db/migration/mysql"]
+    sqlMigrationPrefix = 'MySQL-'
+}
+
+dependencies {
+    compile 'mysql:mysql-connector-java:5.1.34'
+}

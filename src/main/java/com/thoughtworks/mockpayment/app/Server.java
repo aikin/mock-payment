@@ -23,7 +23,7 @@ public class Server {
     public static void main(String[] args) {
 
         final HttpServer server = GrizzlyHttpServerFactory.createHttpServer(BASE_URI, false);
-        final WebappContext context = new WebappContext("authenticatin mock webapp", "/base");
+        final WebappContext context = new WebappContext("authenticatin mock webapp", "/mockpayment");
 
         ServletRegistration servletRegistration = context.addServlet("ServletContainer", ServletContainer.class);
 
