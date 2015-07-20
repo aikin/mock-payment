@@ -1,0 +1,65 @@
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'maven'
+
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri(project.getRootProject().projectDir.getPath() + '/mavenRepo'))
+        }
+    }
+}
+
+//jar {
+//    exclude("payment.properties")
+//    exclude("log4j.properties")
+//}
+
+ext {
+    jerseyVersion = '2.16'
+    guiceVersion = '3.0'
+    guavaVersion = '18.0'
+    gsonVersion = '2.2.4'
+    servletApiVersion = "3.0.1"
+    grizzlyHttpServletVersion = "2.3.8"
+    guiceBridgeVersion = "2.3.0"
+    rsVersion = "2.0"
+}
+
+dependencies {
+    compile "org.glassfish.jersey.core:jersey-client:$jerseyVersion"
+
+    compile "com.google.inject.extensions:guice-multibindings:$guiceVersion"
+    compile "com.google.inject.extensions:guice-servlet:$guiceVersion"
+    compile "com.google.inject:guice:$guiceVersion"
+    compile "com.google.guava:guava:$guavaVersion"
+    compile "com.google.code.gson:gson:$gsonVersion"
+
+    compile "javax.ws.rs:javax.ws.rs-api:$rsVersion"
+    compile "org.glassfish.jersey.core:jersey-client:$jerseyVersion"
+    compile "org.glassfish.jersey.media:jersey-media-json-jackson:$jerseyVersion"
+    compile "com.google.inject.extensions:guice-multibindings:$guiceVersion"
+    compile "com.google.inject.extensions:guice-servlet:$guiceVersion"
+    compile "com.google.inject:guice:$guiceVersion"
+    compile "org.glassfish.hk2:guice-bridge:$guiceBridgeVersion"
+    compile "org.glassfish.grizzly:grizzly-http-servlet:$grizzlyHttpServletVersion"
+    compile "org.glassfish.jersey.core:jersey-server:$jerseyVersion"
+    compile "org.glassfish.jersey.containers:jersey-container-grizzly2-http:$jerseyVersion"
+    compile "org.glassfish.jersey.containers:jersey-container-servlet:$jerseyVersion"
+    compile "org.glassfish.jersey.media:jersey-media-json-jackson:$jerseyVersion"
+    compile "org.glassfish.jersey.core:jersey-client:$jerseyVersion"
+    compile "javax.ws.rs:javax.ws.rs-api:$rsVersion"
+    compile "javax.servlet:javax.servlet-api:$servletApiVersion"
+
+    testCompile "org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-grizzly2:$jerseyVersion"
+    testCompile "org.glassfish.jersey.test-framework:jersey-test-framework-core:$jerseyVersion"
+}
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
