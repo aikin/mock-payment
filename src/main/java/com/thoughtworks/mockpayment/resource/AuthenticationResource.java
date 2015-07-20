@@ -1,4 +1,4 @@
-package com.thoughtworks.mock.authentication.resource;
+package com.thoughtworks.mockpayment.resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

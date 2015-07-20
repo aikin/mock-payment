@@ -1,5 +1,4 @@
-package com.thoughtworks.mock.authentication.app;
-
+package com.thoughtworks.mockpayment.app;
 
 import com.google.inject.servlet.GuiceFilter;
 import org.glassfish.grizzly.http.server.HttpServer;
@@ -16,10 +15,9 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.EnumSet;
 
-public class AuthenticationServer {
-
+public class Server {
     private static URI BASE_URI = URI.create("http://0.0.0.0:8082/");
-    private static final Logger logger = LoggerFactory.getLogger(AuthenticationServer.class);
+    private static final Logger logger = LoggerFactory.getLogger(Server.class);
 
 
     public static void main(String[] args) {
@@ -31,7 +29,7 @@ public class AuthenticationServer {
 
         servletRegistration.addMapping("/*");
         servletRegistration.setInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
-        servletRegistration.setInitParameter("javax.ws.rs.Application", "com.thoughtworks.mock.authentication.app.AuthenticationResourceConfig");
+        servletRegistration.setInitParameter("javax.ws.rs.Application", "com.thoughtworks.mockpayment.app.MockPaymentResourceConfig");
         servletRegistration.setInitParameter("jersey.config.server.provider.scanning.recursive", "true");
 
         FilterRegistration registration = context.addFilter("GuiceFilter", GuiceFilter.class);
