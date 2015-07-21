@@ -17,7 +17,6 @@ public enum AuthStatusCode {
     AUTH_SYSTEM_ERROR("13", "FAILURE", "认证系统异常");
 
 
-
     private String code;
     private String description;
     private String status;
