@@ -2,19 +2,19 @@ package com.thoughtworks.mockpayment.entity;
 
 public enum AuthStatusCode {
 
-    SUCCESS("1", "认证成功", ""),
-    BANK_CARD_NO_ILLEGAL("2", "认证失败", "卡号不合法"),
-    UNSUPPORTED_BANK_CARD("3", "认证失败", "不支持此银行卡"),
-    BANK_CODE_NOT_MATCH_BANK_CARD_NO("4", "认证失败", "银行编码和银行卡号不匹配"),
-    ID_CARD_NO_ILLEGAL("5", "认证失败", "非法的身份证号"),
-    INACTIVE_BANK_CARD_NO("6", "认证失败", "银行卡未激活"),
-    LIMITED_BANK_CARD_NO("7", "认证失败", "银行卡被限制，详情请咨询发卡行"),
-    SHORT_BALANCE_BANK_CARD_NO("8", "认证失败", "银行卡余额不足，不支持认证请求"),
-    EXPIRED_BALANCE_BANK_CARD_NO("9", "认证失败", "银行卡过期"),
-    INVALID_BANK_CARD_NO("10", "认证失败", "银行卡号无效"),
-    BANK_CARD_NO_NOT_MATCH_NAME("11", "认证失败", "银行卡与姓名不符"),
-    BANK_CARD_NO_NOT_MATCH_ID_CARD("12", "认证失败", "银行卡与证件不符"),
-    AUTH_SYSTEM_ERROR("13", "认证失败", "认证系统异常");
+    SUCCESS("1", "SUCCESS", "认证成功"),
+    BANK_CARD_NO_ILLEGAL("2", "FAILURE", "卡号不合法"),
+    UNSUPPORTED_BANK_CARD("3", "FAILURE", "不支持此银行卡"),
+    BANK_CODE_NOT_MATCH_BANK_CARD_NO("4", "FAILURE", "银行编码和银行卡号不匹配"),
+    ID_CARD_NO_ILLEGAL("5", "FAILURE", "非法的身份证号"),
+    INACTIVE_BANK_CARD_NO("6", "FAILURE", "银行卡未激活"),
+    LIMITED_BANK_CARD_NO("7", "FAILURE", "银行卡被限制，详情请咨询发卡行"),
+    SHORT_BALANCE_BANK_CARD_NO("8", "FAILURE", "银行卡余额不足，不支持认证请求"),
+    EXPIRED_BALANCE_BANK_CARD_NO("9", "FAILURE", "银行卡过期"),
+    INVALID_BANK_CARD_NO("10", "FAILURE", "银行卡号无效"),
+    BANK_CARD_NO_NOT_MATCH_NAME("11", "FAILURE", "银行卡与姓名不符"),
+    BANK_CARD_NO_NOT_MATCH_ID_CARD("12", "FAILURE", "银行卡与证件不符"),
+    AUTH_SYSTEM_ERROR("13", "FAILURE", "认证系统异常");
 
 
 
