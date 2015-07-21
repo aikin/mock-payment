@@ -69,7 +69,7 @@ public class AuthenticationResourceTest extends JerseyTest {
     }
 
     @Test
-    public void should_connection_ok() {
+    public void should_connection_forbidden() {
         Response response = authTarget
             .queryParam("customerId", "un right customerId")
             .queryParam("bankCardNo", "1")
@@ -80,7 +80,7 @@ public class AuthenticationResourceTest extends JerseyTest {
     }
 
     @Test
-    public void should_client_string_response() {
+    public void should_client_response_success_when_bankCardNo_be_1() {
         String respondContent =  authTarget
             .queryParam("customerId", "809080908090")
             .queryParam("bankCardNo", "1")
