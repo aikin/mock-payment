@@ -16,7 +16,7 @@ import java.net.URI;
 import java.util.EnumSet;
 
 public class Server {
-    private static URI BASE_URI = URI.create("http://0.0.0.0:8082/");
+    private static URI BASE_URI = URI.create("http://0.0.0.0:8090/");
     private static final Logger logger = LoggerFactory.getLogger(Server.class);
 
 
