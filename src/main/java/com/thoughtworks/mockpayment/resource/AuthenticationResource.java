@@ -35,6 +35,10 @@ public class AuthenticationResource {
 
         logger.info("*** in authenticate bank code ***");
 
+        if (!customerId.equals("809080908090")) {
+            return Response.status(403).entity("server visit permission denied").build();
+        }
+
         // TODO: need extract, api level doesn't nedd know how to combination response
         Map<String, Object> map = new HashMap<>();
         AuthStatusCode authStatusCode  = AuthStatusCode.codeOf(bankCodeNo);
