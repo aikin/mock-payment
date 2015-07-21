@@ -35,26 +35,27 @@ public class AuthenticationResource {
 
         logger.info("*** in authenticate bank code ***");
 
+        // TODO: need extract, api level doesn't nedd know how to combination response
+
         if (!customerId.equals("809080908090")) {
             return Response.status(403).entity("server visit permission denied").build();
         }
 
-        // TODO: need extract, api level doesn't nedd know how to combination response
         Map<String, Object> map = new HashMap<>();
         AuthStatusCode authStatusCode  = AuthStatusCode.codeOf(bankCodeNo);
+        if (authStatusCode == null) {
+            logger.error("*** input bankCardNo not match status ***" + bankCodeNo);
+            authStatusCode = AuthStatusCode.BANK_CARD_NO_ILLEGAL;
+        }
         map.put("command", cmd);
         map.put("customerId", customerId);
         map.put("busId", busId);
         map.put("resDesc", resDesc);
         map.put("flowId", UUID.randomUUID().toString());
-
-        if (authStatusCode == null) {
-            logger.error("*** input bankCardNo not match status ***" + bankCodeNo);
-            authStatusCode = AuthStatusCode.BANK_CARD_NO_ILLEGAL;
-        }
         map.put("authStatus", authStatusCode.getStatus());
         map.put("responseCode", authStatusCode.getCode());
         map.put("authMsg", authStatusCode.getDescription());
+
         ObjectMapper mapper = new ObjectMapper();
         String result =  mapper.writeValueAsString(map);
         return Response.ok().entity(result).build();
