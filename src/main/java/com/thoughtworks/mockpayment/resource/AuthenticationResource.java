@@ -12,6 +12,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Path("authenticate")
 public class AuthenticationResource {
@@ -25,6 +26,9 @@ public class AuthenticationResource {
                                  @QueryParam("idCardNo") String idCardNo,
                                  @QueryParam("bankCode") String bankCode,
                                  @QueryParam("bankCardNo") String bankCodeNo,
+                                 @QueryParam("bankName") String bankName,
+                                 @QueryParam("province") String province,
+                                 @QueryParam("city") String city,
                                  @QueryParam("busId") String busId,
                                  @QueryParam("resDesc") String resDesc
                                  ) throws JsonProcessingException {
@@ -38,10 +42,10 @@ public class AuthenticationResource {
         map.put("customerId", customerId);
         map.put("busId", busId);
         map.put("resDesc", resDesc);
-        map.put("flowId", "");
+        map.put("flowId", UUID.randomUUID().toString());
 
         if (authStatusCode == null) {
-            logger.error("*** input bankCardNo not match status ***");
+            logger.error("*** input bankCardNo not match status ***" + bankCodeNo);
             authStatusCode = AuthStatusCode.BANK_CARD_NO_ILLEGAL;
         }
         map.put("authStatus", authStatusCode.getStatus());
