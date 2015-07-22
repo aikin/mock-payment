@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thoughtworks.mockpayment.persistence.mapper.DepositsOrderMapper">
+
+    <sql id="orderColumns">
+          D.ID AS D_ID,
+          D.CUSTOMER_ID AS D_CUSTOMER_ID,
+          D.ORDER_ID AS  D_ORDER_ID,
+          D.USER_NAME AS D_USER_NAME,
+          D.ID_CARD_NO AS D_ID_CARD_NO,
+          D.BANK_CODE AS D_BANK_CODE,
+          D.BANK_CARD_NO AS D_BANK_CARD_NO,
+          D.BANK_NAME AS D_BANK_NAME,
+          D.EXPAND_INFO AS D_EXPAND_INFO,
+          D.AMOUNT AS D_AMOUNT,
+          D.CURRENCY AS D_CURRENCY
+          D.BANK_SERIAL_NO AS D_BANK_SERIAL_NO
+          D.DEPOSITS_STATUS AS D_DEPOSITS_STATUS,
+          D.DEPOSITS_MESSAGE AS D_DEPOSITS_MESSAGE,
+          D.DEPOSITS_AT AS D_DEPOSITS_AT,
+          D.CREATED_AT AS D_CREATED_AT,
+    </sql>
+
+    <resultMap id="depositsOrder" type="com.thoughtworks.mockpayment.persistence.model.DepositsOrder">
+        <id column="D_ID" property="id"/>
+        <result column="D_CUSTOMER_ID" property="customerId"/>
+        <result column="D_ORDER_ID" property="orderId"/>
+        <result column="D_USER_NAME" property="userName"/>
+        <result column="D_ID_CARD_NO" property="idCardNo"/>
+        <result column="D_BANK_CODE" property="bankCode"/>
+        <result column="D_BANK_CARD_NO" property="bankCardNo"/>
+        <result column="D_BANK_NAME" property="bankName"/>
+        <result column="D_EXPAND_INFO" property="expandInfo"/>
+        <result column="D_AMOUNT" property="amount"/>
+        <result column="D_CURRENCY" property="currency"/>
+        <result column="D_BANK_SERIAL_NO" property="bankSerialNo"/>
+        <result column="D_DEPOSITS_STATUS" property="depositsStatus"/>
+        <result column="D_DEPOSITS_MESSAGE" property="depositsMessage"/>
+        <result column="D_DEPOSITS_AT" property="depositsAt"/>
+        <result column="D_CREATED_AT" property="createdAt"/>
+    </resultMap>
+
+    <insert id="insertNewOrder">
+        INSERT INTO DEPOSITS_ORDER(CUSTOMER_ID, ORDER_ID, USER_NAME, ID_CARD_NO, BANK_CODE, BANK_CARD_NO, BANK_NAME,
+                        EXPAND_INFO, AMOUNT, CURRENCY, DEPOSITS_STATUS, CREATED_AT)
+        VALUES (#{order.customerId}, #{order.orderId}, #{order.userName}, #{order.idCardNo}, #{order.bankCode},
+                #{order.bankCardNo}, #{order.bankName},#{order.expandInfo}, #{order.amount}, #{order.currency},
+                #{order.depositsStatus}, #{order.createdAt})
+    </insert>
+
+    <update id="updatePayStatus">
+        UPDATE DEPOSITS_ORDER SET BANK_SERIAL_NO#{bankSerialNo}, DEPOSITS_STATUS=#{depositsStatus},
+                        DEPOSITS_MESSAGE=#{depositsMessage}, DEPOSITS_AT=#{depositsAt}
+        WHERE ORDER_ID=#{orderId}
+    </update>
+
+</mapper>

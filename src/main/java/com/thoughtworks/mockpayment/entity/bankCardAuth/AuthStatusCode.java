@@ -1,4 +1,4 @@
-package com.thoughtworks.mockpayment.entity;
+package com.thoughtworks.mockpayment.entity.bankCardAuth;
 
 public enum AuthStatusCode {
 

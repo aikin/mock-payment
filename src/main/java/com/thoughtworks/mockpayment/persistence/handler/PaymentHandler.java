@@ -1,7 +1,7 @@
 package com.thoughtworks.mockpayment.persistence.handler;
 
-import com.thoughtworks.mockpayment.persistence.mapper.PayOrderMapper;
-import com.thoughtworks.mockpayment.persistence.model.PayOrder;
+import com.thoughtworks.mockpayment.persistence.mapper.DepositsOrderMapper;
+import com.thoughtworks.mockpayment.persistence.model.DepositsOrder;
 
 import javax.inject.Inject;
 import java.util.Map;
@@ -9,12 +9,12 @@ import java.util.Map;
 public class PaymentHandler {
 
     @Inject
-    private PayOrderMapper payOrderMapper;
+    private DepositsOrderMapper depositsOrderMapper;
 
 
     public void insertPayOrder(Map<String, String> depositsRequest) {
 
-        PayOrder payOrder = new PayOrder(
+        DepositsOrder depositsOrder = new DepositsOrder(
             depositsRequest.get("customerId"),
             depositsRequest.get("orderId"),
             depositsRequest.get("userName"),
@@ -27,6 +27,10 @@ public class PaymentHandler {
             depositsRequest.get("currency")
         );
 
-        payOrderMapper.insertNewOrder(payOrder);
+
+
+        depositsOrderMapper.insertNewOrder(depositsOrder);
+
+
     }
 }

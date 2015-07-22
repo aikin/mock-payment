@@ -22,6 +22,6 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="mock-payment-mybatis/mapper/PayOrderMapper.xml"/>
+        <mapper resource="mock-payment-mybatis/mapper/DepositsOrderMapper.xml"/>
     </mappers>
 </configuration>

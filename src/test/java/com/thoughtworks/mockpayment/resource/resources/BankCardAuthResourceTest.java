@@ -1,7 +1,7 @@
 package com.thoughtworks.mockpayment.resource.resources;
 
 import com.google.gson.Gson;
-import com.thoughtworks.mockpayment.entity.AuthStatusCode;
+import com.thoughtworks.mockpayment.entity.bankCardAuth.AuthStatusCode;
 import com.thoughtworks.mockpayment.resource.util.ResourceTest;
 import org.glassfish.jersey.test.util.runner.ConcurrentRunner;
 import org.junit.After;

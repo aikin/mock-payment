@@ -4,7 +4,7 @@ import org.joda.time.DateTime;
 
 import java.util.Date;
 
-public class PayOrder {
+public class DepositsOrder {
 
     private long id;
     private String customerId;
@@ -19,20 +19,20 @@ public class PayOrder {
     private String currency;
     private Date createdAt;
     private String bankSerialNo;
-    private PayStatus payStatus;
-    private String payMessage;
-    private Date payAt;
+    private DepositsStatus depositsStatus;
+    private String depositsMessage;
+    private Date depositsAt;
 
-    public PayOrder(String customerId,
-                    String orderId,
-                    String userName,
-                    String idCardNo,
-                    String bankCode,
-                    String bankCardNo,
-                    String bankName,
-                    String expandInfo,
-                    String amount,
-                    String currency
+    public DepositsOrder(String customerId,
+                         String orderId,
+                         String userName,
+                         String idCardNo,
+                         String bankCode,
+                         String bankCardNo,
+                         String bankName,
+                         String expandInfo,
+                         String amount,
+                         String currency
     ) {
         this.customerId = customerId;
         this.orderId = orderId;
@@ -45,7 +45,7 @@ public class PayOrder {
         this.amount = amount;
         this.currency = currency;
         this.createdAt = DateTime.now().toDate();
-        this.payStatus = PayStatus.WAIT_FOR_PAY;
+        this.depositsStatus = DepositsStatus.WAIT_FOR_DEPOSITS;
     }
 
     public long getId() {
@@ -152,32 +152,32 @@ public class PayOrder {
         this.bankSerialNo = bankSerialNo;
     }
 
-    public PayStatus getPayStatus() {
-        return payStatus;
+    public DepositsStatus getDepositsStatus() {
+        return depositsStatus;
     }
 
-    public void setPayStatus(PayStatus payStatus) {
-        this.payStatus = payStatus;
+    public void setDepositsStatus(DepositsStatus depositsStatus) {
+        this.depositsStatus = depositsStatus;
     }
 
-    public String getPayMessage() {
-        return payMessage;
+    public String getDepositsMessage() {
+        return depositsMessage;
     }
 
-    public void setPayMessage(String payMessage) {
-        this.payMessage = payMessage;
+    public void setDepositsMessage(String depositsMessage) {
+        this.depositsMessage = depositsMessage;
     }
 
-    public Date getPayAt() {
-        return payAt;
+    public Date getDepositsAt() {
+        return depositsAt;
     }
 
-    public void setPayAt(Date payAt) {
-        this.payAt = payAt;
+    public void setDepositsAt(Date depositsAt) {
+        this.depositsAt = depositsAt;
     }
 
-    public static enum PayStatus {
-        WAIT_FOR_PAY, SUCCESS, FAILURE
+    public static enum DepositsStatus {
+        WAIT_FOR_DEPOSITS, SUCCESS, FAILURE
     }
 
 }

@@ -1,8 +1,8 @@
 package com.thoughtworks.mockpayment.service;
 
-import com.thoughtworks.mockpayment.entity.AuthStatusCode;
-import com.thoughtworks.mockpayment.entity.BankCardAuthResponse;
-import com.thoughtworks.mockpayment.entity.BankCardNoAndStatusCodeMap;
+import com.thoughtworks.mockpayment.entity.bankCardAuth.AuthStatusCode;
+import com.thoughtworks.mockpayment.entity.bankCardAuth.BankCardAuthResponse;
+import com.thoughtworks.mockpayment.entity.bankCardAuth.BankCardNoAndStatusCodeMapper;
 import com.thoughtworks.mockpayment.util.Json;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +28,7 @@ public class DefaultBankCardAuthService implements BankCardAuthService {
             request.get("orderId"),
             request.get("expandInfo")
         );
-        String responseCode =  BankCardNoAndStatusCodeMap.fetchStatusCodeByBankCardNo(request.get("bankCardNo"));
+        String responseCode =  BankCardNoAndStatusCodeMapper.fetchStatusCodeByBankCardNo(request.get("bankCardNo"));
         AuthStatusCode authStatusCode  = AuthStatusCode.codeOf(responseCode);
 
         if (authStatusCode == null) {
