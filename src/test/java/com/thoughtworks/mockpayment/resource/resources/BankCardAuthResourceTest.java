@@ -1,7 +1,7 @@
 package com.thoughtworks.mockpayment.resource.resources;
 
 import com.google.gson.Gson;
-import com.thoughtworks.mockpayment.entity.bankCardAuth.AuthStatusCode;
+import com.thoughtworks.mockpayment.entity.bankCardAuth.BankAuthResponseCode;
 import com.thoughtworks.mockpayment.resource.util.ResourceTest;
 import org.glassfish.jersey.test.util.runner.ConcurrentRunner;
 import org.junit.After;
@@ -51,7 +51,7 @@ public class BankCardAuthResourceTest extends ResourceTest {
             .get(String.class);
         Gson gson = new Gson();
         HashMap respondMap = gson.fromJson(respondContent, HashMap.class);
-        assertThat(respondMap.get("authStatus"), is(AuthStatusCode.SUCCESS.getStatus()));
+        assertThat(respondMap.get("authStatus"), is(BankAuthResponseCode.SUCCESS.getStatus()));
     }
 
     @Test
@@ -62,8 +62,8 @@ public class BankCardAuthResourceTest extends ResourceTest {
             .get(String.class);
         Gson gson = new Gson();
         HashMap respondMap = gson.fromJson(respondContent, HashMap.class);
-        assertThat(respondMap.get("authStatus"), is(AuthStatusCode.BANK_CARD_NO_ILLEGAL.getStatus()));
-        assertThat(respondMap.get("authMsg"), is(AuthStatusCode.BANK_CARD_NO_ILLEGAL.getDescription()));
+        assertThat(respondMap.get("authStatus"), is(BankAuthResponseCode.BANK_CARD_NO_ILLEGAL.getStatus()));
+        assertThat(respondMap.get("authMsg"), is(BankAuthResponseCode.BANK_CARD_NO_ILLEGAL.getDescription()));
     }
 
     @Test
@@ -74,7 +74,7 @@ public class BankCardAuthResourceTest extends ResourceTest {
             .get(String.class);
         Gson gson = new Gson();
         HashMap respondMap = gson.fromJson(respondContent, HashMap.class);
-        assertThat(respondMap.get("authStatus"), is(AuthStatusCode.BANK_CARD_NO_NOT_MATCH_NAME.getStatus()));
-        assertThat(respondMap.get("authMsg"), is(AuthStatusCode.BANK_CARD_NO_NOT_MATCH_NAME.getDescription()));
+        assertThat(respondMap.get("authStatus"), is(BankAuthResponseCode.BANK_CARD_NO_NOT_MATCH_NAME.getStatus()));
+        assertThat(respondMap.get("authMsg"), is(BankAuthResponseCode.BANK_CARD_NO_NOT_MATCH_NAME.getDescription()));
     }
 }

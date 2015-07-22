@@ -47,7 +47,7 @@ public class PaymentResource {
         request.put("currency", expandInfo);
 
         String result = paymentService.handleDepositsRequest(request);
-        return Response.ok().entity("get deposits").build();
+        return Response.ok().entity(result).build();
     }
 
 
@@ -57,7 +57,7 @@ public class PaymentResource {
     public Response pay(Map request) {
 
         String result = paymentService.handleDepositsRequest(request);
-        return Response.ok().entity("get deposits").build();
+        return Response.ok().entity(result).build();
     }
 
     @GET

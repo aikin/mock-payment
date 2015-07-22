@@ -3,7 +3,7 @@ package com.thoughtworks.mockpayment.entity.bankCardAuth;
 
 import java.util.UUID;
 
-public class BankCardAuthResponse {
+public class BankCardAuthResult {
 
     private String command;
     private String customerId;
@@ -14,7 +14,7 @@ public class BankCardAuthResponse {
     private String responseCode;
     private String authMsg;
 
-    public BankCardAuthResponse(String command, String customerId, String orderId, String expandInfo) {
+    public BankCardAuthResult(String command, String customerId, String orderId, String expandInfo) {
         this.command = command;
         this.customerId = customerId;
         this.orderId = orderId;

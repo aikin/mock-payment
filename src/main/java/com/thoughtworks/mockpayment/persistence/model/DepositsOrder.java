@@ -3,10 +3,12 @@ package com.thoughtworks.mockpayment.persistence.model;
 import org.joda.time.DateTime;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class DepositsOrder {
 
     private long id;
+    private String depositsFlowId;
     private String customerId;
     private String orderId;
     private String userName;
@@ -20,6 +22,7 @@ public class DepositsOrder {
     private Date createdAt;
     private String bankSerialNo;
     private DepositsStatus depositsStatus;
+    private String responseCode;
     private String depositsMessage;
     private Date depositsAt;
 
@@ -45,7 +48,8 @@ public class DepositsOrder {
         this.amount = amount;
         this.currency = currency;
         this.createdAt = DateTime.now().toDate();
-        this.depositsStatus = DepositsStatus.WAIT_FOR_DEPOSITS;
+        this.depositsFlowId = UUID.randomUUID().toString();
+        this.depositsStatus = DepositsStatus.PROCESSING;
     }
 
     public long getId() {
@@ -136,6 +140,14 @@ public class DepositsOrder {
         this.currency = currency;
     }
 
+    public String getDepositsFlowId() {
+        return depositsFlowId;
+    }
+
+    public void setDepositsFlowId(String depositsFlowId) {
+        this.depositsFlowId = depositsFlowId;
+    }
+
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -168,6 +180,14 @@ public class DepositsOrder {
         this.depositsMessage = depositsMessage;
     }
 
+    public String getResponseCode() {
+        return responseCode;
+    }
+
+    public void setResponseCode(String responseCode) {
+        this.responseCode = responseCode;
+    }
+
     public Date getDepositsAt() {
         return depositsAt;
     }
@@ -177,7 +197,7 @@ public class DepositsOrder {
     }
 
     public static enum DepositsStatus {
-        WAIT_FOR_DEPOSITS, SUCCESS, FAILURE
+        PROCESSING, SUCCESS, FAILURE
     }
 
 }

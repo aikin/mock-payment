@@ -7,6 +7,7 @@
     <sql id="orderColumns">
           D.ID AS D_ID,
           D.CUSTOMER_ID AS D_CUSTOMER_ID,
+          D.DEPOSITS_FLOW_ID AS D_DEPOSITS_FLOW_ID,
           D.ORDER_ID AS  D_ORDER_ID,
           D.USER_NAME AS D_USER_NAME,
           D.ID_CARD_NO AS D_ID_CARD_NO,
@@ -19,6 +20,7 @@
           D.BANK_SERIAL_NO AS D_BANK_SERIAL_NO
           D.DEPOSITS_STATUS AS D_DEPOSITS_STATUS,
           D.DEPOSITS_MESSAGE AS D_DEPOSITS_MESSAGE,
+          D.RESPONSE_CODE AS D_RESPONSE_CODE,
           D.DEPOSITS_AT AS D_DEPOSITS_AT,
           D.CREATED_AT AS D_CREATED_AT,
     </sql>
@@ -26,6 +28,7 @@
     <resultMap id="depositsOrder" type="com.thoughtworks.mockpayment.persistence.model.DepositsOrder">
         <id column="D_ID" property="id"/>
         <result column="D_CUSTOMER_ID" property="customerId"/>
+        <result column="D_DEPOSITS_FLOW_ID" property="depositsFlowId"/>
         <result column="D_ORDER_ID" property="orderId"/>
         <result column="D_USER_NAME" property="userName"/>
         <result column="D_ID_CARD_NO" property="idCardNo"/>
@@ -38,22 +41,23 @@
         <result column="D_BANK_SERIAL_NO" property="bankSerialNo"/>
         <result column="D_DEPOSITS_STATUS" property="depositsStatus"/>
         <result column="D_DEPOSITS_MESSAGE" property="depositsMessage"/>
+        <result column="D_RESPONSE_CODE" property="responseCode"/>
         <result column="D_DEPOSITS_AT" property="depositsAt"/>
         <result column="D_CREATED_AT" property="createdAt"/>
     </resultMap>
 
     <insert id="insertNewOrder">
-        INSERT INTO DEPOSITS_ORDER(CUSTOMER_ID, ORDER_ID, USER_NAME, ID_CARD_NO, BANK_CODE, BANK_CARD_NO, BANK_NAME,
+        INSERT INTO DEPOSITS_ORDER(CUSTOMER_ID, DEPOSITS_FLOW_ID, ORDER_ID, USER_NAME, ID_CARD_NO, BANK_CODE, BANK_CARD_NO, BANK_NAME,
                         EXPAND_INFO, AMOUNT, CURRENCY, DEPOSITS_STATUS, CREATED_AT)
-        VALUES (#{order.customerId}, #{order.orderId}, #{order.userName}, #{order.idCardNo}, #{order.bankCode},
+        VALUES (#{order.customerId}, #{order.depositsFlowId}, #{order.orderId}, #{order.userName}, #{order.idCardNo}, #{order.bankCode},
                 #{order.bankCardNo}, #{order.bankName},#{order.expandInfo}, #{order.amount}, #{order.currency},
                 #{order.depositsStatus}, #{order.createdAt})
     </insert>
 
-    <update id="updatePayStatus">
-        UPDATE DEPOSITS_ORDER SET BANK_SERIAL_NO#{bankSerialNo}, DEPOSITS_STATUS=#{depositsStatus},
-                        DEPOSITS_MESSAGE=#{depositsMessage}, DEPOSITS_AT=#{depositsAt}
-        WHERE ORDER_ID=#{orderId}
+    <update id="updateDepositsStatus">
+        UPDATE DEPOSITS_ORDER SET BANK_SERIAL_NO=#{bankSerialNo}, DEPOSITS_STATUS=#{depositsStatus},
+                        DEPOSITS_MESSAGE=#{depositsMessage}, RESPONSE_CODE=#{responseCode}, DEPOSITS_AT=#{depositsAt}
+        WHERE DEPOSITS_FLOW_ID=#{depositsFlowId}
     </update>
 
 </mapper>

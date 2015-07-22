@@ -10,8 +10,10 @@ public interface DepositsOrderMapper {
 
      void insertNewOrder(@Param("order") DepositsOrder newOrder);
 
-     void updatePayStatus(@Param("orderId") String orderId,
-                          @Param("payStatus") DepositsStatus payStatus,
-                          @Param("payMessage") String payMessage,
-                          @Param("payAt") Date payAt);
+     void updateDepositsStatus(@Param("depositsFlowId") String depositsFlowId,
+                               @Param("depositsStatus") DepositsStatus depositsStatus,
+                               @Param("depositsMessage") String depositsMessage,
+                               @Param("responseCode") String responseCode,
+                               @Param("depositsAt") Date depositsAt,
+                               @Param("bankSerialNo") String bankSerialNo);
 }

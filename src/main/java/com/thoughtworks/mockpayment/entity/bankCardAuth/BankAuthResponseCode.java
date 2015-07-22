@@ -1,6 +1,6 @@
 package com.thoughtworks.mockpayment.entity.bankCardAuth;
 
-public enum AuthStatusCode {
+public enum BankAuthResponseCode {
 
     SUCCESS("1", "SUCCESS", "认证成功"),
     BANK_CARD_NO_ILLEGAL("2", "FAILURE", "卡号不合法"),
@@ -21,7 +21,7 @@ public enum AuthStatusCode {
     private String description;
     private String status;
 
-    AuthStatusCode(String code, String status, String description) {
+    BankAuthResponseCode(String code, String status, String description) {
 
         this.code = code;
         this.status = status;
@@ -40,11 +40,11 @@ public enum AuthStatusCode {
         return this.description;
     }
 
-    public static AuthStatusCode codeOf(String code) {
+    public static BankAuthResponseCode codeOf(String code) {
 
-        for (AuthStatusCode offerStatus : AuthStatusCode.values()) {
-            if (offerStatus.getCode().equals(code)) {
-                return offerStatus;
+        for (BankAuthResponseCode responseCode : BankAuthResponseCode.values()) {
+            if (responseCode.getCode().equals(code)) {
+                return responseCode;
             }
         }
         return null;
