@@ -3,6 +3,7 @@ package com.thoughtworks.mockpayment.app;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.thoughtworks.mockpayment.persistence.PersistenceModule;
 import com.thoughtworks.mockpayment.service.BankCardAuthService;
 import com.thoughtworks.mockpayment.service.DefaultBankCardAuthService;
 import com.thoughtworks.mockpayment.service.DefaultPaymentService;
@@ -21,6 +22,7 @@ public class MockPaymentResourceConfig extends ResourceConfig {
         GuiceBridge.getGuiceBridge().initializeGuiceBridge(serviceLocator);
         GuiceIntoHK2Bridge guiceBridge = serviceLocator.getService(GuiceIntoHK2Bridge.class);
         Injector injector = Guice.createInjector(
+            new PersistenceModule("development"),
             new AbstractModule() {
                 @Override
                 protected void configure() {
@@ -33,7 +35,6 @@ public class MockPaymentResourceConfig extends ResourceConfig {
         property(org.glassfish.jersey.server.ServerProperties.RESPONSE_SET_STATUS_OVER_SEND_ERROR, true);
         guiceBridge.bridgeGuiceInjector(injector);
         packages("com.thoughtworks.mockpayment");
-
     }
 
 }

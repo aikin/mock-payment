@@ -1,11 +1,12 @@
 package com.thoughtworks.mockpayment.resource;
 
-import com.thoughtworks.mockpayment.service.DefaultPaymentService;
+import com.thoughtworks.mockpayment.service.PaymentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.QueryParam;
+import javax.inject.Inject;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +14,10 @@ import java.util.Map;
 @Path("payment")
 public class PaymentResource {
 
+    private static final Logger logger = LoggerFactory.getLogger(PaymentResource.class);
+
+    @Inject
+    private PaymentService paymentService;
 
     @GET
     @Path("deposits")
@@ -41,14 +46,18 @@ public class PaymentResource {
         request.put("amount", amount);
         request.put("currency", expandInfo);
 
-        return new DefaultPaymentService().handleDepositsRequest(request);
+        String result = paymentService.handleDepositsRequest(request);
+        return Response.ok().entity("get deposits").build();
     }
 
 
     @POST
     @Path("deposits")
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response pay(Map request) {
-        return Response.ok().entity("ok").build();
+
+        String result = paymentService.handleDepositsRequest(request);
+        return Response.ok().entity("get deposits").build();
     }
 
     @GET

@@ -44,7 +44,8 @@ public class BankCardAuthResource {
         request.put("bankName", bankName);
         request.put("expandInfo", expandInfo);
 
-        return bankCardAuthService.handleBankCardAuthRequest(request);
+        String result = bankCardAuthService.handleBankCardAuthRequest(request);
+        return Response.ok().entity(result).build();
     }
 
     @POST
@@ -52,6 +53,7 @@ public class BankCardAuthResource {
     public Response authenticate(Map request) {
         logger.debug("*** The bank code auth POST request ***" + request);
 
-        return bankCardAuthService.handleBankCardAuthRequest(request);
+        String result = bankCardAuthService.handleBankCardAuthRequest(request);
+        return Response.ok().entity(result).build();
     }
 }

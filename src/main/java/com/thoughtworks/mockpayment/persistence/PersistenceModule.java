@@ -22,7 +22,7 @@ import static org.apache.ibatis.io.Resources.getResourceAsReader;
 
 public class PersistenceModule extends AbstractModule {
     private static final Logger LOGGER = Logger.getLogger(PersistenceModule.class);
-    private static final String DEFAULT_CONFIG_RESOURCE = "withdraw-mybatis/mybatis-config.xml";
+    private static final String DEFAULT_CONFIG_RESOURCE = "mock-payment-mybatis/mybatis-config.xml";
 
     private final String classPathResource;
     private final String environmentId;

@@ -1,6 +1,6 @@
-apply plugin: 'idea'
 apply plugin: 'java'
-apply plugin: 'maven'
+apply plugin: 'flyway'
+apply from: "db.mysql.gradle"
 
 version = '1.0'
 
@@ -8,14 +8,23 @@ repositories {
     mavenCentral()
 }
 
-
-uploadArchives {
+buildscript {
     repositories {
-        mavenDeployer {
-            repository(url: uri(project.getRootProject().projectDir.getPath() + '/mavenRepo'))
-        }
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.flywaydb:flyway-gradle-plugin:3.0"
     }
 }
+
+//uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            repository(url: uri(project.getRootProject().projectDir.getPath() + '/mavenRepo'))
+//        }
+//    }
+//}
 
 //jar {
 //    exclude("payment.properties")
@@ -48,7 +57,6 @@ dependencies {
     compile "org.slf4j:slf4j-api:$slf4jVersion"
     compile "org.slf4j:jcl-over-slf4j:$slf4jVersion"
     compile "org.slf4j:slf4j-log4j12:$slf4jVersion"
-
     compile "com.google.inject.extensions:guice-multibindings:$guiceVersion"
     compile "com.google.inject.extensions:guice-servlet:$guiceVersion"
     compile "com.google.inject:guice:$guiceVersion"
@@ -67,6 +75,8 @@ dependencies {
 
     compile "org.mybatis:mybatis:$myBatisVersion"
     compile "org.mybatis:mybatis-guice:$myBatisGuiceVersion"
+//    compile 'mysql:mysql-connector-java:5.1.34'
+
 
     compile "joda-time:joda-time:$jodaTimeVersion"
     compile "org.joda:joda-money:$jodaMoneyVersion"

@@ -7,7 +7,6 @@ import com.thoughtworks.mockpayment.util.Json;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.core.Response;
 import java.util.Map;
 
 public class DefaultBankCardAuthService implements BankCardAuthService {
@@ -15,10 +14,10 @@ public class DefaultBankCardAuthService implements BankCardAuthService {
     private static final Logger logger = LoggerFactory.getLogger(DefaultBankCardAuthService.class);
 
     @Override
-    public Response handleBankCardAuthRequest(Map<String, String> request) {
+    public String handleBankCardAuthRequest(Map<String, String> request) {
 
         BankCardAuthResponse result = this.generateAuthResult(request);
-        return Response.ok().entity(Json.toJSON(result)).build();
+        return Json.toJSON(result);
     }
 
     private BankCardAuthResponse generateAuthResult(Map<String, String> request) {

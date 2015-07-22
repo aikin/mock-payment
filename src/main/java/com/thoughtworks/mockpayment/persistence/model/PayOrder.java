@@ -23,10 +23,6 @@ public class PayOrder {
     private String payMessage;
     private Date payAt;
 
-    public PayOrder() {
-
-    }
-
     public PayOrder(String customerId,
                     String orderId,
                     String userName,
@@ -49,6 +45,7 @@ public class PayOrder {
         this.amount = amount;
         this.currency = currency;
         this.createdAt = DateTime.now().toDate();
+        this.payStatus = PayStatus.WAIT_FOR_PAY;
     }
 
     public long getId() {
