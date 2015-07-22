@@ -14,7 +14,13 @@ public class BankCardAuthResponse {
     private String responseCode;
     private String authMsg;
 
-
+    public BankCardAuthResponse(String command, String customerId, String orderId, String expandInfo) {
+        this.command = command;
+        this.customerId = customerId;
+        this.orderId = orderId;
+        this.expandInfo = expandInfo;
+        this.flowId = UUID.randomUUID().toString();
+    }
 
     public String getCommand() {
         return command;
@@ -78,19 +84,6 @@ public class BankCardAuthResponse {
 
     public void setAuthMsg(String authMsg) {
         this.authMsg = authMsg;
-    }
-
-    public BankCardAuthResponse(String command, String customerId, String orderId, String expandInfo) {
-
-        this.command = command;
-        this.customerId = customerId;
-        this.orderId = orderId;
-        this.expandInfo = expandInfo;
-        this.flowId = UUID.randomUUID().toString();
-    }
-
-    public  BankCardAuthResponse() {
-
     }
 
 }

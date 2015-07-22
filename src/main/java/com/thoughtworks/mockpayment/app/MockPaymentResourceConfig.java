@@ -1,5 +1,12 @@
 package com.thoughtworks.mockpayment.app;
 
+import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.thoughtworks.mockpayment.service.BankCardAuthService;
+import com.thoughtworks.mockpayment.service.DefaultBankCardAuthService;
+import com.thoughtworks.mockpayment.service.DefaultPaymentService;
+import com.thoughtworks.mockpayment.service.PaymentService;
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.jvnet.hk2.guice.bridge.api.GuiceBridge;
@@ -13,17 +20,18 @@ public class MockPaymentResourceConfig extends ResourceConfig {
 
         GuiceBridge.getGuiceBridge().initializeGuiceBridge(serviceLocator);
         GuiceIntoHK2Bridge guiceBridge = serviceLocator.getService(GuiceIntoHK2Bridge.class);
-//        Injector injector = Guice.createInjector(
-//            new PersistenceModule(System.getProperty("env", "withdraw")),
-//            new AbstractModule() {
-//                @Override
-//                protected void configure() {
-//                }
-//            }
-//        );
+        Injector injector = Guice.createInjector(
+            new AbstractModule() {
+                @Override
+                protected void configure() {
+                    bind(BankCardAuthService.class).to(DefaultBankCardAuthService.class);
+                    bind(PaymentService.class).to(DefaultPaymentService.class);
+                }
+            }
+        );
 
         property(org.glassfish.jersey.server.ServerProperties.RESPONSE_SET_STATUS_OVER_SEND_ERROR, true);
-//        guiceBridge.bridgeGuiceInjector(injector);
+        guiceBridge.bridgeGuiceInjector(injector);
         packages("com.thoughtworks.mockpayment");
 
     }

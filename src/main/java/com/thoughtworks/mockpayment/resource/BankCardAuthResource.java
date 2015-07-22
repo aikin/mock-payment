@@ -1,22 +1,23 @@
 package com.thoughtworks.mockpayment.resource;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.thoughtworks.mockpayment.service.BankCardAuthService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.MultivaluedMap;
+import javax.inject.Inject;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.HashMap;
+import java.util.Map;
 
 @Path("bank-card-auth")
 public class BankCardAuthResource {
 
     private static final Logger logger = LoggerFactory.getLogger(BankCardAuthResource.class);
+
+    @Inject
+    private BankCardAuthService bankCardAuthService;
 
     @GET
     public Response authenticate(@QueryParam("cmd") String cmd,
@@ -28,28 +29,29 @@ public class BankCardAuthResource {
                                  @QueryParam("bankCardNo") String bankCardNo,
                                  @QueryParam("bankName") String bankName,
                                  @QueryParam("expandInfo") String expandInfo
-                                 ) throws JsonProcessingException {
+    ) {
 
-        logger.info("*** The bank code auth GET request ***");
+        logger.debug("*** The bank code auth GET request ***");
 
-        MultivaluedMap<String, String> request = new MultivaluedHashMap<>();
-        request.add("cmd", cmd);
-        request.add("customerId", customerId);
-        request.add("orderId", orderId);
-        request.add("name", name);
-        request.add("idCardNo", idCardNo);
-        request.add("bankCode", bankCode);
-        request.add("bankCardNo", bankCardNo);
-        request.add("bankName", bankName);
-        request.add("expandInfo", expandInfo);
+        Map<String, String> request = new HashMap<>();
+        request.put("cmd", cmd);
+        request.put("customerId", customerId);
+        request.put("orderId", orderId);
+        request.put("name", name);
+        request.put("idCardNo", idCardNo);
+        request.put("bankCode", bankCode);
+        request.put("bankCardNo", bankCardNo);
+        request.put("bankName", bankName);
+        request.put("expandInfo", expandInfo);
 
-        return new BankCardAuthService().handleBankCardAuthRequest(request);
+        return bankCardAuthService.handleBankCardAuthRequest(request);
     }
 
     @POST
-    public Response authenticate(MultivaluedMap request) throws JsonProcessingException {
-        logger.info("*** The bank code auth POST request ***" + request);
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response authenticate(Map request) {
+        logger.debug("*** The bank code auth POST request ***" + request);
 
-        return new BankCardAuthService().handleBankCardAuthRequest(request);
+        return bankCardAuthService.handleBankCardAuthRequest(request);
     }
 }

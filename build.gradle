@@ -38,6 +38,8 @@ ext {
     rsVersion = "2.0"
     myBatisVersion = '3.2.7'
     myBatisGuiceVersion = '3.6'
+    jodaTimeVersion = '2.6'
+    jodaMoneyVersion = '0.10.0'
 }
 
 dependencies {
@@ -65,6 +67,10 @@ dependencies {
 
     compile "org.mybatis:mybatis:$myBatisVersion"
     compile "org.mybatis:mybatis-guice:$myBatisGuiceVersion"
+
+    compile "joda-time:joda-time:$jodaTimeVersion"
+    compile "org.joda:joda-money:$jodaMoneyVersion"
+
 
     testCompile "junit:junit:$junitVersion"
     testCompile "org.hamcrest:hamcrest-all:$hamcrestVersion"

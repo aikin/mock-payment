@@ -37,8 +37,8 @@ public class Server {
 
         context.deploy(server);
 
-        System.out.println(String.format("Application started.\nTry out %s\nStop the application using CTRL+C",
-                BASE_URI));
+        logger.info(String.format("Application started.\nTry out %s\nStop the application using CTRL+C",
+            BASE_URI));
 
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
             @Override
@@ -53,7 +53,7 @@ public class Server {
         } catch (IOException e) {
             logger.error(e.getMessage(), e);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.error(e.getLocalizedMessage(), e);
         }
     }
 }

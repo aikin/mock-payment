@@ -3,7 +3,6 @@ package com.thoughtworks.mockpayment.entity;
 
 public enum BankCardNoAndStatusCodeMap {
 
-    SUCCESS("111111111111111", "1"),
     BANK_CARD_NO_ILLEGAL("222222222222222", "2"),
     UNSUPPORTED_BANK_CARD("333333333333333", "3"),
     BANK_CODE_NOT_MATCH_BANK_CARD_NO("444444444444444", "4"),
