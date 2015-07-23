@@ -12,7 +12,6 @@ import org.junit.runner.RunWith;
 
 import javax.ws.rs.client.WebTarget;
 import java.util.HashMap;
-import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -37,7 +36,7 @@ public class PaymentResourceTest extends ResourceTest {
             .queryParam("bankName", "www")
             .queryParam("amount", "100")
             .queryParam("currency", "CNY")
-            .queryParam("orderId", UUID.randomUUID().toString())
+            .queryParam("orderId", "121121121121")
             .queryParam("expandInfo", "testExpandInfo");
     }
 
@@ -62,7 +61,6 @@ public class PaymentResourceTest extends ResourceTest {
         assertThat(respondMap.get("responseCode"), is(DepositsResponseCode.SUCCESS.getCode()));
     }
 
-
     @Test
     public void should_client_response_failure_when_bankCardNo_be_match_SHORT_BALANCE() {
 
@@ -74,5 +72,18 @@ public class PaymentResourceTest extends ResourceTest {
         HashMap respondMap = gson.fromJson(respondContent, HashMap.class);
         assertThat(respondMap.get("depositsMessage"), is(DepositsResponseCode.SHORT_BALANCE.getDescription()));
         assertThat(respondMap.get("responseCode"), is(DepositsResponseCode.SHORT_BALANCE.getCode()));
+    }
+
+    @Test
+    public void should_client_response_failure_when_bankCardNo_be_match_DEPOSITS_PROCESSING() {
+
+        String respondContent = authTarget
+            .queryParam("bankCardNo", BankCardNoAndResponseCodeMapper.DEPOSITS_PROCESSING.getBankCardNo())
+            .request()
+            .get(String.class);
+        Gson gson = new Gson();
+        HashMap respondMap = gson.fromJson(respondContent, HashMap.class);
+        assertThat(respondMap.get("depositsMessage"), is(DepositsResponseCode.DEPOSITS_PROCESSING.getDescription()));
+        assertThat(respondMap.get("responseCode"), is(DepositsResponseCode.DEPOSITS_PROCESSING.getCode()));
     }
 }
