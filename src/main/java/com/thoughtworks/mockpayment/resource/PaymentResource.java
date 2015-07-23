@@ -22,16 +22,16 @@ public class PaymentResource {
     @GET
     @Path("deposits")
     public Response deposits(@QueryParam("cmd") String cmd,
-                        @QueryParam("customerId") String customerId,
-                        @QueryParam("orderId") String orderId,
-                        @QueryParam("userName") String userName,
-                        @QueryParam("idCardNo") String idCardNo,
-                        @QueryParam("bankCode") String bankCode,
-                        @QueryParam("bankCardNo") String bankCardNo,
-                        @QueryParam("bankName") String bankName,
-                        @QueryParam("amount") String amount,
-                        @QueryParam("currency") String currency,
-                        @QueryParam("expandInfo") String expandInfo
+                             @QueryParam("customerId") String customerId,
+                             @QueryParam("orderId") String orderId,
+                             @QueryParam("userName") String userName,
+                             @QueryParam("idCardNo") String idCardNo,
+                             @QueryParam("bankCode") String bankCode,
+                             @QueryParam("bankCardNo") String bankCardNo,
+                             @QueryParam("bankName") String bankName,
+                             @QueryParam("amount") String amount,
+                             @QueryParam("currency") String currency,
+                             @QueryParam("expandInfo") String expandInfo
     ) {
 
         Map<String, String> request = new HashMap<>();

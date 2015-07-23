@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thoughtworks.mockpayment.persistence.mapper.WithdrawOrderMapper">
+
+    <sql id="orderColumns">
+          W.ID AS D_ID,
+          W.BATCH_NO AS W_BATCH_NO,
+          W.CUSTOMER_ID AS W_CUSTOMER_ID,
+          W.ORDER_ID AS  W_ORDER_ID,
+          W.BANK_CODE AS W_BANK_CODE,
+          W.BANK_CARD_NO AS W_BANK_CARD_NO,
+          W.BANK_NAME AS W_BANK_NAME,
+          W.USER_NAME AS W_USER_NAME,
+          W.ID_CARD_NO AS W_ID_CARD_NO,
+          W.AMOUNT AS W_AMOUNT,
+          W.WITHDRAW_STATUS AS W_WITHDRAW_STATUS,
+          W.WITHDRAW_MESSAGE AS W_WITHDRAW_MESSAGE,
+          W.RESPONSE_CODE AS W_RESPONSE_CODE,
+          W.WITHDRAW_AT AS W_WITHDRAW_AT,
+          W.CREATED_AT AS W_CREATED_AT,
+    </sql>
+
+    <resultMap id="depositsOrder" type="com.thoughtworks.mockpayment.persistence.model.WithdrawOrder">
+        <id column="D_ID" property="id"/>
+        <result column="W_BATCH_NO" property="batchNo"/>
+        <result column="W_CUSTOMER_ID" property="customerId"/>
+        <result column="W_ORDER_ID" property="orderId"/>
+        <result column="W_BANK_CODE" property="bankCode"/>
+        <result column="W_BANK_CARD_NO" property="bankCardNo"/>
+        <result column="W_BANK_NAME" property="bankName"/>
+        <result column="W_USER_NAME" property="userName"/>
+        <result column="W_ID_CARD_NO" property="idCardNo"/>
+        <result column="W_AMOUNT" property="amount"/>
+        <result column="W_WITHDRAW_STATUS" property="withdrawStatus"/>
+        <result column="W_WITHDRAW_MESSAGE" property="withdrawMessage"/>
+        <result column="W_RESPONSE_CODE" property="responseCode"/>
+        <result column="W_WITHDRAW_AT" property="withdrawAt"/>
+        <result column="W_CREATED_AT" property="createdAt"/>
+    </resultMap>
+
+    <insert id="insertNewOrder">
+        INSERT INTO WITHDRAW_ORDER(CUSTOMER_ID, BATCH_NO, ORDER_ID, USER_NAME, ID_CARD_NO, BANK_CODE, BANK_CARD_NO, BANK_NAME,
+                        AMOUNT, WITHDRAW_STATUS, CREATED_AT)
+        VALUES (#{order.customerId}, #{order.batchNo}, #{order.orderId}, #{order.userName}, #{order.idCardNo}, #{order.bankCode},
+                #{order.bankCardNo}, #{order.bankName}, #{order.amount},
+                #{order.withdrawStatus}, #{order.createdAt})
+    </insert>
+
+    <update id="updateWithdrawStatus">
+        UPDATE WITHDRAW_ORDER SET BANK_SERIAL_NO=#{bankSerialNo}, WITHDRAW_STATUS=#{withdrawStatus},
+                        WITHDRAW_MESSAGE=#{withdrawMessage}, RESPONSE_CODE=#{responseCode}, DEPOSITS_AT=#{withdrawAt}
+        WHERE ORDER_ID=#{orderId}
+    </update>
+
+</mapper>

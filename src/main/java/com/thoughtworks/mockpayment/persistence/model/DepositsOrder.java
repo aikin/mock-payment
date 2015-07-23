@@ -199,5 +199,4 @@ public class DepositsOrder {
     public static enum DepositsStatus {
         PROCESSING, SUCCESS, FAILURE
     }
-
 }
