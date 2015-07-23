@@ -17,7 +17,7 @@ import java.util.Map;
 public class DefaultPaymentService implements PaymentService {
 
     private static final Logger logger = LoggerFactory.getLogger(DefaultPaymentService.class);
-    private static final int WAIT_RESPONSE_DEPOSITS_RESULT = 5000;
+    private static final int WAIT_RESPONSE_DEPOSITS_RESULT = 1000;
 
     @Inject
     private PaymentHandler paymentHandler;
@@ -33,7 +33,7 @@ public class DefaultPaymentService implements PaymentService {
 
         return Json.toJSON(depositsResult);
     }
-
+    // TODO:
     private DepositsResult generateDepositsResult(DepositsOrder depositsOrder) {
 
         DepositsResult depositsResult = new DepositsResult(

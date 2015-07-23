@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Map;
@@ -21,35 +22,8 @@ public class WithdrawResource {
     @Inject
     private WithdrawService withdrawService;
 
-//    @GET
-//    public Response withdraw(@QueryParam("cmd") String cmd,
-//                             @QueryParam("batchNo") String batchNo,
-//                             @QueryParam("customerId") String customerId,
-//                             @QueryParam("orderId") String orderId,
-//                             @QueryParam("bankCode") String bankCode,
-//                             @QueryParam("bankCardNo") String bankCardNo,
-//                             @QueryParam("bankName") String bankName,
-//                             @QueryParam("userName") String userName,
-//                             @QueryParam("amount") String amount
-//    ) {
-//
-//        Map<String, String> request = new HashMap<>();
-//        request.put("command", cmd);
-//        request.put("batchNo", batchNo);
-//        request.put("customerId", customerId);
-//        request.put("orderId", orderId);
-//        request.put("bankCode", bankCode);
-//        request.put("bankCardNo", bankCardNo);
-//        request.put("bankName", bankName);
-//        request.put("userName", userName);
-//        request.put("amount", amount);
-//
-//        String result = withdrawService.handleWithdrawRequest(request);
-//        return Response.ok().entity(result).build();
-//    }
-
-
     @POST
+    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response withdraw(Map request) {
 

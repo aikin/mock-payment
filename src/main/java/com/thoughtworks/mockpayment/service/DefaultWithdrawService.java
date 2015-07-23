@@ -47,6 +47,7 @@ public class DefaultWithdrawService implements WithdrawService {
                 logger.debug("*** input bankCardNo not match status deposits response code ***" + withdrawOrder.getBankCardNo());
                 withdrawResponseCode = WithdrawResponseCode.SUCCESS;
             }
+
         }
         return null;
     }
