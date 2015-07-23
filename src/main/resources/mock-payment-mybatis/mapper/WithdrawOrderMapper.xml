@@ -41,16 +41,16 @@
     </resultMap>
 
     <insert id="insertNewOrder">
-        INSERT INTO WITHDRAW_ORDER(CUSTOMER_ID, BATCH_NO, ORDER_ID, USER_NAME, ID_CARD_NO, BANK_CODE, BANK_CARD_NO, BANK_NAME,
+        INSERT INTO WITHDRAW_ORDER(CUSTOMER_ID, BATCH_NO, ORDER_ID, USER_NAME, BANK_CODE, BANK_CARD_NO, BANK_NAME,
                         AMOUNT, WITHDRAW_STATUS, CREATED_AT)
-        VALUES (#{order.customerId}, #{order.batchNo}, #{order.orderId}, #{order.userName}, #{order.idCardNo}, #{order.bankCode},
+        VALUES (#{order.customerId}, #{order.batchNo}, #{order.orderId}, #{order.userName}, #{order.bankCode},
                 #{order.bankCardNo}, #{order.bankName}, #{order.amount},
                 #{order.withdrawStatus}, #{order.createdAt})
     </insert>
 
     <update id="updateWithdrawStatus">
-        UPDATE WITHDRAW_ORDER SET BANK_SERIAL_NO=#{bankSerialNo}, WITHDRAW_STATUS=#{withdrawStatus},
-                        WITHDRAW_MESSAGE=#{withdrawMessage}, RESPONSE_CODE=#{responseCode}, DEPOSITS_AT=#{withdrawAt}
+        UPDATE WITHDRAW_ORDER SET WITHDRAW_STATUS=#{withdrawStatus},
+                        WITHDRAW_MESSAGE=#{withdrawMessage}, RESPONSE_CODE=#{responseCode}, WITHDRAW_AT=#{withdrawAt}
         WHERE ORDER_ID=#{orderId}
     </update>
 
