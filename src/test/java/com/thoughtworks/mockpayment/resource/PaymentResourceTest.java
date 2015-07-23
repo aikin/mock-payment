@@ -3,6 +3,7 @@ package com.thoughtworks.mockpayment.resource;
 import com.google.gson.Gson;
 import com.thoughtworks.mockpayment.entity.payment.BankCardNoAndResponseCodeMapper;
 import com.thoughtworks.mockpayment.entity.payment.DepositsResponseCode;
+import com.thoughtworks.mockpayment.util.Json;
 import com.thoughtworks.mockpayment.util.MockPaymentResourceRunner;
 import com.thoughtworks.mockpayment.util.ResourceTest;
 import org.junit.After;
@@ -10,8 +11,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -21,23 +26,22 @@ import static org.hamcrest.Matchers.is;
 public class PaymentResourceTest extends ResourceTest {
 
     protected WebTarget authTarget;
+    protected Map<String, String> requestData = new HashMap<>();
 
     @Before
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        authTarget = target()
-            .path("/payment/deposits")
-            .queryParam("cmd", "deposits")
-            .queryParam("customerId", "809080908090")
-            .queryParam("userName", "aikin")
-            .queryParam("idCardNo","362329199103120018")
-            .queryParam("bankCode", "CCB")
-            .queryParam("bankName", "www")
-            .queryParam("amount", "100")
-            .queryParam("currency", "CNY")
-            .queryParam("orderId", "121121121121")
-            .queryParam("expandInfo", "testExpandInfo");
+        authTarget = target().path("/payment/deposits");
+        requestData.put("cmd", "deposits");
+        requestData.put("customerId", "809080908090");
+        requestData.put("userName", "aikin");
+        requestData.put("idCardNo", "362329199103120018");
+        requestData.put("bankCode", "CCB");
+        requestData.put("bankName", "www");
+        requestData.put("amount", "100");
+        requestData.put("orderId", "121121121121");
+        requestData.put("expandInfo", "testExpandInfo");
     }
 
     @After
@@ -45,18 +49,20 @@ public class PaymentResourceTest extends ResourceTest {
     public void tearDown() throws Exception {
         super.tearDown();
         authTarget = null;
+        requestData = null;
     }
 
     @Test
     public void should_client_response_success_when_bankCardNo_be_not_match() {
 
         final String UN_MATCH_BANK_CARD_NO = "123456789012345";
-        String respondContent = authTarget
-            .queryParam("bankCardNo", UN_MATCH_BANK_CARD_NO)
+        requestData.put("bankCardNo", UN_MATCH_BANK_CARD_NO);
+        Response response = authTarget
             .request()
-            .get(String.class);
+            .post(Entity.entity(Json.toJSON(requestData), MediaType.APPLICATION_JSON));
+
         Gson gson = new Gson();
-        HashMap respondMap = gson.fromJson(respondContent, HashMap.class);
+        HashMap respondMap = gson.fromJson(response.readEntity(String.class), HashMap.class);
         assertThat(respondMap.get("depositsMessage"), is(DepositsResponseCode.SUCCESS.getDescription()));
         assertThat(respondMap.get("responseCode"), is(DepositsResponseCode.SUCCESS.getCode()));
     }
@@ -64,12 +70,13 @@ public class PaymentResourceTest extends ResourceTest {
     @Test
     public void should_client_response_failure_when_bankCardNo_be_match_SHORT_BALANCE() {
 
-        String respondContent = authTarget
-            .queryParam("bankCardNo", BankCardNoAndResponseCodeMapper.SHORT_BALANCE.getBankCardNo())
+        requestData.put("bankCardNo", BankCardNoAndResponseCodeMapper.SHORT_BALANCE.getBankCardNo());
+        Response response = authTarget
             .request()
-            .get(String.class);
+            .post(Entity.entity(Json.toJSON(requestData), MediaType.APPLICATION_JSON));
+
         Gson gson = new Gson();
-        HashMap respondMap = gson.fromJson(respondContent, HashMap.class);
+        HashMap respondMap = gson.fromJson(response.readEntity(String.class), HashMap.class);
         assertThat(respondMap.get("depositsMessage"), is(DepositsResponseCode.SHORT_BALANCE.getDescription()));
         assertThat(respondMap.get("responseCode"), is(DepositsResponseCode.SHORT_BALANCE.getCode()));
     }
@@ -77,12 +84,13 @@ public class PaymentResourceTest extends ResourceTest {
     @Test
     public void should_client_response_failure_when_bankCardNo_be_match_DEPOSITS_PROCESSING() {
 
-        String respondContent = authTarget
-            .queryParam("bankCardNo", BankCardNoAndResponseCodeMapper.DEPOSITS_PROCESSING.getBankCardNo())
+        requestData.put("bankCardNo", BankCardNoAndResponseCodeMapper.DEPOSITS_PROCESSING.getBankCardNo());
+        Response response = authTarget
             .request()
-            .get(String.class);
+            .post(Entity.entity(Json.toJSON(requestData), MediaType.APPLICATION_JSON));
+
         Gson gson = new Gson();
-        HashMap respondMap = gson.fromJson(respondContent, HashMap.class);
+        HashMap respondMap = gson.fromJson(response.readEntity(String.class), HashMap.class);
         assertThat(respondMap.get("depositsMessage"), is(DepositsResponseCode.DEPOSITS_PROCESSING.getDescription()));
         assertThat(respondMap.get("responseCode"), is(DepositsResponseCode.DEPOSITS_PROCESSING.getCode()));
     }
