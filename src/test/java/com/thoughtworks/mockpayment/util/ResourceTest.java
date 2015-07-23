@@ -1,4 +1,4 @@
-package com.thoughtworks.mockpayment.resource.util;
+package com.thoughtworks.mockpayment.util;
 
 import com.google.inject.Injector;
 import com.thoughtworks.mockpayment.app.MockPaymentResourceConfig;
@@ -27,12 +27,6 @@ public class ResourceTest extends JerseyTest {
 
             }
         });
-    }
-
-    @Override
-    public void setUp() throws Exception {
-        super.setUp();
-
     }
 
 }

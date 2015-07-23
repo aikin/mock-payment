@@ -17,6 +17,7 @@ import java.util.Map;
 public class DefaultPaymentService implements PaymentService {
 
     private static final Logger logger = LoggerFactory.getLogger(DefaultBankCardAuthService.class);
+    private static final int WAIT_SENT_DEPOSITS_RESULT = 5000;
 
     @Inject
     private PaymentHandler paymentHandler;
@@ -25,8 +26,7 @@ public class DefaultPaymentService implements PaymentService {
     @Override
     public String handleDepositsRequest(Map<String, String> depositsRequest) {
 
-        logger.debug("handle deposits" + depositsRequest);
-
+        logger.debug("*** in handle deposits request ***" + depositsRequest);
 
         DepositsOrder depositsOrder = this.paymentHandler.insertPayOrder(depositsRequest);
         DepositsResult depositsResult = this.generateDepositsResult(depositsOrder);
@@ -49,7 +49,7 @@ public class DefaultPaymentService implements PaymentService {
         DepositsResponseCode depositsResponseCode = DepositsResponseCode.codeOf(responseCode);
 
         if (depositsResponseCode == null) {
-            logger.debug("*** input bankCardNo not match status ***" + depositsOrder.getBankCardNo());
+            logger.debug("*** input bankCardNo not match status deposits response code ***" + depositsOrder.getBankCardNo());
             depositsResponseCode = DepositsResponseCode.SUCCESS;
         }
 
@@ -59,7 +59,7 @@ public class DefaultPaymentService implements PaymentService {
     private DepositsResult handleDepositsOrder(DepositsResult depositsResult, DepositsResponseCode depositsResponseCode) {
 
         try {
-            Thread.sleep(5000);
+            Thread.sleep(WAIT_SENT_DEPOSITS_RESULT);
         } catch (InterruptedException e) {
             logger.error(e.getLocalizedMessage(), e);
         }

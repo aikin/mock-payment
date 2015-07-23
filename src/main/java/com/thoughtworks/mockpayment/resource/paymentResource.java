@@ -27,7 +27,7 @@ public class PaymentResource {
                         @QueryParam("userName") String userName,
                         @QueryParam("idCardNo") String idCardNo,
                         @QueryParam("bankCode") String bankCode,
-                        @QueryParam("bankCardNo") String bankCodeNo,
+                        @QueryParam("bankCardNo") String bankCardNo,
                         @QueryParam("bankName") String bankName,
                         @QueryParam("amount") String amount,
                         @QueryParam("currency") String currency,
@@ -41,10 +41,11 @@ public class PaymentResource {
         request.put("userName", userName);
         request.put("idCardNo", idCardNo);
         request.put("bankCode", bankCode);
-        request.put("bankCodeNo", bankCodeNo);
+        request.put("bankCardNo", bankCardNo);
         request.put("bankName", bankName);
         request.put("amount", amount);
-        request.put("currency", expandInfo);
+        request.put("currency", currency);
+        request.put("expandInfo", expandInfo);
 
         String result = paymentService.handleDepositsRequest(request);
         return Response.ok().entity(result).build();

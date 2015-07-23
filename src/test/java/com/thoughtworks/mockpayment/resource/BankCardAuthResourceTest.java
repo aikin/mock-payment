@@ -1,8 +1,8 @@
-package com.thoughtworks.mockpayment.resource.resources;
+package com.thoughtworks.mockpayment.resource;
 
 import com.google.gson.Gson;
 import com.thoughtworks.mockpayment.entity.bankCardAuth.BankAuthResponseCode;
-import com.thoughtworks.mockpayment.resource.util.ResourceTest;
+import com.thoughtworks.mockpayment.util.ResourceTest;
 import org.glassfish.jersey.test.util.runner.ConcurrentRunner;
 import org.junit.After;
 import org.junit.Before;
@@ -10,7 +10,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.ws.rs.client.WebTarget;
-import java.io.IOException;
 import java.util.HashMap;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -39,7 +38,8 @@ public class BankCardAuthResourceTest extends ResourceTest {
     }
 
     @After
-    public void tearDown() throws IOException {
+    public void tearDown() throws Exception {
+        super.tearDown();
         authTarget = null;
     }
 
@@ -47,7 +47,7 @@ public class BankCardAuthResourceTest extends ResourceTest {
     public void should_client_response_success_when_bankCardNo_be_1() {
         String respondContent = authTarget
             .queryParam("bankCardNo", "111111111111111")
-            .request("text/json")
+            .request()
             .get(String.class);
         Gson gson = new Gson();
         HashMap respondMap = gson.fromJson(respondContent, HashMap.class);
@@ -58,7 +58,7 @@ public class BankCardAuthResourceTest extends ResourceTest {
     public void should_client_response_failure_when_bankCardNo_be_2() {
         String respondContent = authTarget
             .queryParam("bankCardNo", "222222222222222")
-            .request("text/json")
+            .request()
             .get(String.class);
         Gson gson = new Gson();
         HashMap respondMap = gson.fromJson(respondContent, HashMap.class);
@@ -70,7 +70,7 @@ public class BankCardAuthResourceTest extends ResourceTest {
     public void should_client_response_failure_when_bankCardNo_be_11() {
         String respondContent = authTarget
             .queryParam("bankCardNo", "111111111111110")
-            .request("text/json")
+            .request()
             .get(String.class);
         Gson gson = new Gson();
         HashMap respondMap = gson.fromJson(respondContent, HashMap.class);
