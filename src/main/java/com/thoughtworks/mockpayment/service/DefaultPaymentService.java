@@ -16,8 +16,8 @@ import java.util.Map;
 
 public class DefaultPaymentService implements PaymentService {
 
-    private static final Logger logger = LoggerFactory.getLogger(DefaultBankCardAuthService.class);
-    private static final int WAIT_SENT_DEPOSITS_RESULT = 5000;
+    private static final Logger logger = LoggerFactory.getLogger(DefaultPaymentService.class);
+    private static final int WAIT_RESPONSE_DEPOSITS_RESULT = 5000;
 
     @Inject
     private PaymentHandler paymentHandler;
@@ -59,7 +59,7 @@ public class DefaultPaymentService implements PaymentService {
     private DepositsResult handleDepositsOrder(DepositsResult depositsResult, DepositsResponseCode depositsResponseCode) {
 
         try {
-            Thread.sleep(WAIT_SENT_DEPOSITS_RESULT);
+            Thread.sleep(WAIT_RESPONSE_DEPOSITS_RESULT);
         } catch (InterruptedException e) {
             logger.error(e.getLocalizedMessage(), e);
         }
