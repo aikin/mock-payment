@@ -3,9 +3,7 @@ package com.thoughtworks.mockpayment.service;
 
 import java.util.Map;
 
-public class WithdrawService {
+public interface WithdrawService {
 
-    public String handleWithdrawRequest(Map request) {
-        return null;
-    }
+    String handleWithdrawRequest(Map request);
 }

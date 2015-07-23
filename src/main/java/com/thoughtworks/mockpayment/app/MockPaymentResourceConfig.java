@@ -4,10 +4,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.thoughtworks.mockpayment.persistence.PersistenceModule;
-import com.thoughtworks.mockpayment.service.BankCardAuthService;
-import com.thoughtworks.mockpayment.service.DefaultBankCardAuthService;
-import com.thoughtworks.mockpayment.service.DefaultPaymentService;
-import com.thoughtworks.mockpayment.service.PaymentService;
+import com.thoughtworks.mockpayment.service.*;
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.jvnet.hk2.guice.bridge.api.GuiceBridge;
@@ -28,6 +25,7 @@ public class MockPaymentResourceConfig extends ResourceConfig {
                 protected void configure() {
                     bind(BankCardAuthService.class).to(DefaultBankCardAuthService.class);
                     bind(PaymentService.class).to(DefaultPaymentService.class);
+                    bind(WithdrawService.class).to(DefaultWithdrawService.class);
                 }
             }
         );
