@@ -2,6 +2,7 @@ package com.thoughtworks.mockpayment.resource;
 
 import com.google.gson.Gson;
 import com.thoughtworks.mockpayment.entity.bankCardAuth.BankAuthResponseCode;
+import com.thoughtworks.mockpayment.entity.bankCardAuth.BankCardNoAndResponseCodeMapper;
 import com.thoughtworks.mockpayment.util.ResourceTest;
 import org.glassfish.jersey.test.util.runner.ConcurrentRunner;
 import org.junit.After;
@@ -44,9 +45,11 @@ public class BankCardAuthResourceTest extends ResourceTest {
     }
 
     @Test
-    public void should_client_response_success_when_bankCardNo_be_1() {
+    public void should_client_response_success_when_bankCardNo_be_not_match() {
+
+        final String UN_MATCH_BANK_CARD_NO = "123456789012345";
         String respondContent = authTarget
-            .queryParam("bankCardNo", "111111111111111")
+            .queryParam("bankCardNo", UN_MATCH_BANK_CARD_NO)
             .request()
             .get(String.class);
         Gson gson = new Gson();
@@ -55,9 +58,10 @@ public class BankCardAuthResourceTest extends ResourceTest {
     }
 
     @Test
-    public void should_client_response_failure_when_bankCardNo_be_2() {
+    public void should_client_response_failure_when_bankCardNo_be_BANK_CARD_NO_ILLEGAL() {
+
         String respondContent = authTarget
-            .queryParam("bankCardNo", "222222222222222")
+            .queryParam("bankCardNo", BankCardNoAndResponseCodeMapper.BANK_CARD_NO_ILLEGAL.getBankCardNo())
             .request()
             .get(String.class);
         Gson gson = new Gson();
@@ -67,9 +71,9 @@ public class BankCardAuthResourceTest extends ResourceTest {
     }
 
     @Test
-    public void should_client_response_failure_when_bankCardNo_be_11() {
+    public void should_client_response_failure_when_bankCardNo_be_BANK_CARD_NO_NOT_MATCH_NAME() {
         String respondContent = authTarget
-            .queryParam("bankCardNo", "111111111111110")
+            .queryParam("bankCardNo", BankCardNoAndResponseCodeMapper.BANK_CARD_NO_NOT_MATCH_NAME.getBankCardNo())
             .request()
             .get(String.class);
         Gson gson = new Gson();
