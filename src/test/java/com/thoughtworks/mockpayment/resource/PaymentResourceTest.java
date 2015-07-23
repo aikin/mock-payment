@@ -1,6 +1,5 @@
 package com.thoughtworks.mockpayment.resource;
 
-import com.google.gson.Gson;
 import com.thoughtworks.mockpayment.entity.payment.BankCardNoAndResponseCodeMapper;
 import com.thoughtworks.mockpayment.entity.payment.DepositsResponseCode;
 import com.thoughtworks.mockpayment.util.Json;
@@ -61,8 +60,9 @@ public class PaymentResourceTest extends ResourceTest {
             .request()
             .post(Entity.entity(Json.toJSON(requestData), MediaType.APPLICATION_JSON));
 
-        Gson gson = new Gson();
-        HashMap respondMap = gson.fromJson(response.readEntity(String.class), HashMap.class);
+//        Gson gson = new Gson();
+//        HashMap respondMap = gson.fromJson(response.readEntity(String.class), HashMap.class);
+        HashMap respondMap = response.readEntity(HashMap.class);
         assertThat(respondMap.get("depositsMessage"), is(DepositsResponseCode.SUCCESS.getDescription()));
         assertThat(respondMap.get("responseCode"), is(DepositsResponseCode.SUCCESS.getCode()));
     }
@@ -75,8 +75,7 @@ public class PaymentResourceTest extends ResourceTest {
             .request()
             .post(Entity.entity(Json.toJSON(requestData), MediaType.APPLICATION_JSON));
 
-        Gson gson = new Gson();
-        HashMap respondMap = gson.fromJson(response.readEntity(String.class), HashMap.class);
+        HashMap respondMap = response.readEntity(HashMap.class);
         assertThat(respondMap.get("depositsMessage"), is(DepositsResponseCode.SHORT_BALANCE.getDescription()));
         assertThat(respondMap.get("responseCode"), is(DepositsResponseCode.SHORT_BALANCE.getCode()));
     }
@@ -89,8 +88,7 @@ public class PaymentResourceTest extends ResourceTest {
             .request()
             .post(Entity.entity(Json.toJSON(requestData), MediaType.APPLICATION_JSON));
 
-        Gson gson = new Gson();
-        HashMap respondMap = gson.fromJson(response.readEntity(String.class), HashMap.class);
+        HashMap respondMap = response.readEntity(HashMap.class);
         assertThat(respondMap.get("depositsMessage"), is(DepositsResponseCode.DEPOSITS_PROCESSING.getDescription()));
         assertThat(respondMap.get("responseCode"), is(DepositsResponseCode.DEPOSITS_PROCESSING.getCode()));
     }
