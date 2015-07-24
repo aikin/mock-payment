@@ -13,7 +13,6 @@
           W.BANK_CARD_NO AS W_BANK_CARD_NO,
           W.BANK_NAME AS W_BANK_NAME,
           W.USER_NAME AS W_USER_NAME,
-          W.ID_CARD_NO AS W_ID_CARD_NO,
           W.AMOUNT AS W_AMOUNT,
           W.WITHDRAW_STATUS AS W_WITHDRAW_STATUS,
           W.WITHDRAW_MESSAGE AS W_WITHDRAW_MESSAGE,
@@ -31,7 +30,6 @@
         <result column="W_BANK_CARD_NO" property="bankCardNo"/>
         <result column="W_BANK_NAME" property="bankName"/>
         <result column="W_USER_NAME" property="userName"/>
-        <result column="W_ID_CARD_NO" property="idCardNo"/>
         <result column="W_AMOUNT" property="amount"/>
         <result column="W_WITHDRAW_STATUS" property="withdrawStatus"/>
         <result column="W_WITHDRAW_MESSAGE" property="withdrawMessage"/>

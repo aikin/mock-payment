@@ -10,7 +10,7 @@ public class DatabaseHelper {
     public static void cleanDatabase(SqlSessionManager sqlSessionManager) throws SQLException {
         try (final SqlSession sqlSession = sqlSessionManager.openSession()) {
             final PreparedStatement statement = sqlSession.getConnection().prepareStatement("SET FOREIGN_KEY_CHECKS = 0;" +
-                    "TRUNCATE DEPOSITS_ORDER;" +
+                    "TRUNCATE DEPOSITS_ORDER;" + "TRUNCATE WITHDRAW_ORDER;" +
                     "SET FOREIGN_KEY_CHECKS = 1;");
             statement.setQueryTimeout(20);
             statement.execute();

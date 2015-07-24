@@ -31,6 +31,7 @@ public class WithdrawOrder {
         this.orderId = request.get("orderId");
         this.bankCode = request.get("bankCode");
         this.bankName = request.get("bankName");
+        this.bankCardNo = request.get("bankCardNo");
         this.userName = request.get("userName");
         this.amount = request.get("amount");
         this.createdAt = DateTime.now().toDate();
