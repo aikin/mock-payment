@@ -1,6 +1,6 @@
 package com.thoughtworks.mockpayment.entity.payment;
 
-//TODO: 改名字
+
 public enum BankCardNoAndResponseCodeMap {
 
     SHORT_BALANCE("020202020202020", DepositsResponseCode.SHORT_BALANCE.getCode()),

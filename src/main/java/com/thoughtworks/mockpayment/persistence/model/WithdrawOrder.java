@@ -4,11 +4,11 @@ package com.thoughtworks.mockpayment.persistence.model;
 import org.joda.time.DateTime;
 
 import java.util.Date;
+import java.util.Map;
 
 public class WithdrawOrder {
 
     private long id;
-    private String batchNo;
     private String customerId;
     private String orderId;
     private String bankCode;
@@ -23,23 +23,14 @@ public class WithdrawOrder {
     private Date createdAt;
 
 
-    public WithdrawOrder(String batchNo,
-                         String customerId,
-                         String orderId,
-                         String userName,
-                         String bankCode,
-                         String bankCardNo,
-                         String bankName,
-                         String amount
-    ) {
-        this.batchNo = batchNo;
-        this.customerId = customerId;
-        this.orderId = orderId;
-        this.bankCode = bankCode;
-        this.bankCardNo = bankCardNo;
-        this.bankName = bankName;
-        this.userName = userName;
-        this.amount = amount;
+    public WithdrawOrder(Map<String, String> request) {
+
+        this.customerId = request.get("customerId");
+        this.orderId = request.get("orderId");
+        this.bankCode = request.get("bankCode");
+        this.bankName = request.get("bankName");
+        this.userName = request.get("userName");
+        this.amount = request.get("amount");
         this.createdAt = DateTime.now().toDate();
         this.withdrawStatus = WithdrawStatus.PROCESSING;
     }
@@ -50,14 +41,6 @@ public class WithdrawOrder {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getBatchNo() {
-        return batchNo;
-    }
-
-    public void setBatchNo(String batchNo) {
-        this.batchNo = batchNo;
     }
 
     public String getCustomerId() {

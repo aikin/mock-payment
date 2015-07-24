@@ -5,5 +5,5 @@ import java.util.Map;
 
 public interface WithdrawService {
 
-    String handleWithdrawRequest(Map request);
+    String handleWithdrawRequest(Map<String, String> request);
 }

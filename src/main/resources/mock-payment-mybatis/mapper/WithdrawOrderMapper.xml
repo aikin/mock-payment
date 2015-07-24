@@ -6,7 +6,6 @@
 
     <sql id="orderColumns">
           W.ID AS D_ID,
-          W.BATCH_NO AS W_BATCH_NO,
           W.CUSTOMER_ID AS W_CUSTOMER_ID,
           W.ORDER_ID AS  W_ORDER_ID,
           W.BANK_CODE AS W_BANK_CODE,
@@ -24,7 +23,6 @@
 
     <resultMap id="depositsOrder" type="com.thoughtworks.mockpayment.persistence.model.WithdrawOrder">
         <id column="D_ID" property="id"/>
-        <result column="W_BATCH_NO" property="batchNo"/>
         <result column="W_CUSTOMER_ID" property="customerId"/>
         <result column="W_ORDER_ID" property="orderId"/>
         <result column="W_BANK_CODE" property="bankCode"/>
@@ -41,9 +39,9 @@
     </resultMap>
 
     <insert id="insertNewOrder">
-        INSERT INTO WITHDRAW_ORDER(CUSTOMER_ID, BATCH_NO, ORDER_ID, USER_NAME, BANK_CODE, BANK_CARD_NO, BANK_NAME,
+        INSERT INTO WITHDRAW_ORDER(CUSTOMER_ID, ORDER_ID, USER_NAME, BANK_CODE, BANK_CARD_NO, BANK_NAME,
                         AMOUNT, WITHDRAW_STATUS, CREATED_AT)
-        VALUES (#{order.customerId}, #{order.batchNo}, #{order.orderId}, #{order.userName}, #{order.bankCode},
+        VALUES (#{order.customerId}, #{order.orderId}, #{order.userName}, #{order.bankCode},
                 #{order.bankCardNo}, #{order.bankName}, #{order.amount},
                 #{order.withdrawStatus}, #{order.createdAt})
     </insert>
