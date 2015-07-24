@@ -91,4 +91,9 @@ dependencies {
     testCompile "org.glassfish.jersey.test-framework:jersey-test-framework-util:$jerseyVersion"
 }
 
+task startServer(type: JavaExec) {
+    main = "com.thoughtworks.mockpayment.app.Server"
+    classpath = sourceSets.main.runtimeClasspath
+}
+
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
