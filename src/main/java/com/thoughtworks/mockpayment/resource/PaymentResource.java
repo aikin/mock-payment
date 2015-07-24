@@ -18,39 +18,6 @@ public class PaymentResource {
     @Inject
     private PaymentService paymentService;
 
-//    @GET
-//    @Path("deposits")
-//    public Response deposits(@QueryParam("cmd") String cmd,
-//                             @QueryParam("customerId") String customerId,
-//                             @QueryParam("orderId") String orderId,
-//                             @QueryParam("userName") String userName,
-//                             @QueryParam("idCardNo") String idCardNo,
-//                             @QueryParam("bankCode") String bankCode,
-//                             @QueryParam("bankCardNo") String bankCardNo,
-//                             @QueryParam("bankName") String bankName,
-//                             @QueryParam("amount") String amount,
-//                             @QueryParam("currency") String currency,
-//                             @QueryParam("expandInfo") String expandInfo
-//    ) {
-//
-//        Map<String, String> request = new HashMap<>();
-//        request.put("command", cmd);
-//        request.put("customerId", customerId);
-//        request.put("orderId", orderId);
-//        request.put("userName", userName);
-//        request.put("idCardNo", idCardNo);
-//        request.put("bankCode", bankCode);
-//        request.put("bankCardNo", bankCardNo);
-//        request.put("bankName", bankName);
-//        request.put("amount", amount);
-//        request.put("currency", currency);
-//        request.put("expandInfo", expandInfo);
-//
-//        String result = paymentService.handleDepositsRequest(request);
-//        return Response.ok().entity(result).build();
-//    }
-
-
     @POST
     @Path("deposits")
     @Consumes(MediaType.APPLICATION_JSON)
