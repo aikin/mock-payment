@@ -6,6 +6,7 @@
 
     <sql id="orderColumns">
           W.ID AS D_ID,
+          W.WITHDRAW_FLOW_ID AS W_WITHDRAW_FLOW_ID,
           W.CUSTOMER_ID AS W_CUSTOMER_ID,
           W.ORDER_ID AS  W_ORDER_ID,
           W.BANK_CODE AS W_BANK_CODE,
@@ -22,7 +23,8 @@
     </sql>
 
     <resultMap id="depositsOrder" type="com.thoughtworks.mockpayment.persistence.model.WithdrawOrder">
-        <id column="D_ID" property="id"/>
+        <id column="W_ID" property="id"/>
+        <result column="W_WITHDRAW_FLOW_ID" property="withdrawFlowId"/>
         <result column="W_CUSTOMER_ID" property="customerId"/>
         <result column="W_ORDER_ID" property="orderId"/>
         <result column="W_BANK_CODE" property="bankCode"/>
@@ -39,17 +41,17 @@
     </resultMap>
 
     <insert id="insertNewOrder">
-        INSERT INTO WITHDRAW_ORDER(CUSTOMER_ID, ORDER_ID, USER_NAME, BANK_CODE, BANK_CARD_NO, BANK_NAME,
+        INSERT INTO WITHDRAW_ORDER(CUSTOMER_ID, WITHDRAW_FLOW_ID, ORDER_ID, USER_NAME, BANK_CODE, BANK_CARD_NO, BANK_NAME,
                         AMOUNT, WITHDRAW_STATUS, CREATED_AT)
-        VALUES (#{order.customerId}, #{order.orderId}, #{order.userName}, #{order.bankCode},
+        VALUES (#{order.customerId}, #{order.withdrawFlowId}, #{order.orderId}, #{order.userName}, #{order.bankCode},
                 #{order.bankCardNo}, #{order.bankName}, #{order.amount},
                 #{order.withdrawStatus}, #{order.createdAt})
     </insert>
 
     <update id="updateWithdrawStatus">
-        UPDATE WITHDRAW_ORDER SET WITHDRAW_STATUS=#{withdrawStatus},
-                        WITHDRAW_MESSAGE=#{withdrawMessage}, RESPONSE_CODE=#{responseCode}, WITHDRAW_AT=#{withdrawAt}
-        WHERE ORDER_ID=#{orderId}
+        UPDATE WITHDRAW_ORDER SET WITHDRAW_STATUS=#{withdrawStatus}, WITHDRAW_MESSAGE=#{withdrawMessage},
+                                RESPONSE_CODE=#{responseCode}, WITHDRAW_AT=#{withdrawAt}
+        WHERE WITHDRAW_FLOW_ID=#{withdrawFlowId}
     </update>
 
 </mapper>

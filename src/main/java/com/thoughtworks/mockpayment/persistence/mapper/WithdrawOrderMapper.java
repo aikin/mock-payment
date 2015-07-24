@@ -10,9 +10,9 @@ public interface WithdrawOrderMapper {
 
      void insertNewOrder(@Param("order") WithdrawOrder newOrder);
 
-     void updateWithdrawStatus(@Param("orderId") String orderId,
+     void updateWithdrawStatus(@Param("withdrawFlowId") String withdrawFlowId,
+                               @Param("withdrawAt") Date withdrawAt,
                                @Param("withdrawStatus") WithdrawStatus withdrawStatus,
                                @Param("withdrawMessage") String withdrawMessage,
-                               @Param("responseCode") String responseCode,
-                               @Param("withdrawAt") Date withdrawAt);
+                               @Param("responseCode") String responseCode);
 }

@@ -5,10 +5,12 @@ import org.joda.time.DateTime;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.UUID;
 
 public class WithdrawOrder {
 
     private long id;
+    private String withdrawFlowId;
     private String customerId;
     private String orderId;
     private String bankCode;
@@ -33,6 +35,7 @@ public class WithdrawOrder {
         this.amount = request.get("amount");
         this.createdAt = DateTime.now().toDate();
         this.withdrawStatus = WithdrawStatus.PROCESSING;
+        this.withdrawFlowId = UUID.randomUUID().toString();
     }
 
     public long getId() {
@@ -41,6 +44,14 @@ public class WithdrawOrder {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getWithdrawFlowId() {
+        return withdrawFlowId;
+    }
+
+    public void setWithdrawFlowId(String withdrawFlowId) {
+        this.withdrawFlowId = withdrawFlowId;
     }
 
     public String getCustomerId() {
