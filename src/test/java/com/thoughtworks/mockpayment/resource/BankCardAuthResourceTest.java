@@ -2,7 +2,7 @@ package com.thoughtworks.mockpayment.resource;
 
 import com.google.gson.Gson;
 import com.thoughtworks.mockpayment.entity.bankCardAuth.BankAuthResponseCode;
-import com.thoughtworks.mockpayment.entity.bankCardAuth.BankCardNoAndResponseCodeMapper;
+import com.thoughtworks.mockpayment.entity.bankCardAuth.BankCardNoAndResponseCodeMap;
 import com.thoughtworks.mockpayment.util.ResourceTest;
 import org.glassfish.jersey.test.util.runner.ConcurrentRunner;
 import org.junit.After;
@@ -61,7 +61,7 @@ public class BankCardAuthResourceTest extends ResourceTest {
     public void should_client_response_failure_when_bankCardNo_be_BANK_CARD_NO_ILLEGAL() {
 
         String respondContent = authTarget
-            .queryParam("bankCardNo", BankCardNoAndResponseCodeMapper.BANK_CARD_NO_ILLEGAL.getBankCardNo())
+            .queryParam("bankCardNo", BankCardNoAndResponseCodeMap.BANK_CARD_NO_ILLEGAL.getBankCardNo())
             .request()
             .get(String.class);
         Gson gson = new Gson();
@@ -73,7 +73,7 @@ public class BankCardAuthResourceTest extends ResourceTest {
     @Test
     public void should_client_response_failure_when_bankCardNo_be_BANK_CARD_NO_NOT_MATCH_NAME() {
         String respondContent = authTarget
-            .queryParam("bankCardNo", BankCardNoAndResponseCodeMapper.BANK_CARD_NO_NOT_MATCH_NAME.getBankCardNo())
+            .queryParam("bankCardNo", BankCardNoAndResponseCodeMap.BANK_CARD_NO_NOT_MATCH_NAME.getBankCardNo())
             .request()
             .get(String.class);
         Gson gson = new Gson();

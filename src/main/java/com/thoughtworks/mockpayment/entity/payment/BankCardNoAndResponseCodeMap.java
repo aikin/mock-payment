@@ -1,7 +1,7 @@
 package com.thoughtworks.mockpayment.entity.payment;
 
 //TODO: 改名字
-public enum BankCardNoAndResponseCodeMapper {
+public enum BankCardNoAndResponseCodeMap {
 
     SHORT_BALANCE("020202020202020", DepositsResponseCode.SHORT_BALANCE.getCode()),
     EXCEED_BALANCE("030303030303030", DepositsResponseCode.EXCEED_BALANCE.getCode()),
@@ -13,7 +13,7 @@ public enum BankCardNoAndResponseCodeMapper {
     private String bankCardNo;
     private String responseCode;
 
-    BankCardNoAndResponseCodeMapper(String bankCardNo, String responseCode) {
+    BankCardNoAndResponseCodeMap(String bankCardNo, String responseCode) {
 
         this.bankCardNo = bankCardNo;
         this.responseCode = responseCode;
@@ -29,9 +29,9 @@ public enum BankCardNoAndResponseCodeMapper {
 
     public static String fetchStatusCodeByBankCardNo(String bankCardNo) {
 
-        for (BankCardNoAndResponseCodeMapper bankCardNoAndResponseCodeMapper : BankCardNoAndResponseCodeMapper.values()) {
-            if (bankCardNoAndResponseCodeMapper.getBankCardNo().equals(bankCardNo)) {
-                return bankCardNoAndResponseCodeMapper.getResponseCode();
+        for (BankCardNoAndResponseCodeMap bankCardNoAndResponseCodeMap : BankCardNoAndResponseCodeMap.values()) {
+            if (bankCardNoAndResponseCodeMap.getBankCardNo().equals(bankCardNo)) {
+                return bankCardNoAndResponseCodeMap.getResponseCode();
             }
         }
         return null;

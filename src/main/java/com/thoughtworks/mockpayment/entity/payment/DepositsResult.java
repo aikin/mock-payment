@@ -1,11 +1,16 @@
 package com.thoughtworks.mockpayment.entity.payment;
 
+import com.thoughtworks.mockpayment.persistence.model.DepositsOrder;
+import org.joda.time.DateTime;
+
+import java.util.Date;
+
 public class DepositsResult {
 
     private String depositsFlowId;
     private String depositsMessage;
     private String responseCode;
-    private String depositsAt;
+    private Date depositsAt;
     private String bankSerialNo;
     private String customerId;
     private String orderId;
@@ -13,20 +18,19 @@ public class DepositsResult {
     private String currency;
     private String expandInfo;
 
-    public DepositsResult(String depositsFlowId,
-                          String customerId,
-                          String orderId,
-                          String amount,
-                          String currency,
-                          String expandInfo
-    ) {
 
-        this.depositsFlowId = depositsFlowId;
-        this.customerId = customerId;
-        this.orderId = orderId;
-        this.amount = amount;
-        this.currency = currency;
-        this.expandInfo = expandInfo;
+    public DepositsResult(DepositsOrder depositsOrder, DepositsResponseCode depositsResponseCode) {
+
+        this.depositsFlowId = depositsOrder.getDepositsFlowId();
+        this.customerId = depositsOrder.getCustomerId();
+        this.orderId = depositsOrder.getOrderId();
+        this.amount = depositsOrder.getAmount();
+        this.currency = depositsOrder.getCurrency();
+        this.expandInfo = depositsOrder.getExpandInfo();
+        this.responseCode = depositsResponseCode.getCode();
+        this.depositsMessage = depositsResponseCode.getDescription();
+        this.depositsAt = DateTime.now().toDate();
+        this.bankSerialNo = DateTime.now().toDate().toString();
     }
 
     public String getDepositsFlowId() {
@@ -53,11 +57,11 @@ public class DepositsResult {
         this.responseCode = responseCode;
     }
 
-    public String getDepositsAt() {
+    public Date getDepositsAt() {
         return depositsAt;
     }
 
-    public void setDepositsAt(String depositsAt) {
+    public void setDepositsAt(Date depositsAt) {
         this.depositsAt = depositsAt;
     }
 

@@ -1,7 +1,7 @@
 package com.thoughtworks.mockpayment.entity.withdraw;
 
 
-public enum BankCardNoAndResponseCodeMapper {
+public enum BankCardNoAndResponseCodeMap {
 
     SUCCESS("001001001001001", WithdrawResponseCode.SUCCESS.getCode()),
     WITHDRAW_ORDER_ID_REPEAT("002002002002002", WithdrawResponseCode.WITHDRAW_ORDER_ID_REPEAT.getCode()),
@@ -12,7 +12,7 @@ public enum BankCardNoAndResponseCodeMapper {
     private String bankCardNo;
     private String responseCode;
 
-    BankCardNoAndResponseCodeMapper(String bankCardNo, String responseCode) {
+    BankCardNoAndResponseCodeMap(String bankCardNo, String responseCode) {
 
         this.bankCardNo = bankCardNo;
         this.responseCode = responseCode;
@@ -28,9 +28,9 @@ public enum BankCardNoAndResponseCodeMapper {
 
     public static String fetchStatusCodeByBankCardNo(String bankCardNo) {
 
-        for (BankCardNoAndResponseCodeMapper bankCardNoAndResponseCodeMapper : BankCardNoAndResponseCodeMapper.values()) {
-            if (bankCardNoAndResponseCodeMapper.getBankCardNo().equals(bankCardNo)) {
-                return bankCardNoAndResponseCodeMapper.getResponseCode();
+        for (BankCardNoAndResponseCodeMap bankCardNoAndResponseCodeMap : BankCardNoAndResponseCodeMap.values()) {
+            if (bankCardNoAndResponseCodeMap.getBankCardNo().equals(bankCardNo)) {
+                return bankCardNoAndResponseCodeMap.getResponseCode();
             }
         }
         return null;

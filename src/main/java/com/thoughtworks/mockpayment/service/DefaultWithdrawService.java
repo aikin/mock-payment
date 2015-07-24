@@ -1,7 +1,7 @@
 package com.thoughtworks.mockpayment.service;
 
 
-import com.thoughtworks.mockpayment.entity.withdraw.BankCardNoAndResponseCodeMapper;
+import com.thoughtworks.mockpayment.entity.withdraw.BankCardNoAndResponseCodeMap;
 import com.thoughtworks.mockpayment.entity.withdraw.WithdrawResponseCode;
 import com.thoughtworks.mockpayment.persistence.model.WithdrawOrder;
 import org.slf4j.Logger;
@@ -40,7 +40,7 @@ public class DefaultWithdrawService implements WithdrawService {
                 item.get("bankName").toString(),
                 item.get("amount").toString()
             );
-            String responseCode =  BankCardNoAndResponseCodeMapper.fetchStatusCodeByBankCardNo(withdrawOrder.getBankCardNo());
+            String responseCode =  BankCardNoAndResponseCodeMap.fetchStatusCodeByBankCardNo(withdrawOrder.getBankCardNo());
             WithdrawResponseCode withdrawResponseCode = WithdrawResponseCode.codeOf(responseCode);
 
             if (withdrawResponseCode == null) {

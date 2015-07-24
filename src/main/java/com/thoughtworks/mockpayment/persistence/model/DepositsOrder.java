@@ -3,6 +3,7 @@ package com.thoughtworks.mockpayment.persistence.model;
 import org.joda.time.DateTime;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.UUID;
 
 public class DepositsOrder {
@@ -26,31 +27,23 @@ public class DepositsOrder {
     private String depositsMessage;
     private Date depositsAt;
 
-    public DepositsOrder(String customerId,
-                         String orderId,
-                         String userName,
-                         String idCardNo,
-                         String bankCode,
-                         String bankCardNo,
-                         String bankName,
-                         String expandInfo,
-                         String amount,
-                         String currency
-    ) {
-        this.customerId = customerId;
-        this.orderId = orderId;
-        this.userName = userName;
-        this.idCardNo = idCardNo;
-        this.bankCode = bankCode;
-        this.bankCardNo = bankCardNo;
-        this.bankName = bankName;
-        this.expandInfo = expandInfo;
-        this.amount = amount;
-        this.currency = currency;
+    public DepositsOrder(Map<String, String> depositsRequest) {
+
+        this.customerId = depositsRequest.get("customerId");
+        this.orderId = depositsRequest.get("orderId");
+        this.userName = depositsRequest.get("userName");
+        this.idCardNo = depositsRequest.get("idCardNo");
+        this.bankCode = depositsRequest.get("bankCode");
+        this.bankCardNo = depositsRequest.get("bankCardNo");
+        this.bankName = depositsRequest.get("bankName");
+        this.expandInfo = depositsRequest.get("expandInfo");
+        this.amount = depositsRequest.get("amount");
+        this.currency = depositsRequest.get("currency");
         this.createdAt = DateTime.now().toDate();
         this.depositsFlowId = UUID.randomUUID().toString();
         this.depositsStatus = DepositsStatus.PROCESSING;
     }
+
 
     public long getId() {
         return id;

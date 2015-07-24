@@ -1,6 +1,6 @@
 package com.thoughtworks.mockpayment.resource;
 
-import com.thoughtworks.mockpayment.entity.payment.BankCardNoAndResponseCodeMapper;
+import com.thoughtworks.mockpayment.entity.payment.BankCardNoAndResponseCodeMap;
 import com.thoughtworks.mockpayment.entity.payment.DepositsResponseCode;
 import com.thoughtworks.mockpayment.util.Json;
 import com.thoughtworks.mockpayment.util.MockPaymentResourceRunner;
@@ -70,7 +70,7 @@ public class PaymentResourceTest extends ResourceTest {
     @Test
     public void should_client_response_failure_when_bankCardNo_be_match_SHORT_BALANCE() {
 
-        requestData.put("bankCardNo", BankCardNoAndResponseCodeMapper.SHORT_BALANCE.getBankCardNo());
+        requestData.put("bankCardNo", BankCardNoAndResponseCodeMap.SHORT_BALANCE.getBankCardNo());
         Response response = authTarget
             .request()
             .post(Entity.entity(Json.toJSON(requestData), MediaType.APPLICATION_JSON));
@@ -83,7 +83,7 @@ public class PaymentResourceTest extends ResourceTest {
     @Test
     public void should_client_response_failure_when_bankCardNo_be_match_DEPOSITS_PROCESSING() {
 
-        requestData.put("bankCardNo", BankCardNoAndResponseCodeMapper.DEPOSITS_PROCESSING.getBankCardNo());
+        requestData.put("bankCardNo", BankCardNoAndResponseCodeMap.DEPOSITS_PROCESSING.getBankCardNo());
         Response response = authTarget
             .request()
             .post(Entity.entity(Json.toJSON(requestData), MediaType.APPLICATION_JSON));

@@ -1,17 +1,15 @@
 package com.thoughtworks.mockpayment.service;
 
-import com.thoughtworks.mockpayment.entity.payment.BankCardNoAndResponseCodeMapper;
+import com.thoughtworks.mockpayment.entity.payment.BankCardNoAndResponseCodeMap;
 import com.thoughtworks.mockpayment.entity.payment.DepositsResponseCode;
 import com.thoughtworks.mockpayment.entity.payment.DepositsResult;
-import com.thoughtworks.mockpayment.persistence.handler.PaymentHandler;
+import com.thoughtworks.mockpayment.persistence.mapper.DepositsOrderMapper;
 import com.thoughtworks.mockpayment.persistence.model.DepositsOrder;
 import com.thoughtworks.mockpayment.util.Json;
-import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
-import java.util.Date;
 import java.util.Map;
 
 public class DefaultPaymentService implements PaymentService {
@@ -20,32 +18,23 @@ public class DefaultPaymentService implements PaymentService {
     private static final int WAIT_RESPONSE_DEPOSITS_RESULT = 1000;
 
     @Inject
-    private PaymentHandler paymentHandler;
-
+    private DepositsOrderMapper depositsOrderMapper;
 
     @Override
     public String handleDepositsRequest(Map<String, String> depositsRequest) {
 
         logger.debug("*** in handle deposits request ***" + depositsRequest);
 
-        DepositsOrder depositsOrder = this.paymentHandler.insertPayOrder(depositsRequest);
+        DepositsOrder depositsOrder = new DepositsOrder(depositsRequest);
+        depositsOrderMapper.insertNewOrder(depositsOrder);
         DepositsResult depositsResult = this.generateDepositsResult(depositsOrder);
 
         return Json.toJSON(depositsResult);
     }
-    // TODO:
+
     private DepositsResult generateDepositsResult(DepositsOrder depositsOrder) {
 
-        DepositsResult depositsResult = new DepositsResult(
-            depositsOrder.getDepositsFlowId(),
-            depositsOrder.getCustomerId(),
-            depositsOrder.getOrderId(),
-            depositsOrder.getAmount(),
-            depositsOrder.getCurrency(),
-            depositsOrder.getExpandInfo()
-        );
-
-        String responseCode =  BankCardNoAndResponseCodeMapper.fetchStatusCodeByBankCardNo(depositsOrder.getBankCardNo());
+        String responseCode =  BankCardNoAndResponseCodeMap.fetchStatusCodeByBankCardNo(depositsOrder.getBankCardNo());
         DepositsResponseCode depositsResponseCode = DepositsResponseCode.codeOf(responseCode);
 
         if (depositsResponseCode == null) {
@@ -53,10 +42,12 @@ public class DefaultPaymentService implements PaymentService {
             depositsResponseCode = DepositsResponseCode.SUCCESS;
         }
 
-       return this.handleDepositsOrder(depositsResult, depositsResponseCode);
+        DepositsResult depositsResult = new DepositsResult(depositsOrder, depositsResponseCode);
+        this.handleDepositsOrder(depositsResult, depositsResponseCode);
+        return depositsResult;
     }
 
-    private DepositsResult handleDepositsOrder(DepositsResult depositsResult, DepositsResponseCode depositsResponseCode) {
+    private void handleDepositsOrder(DepositsResult depositsResult, DepositsResponseCode depositsResponseCode) {
 
         try {
             Thread.sleep(WAIT_RESPONSE_DEPOSITS_RESULT);
@@ -64,25 +55,13 @@ public class DefaultPaymentService implements PaymentService {
             logger.error(e.getLocalizedMessage(), e);
         }
 
-        String code = depositsResponseCode.getCode();
-        String depositsMessage = depositsResponseCode.getDescription();
-        Date depositsAt = DateTime.now().toDate();
-        String bankSerialNo = DateTime.now().toDate().toString();
-
-        depositsResult.setResponseCode(code);
-        depositsResult.setDepositsMessage(depositsMessage);
-        depositsResult.setBankSerialNo(bankSerialNo);
-        depositsResult.setDepositsAt(depositsAt.toString());
-
-        this.paymentHandler.updateDepositsStatus(
+        this.depositsOrderMapper.updateDepositsStatus(
             depositsResult.getDepositsFlowId(),
             depositsResponseCode.getStatus(),
-            code,
-            depositsMessage,
-            depositsAt,
-            bankSerialNo
+            depositsResponseCode.getCode(),
+            depositsResponseCode.getDescription(),
+            depositsResult.getDepositsAt(),
+            depositsResult.getBankSerialNo()
         );
-
-        return depositsResult;
     }
 }

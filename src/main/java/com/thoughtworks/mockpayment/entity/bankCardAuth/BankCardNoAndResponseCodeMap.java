@@ -1,7 +1,7 @@
 package com.thoughtworks.mockpayment.entity.bankCardAuth;
 
 
-public enum BankCardNoAndResponseCodeMapper {
+public enum BankCardNoAndResponseCodeMap {
 
     BANK_CARD_NO_ILLEGAL("222222222222222", BankAuthResponseCode.BANK_CARD_NO_ILLEGAL.getCode()),
     UNSUPPORTED_BANK_CARD("333333333333333", BankAuthResponseCode.UNSUPPORTED_BANK_CARD.getCode()),
@@ -20,7 +20,7 @@ public enum BankCardNoAndResponseCodeMapper {
     private String bankCardNo;
     private String responseCode;
 
-    BankCardNoAndResponseCodeMapper(String bankCardNo, String responseCode) {
+    BankCardNoAndResponseCodeMap(String bankCardNo, String responseCode) {
 
         this.bankCardNo = bankCardNo;
         this.responseCode = responseCode;
@@ -36,9 +36,9 @@ public enum BankCardNoAndResponseCodeMapper {
 
     public static String fetchStatusCodeByBankCardNo(String bankCardNo) {
 
-        for (BankCardNoAndResponseCodeMapper bankCardNoAndResponseCodeMapper : BankCardNoAndResponseCodeMapper.values()) {
-            if (bankCardNoAndResponseCodeMapper.getBankCardNo().equals(bankCardNo)) {
-                return bankCardNoAndResponseCodeMapper.getResponseCode();
+        for (BankCardNoAndResponseCodeMap bankCardNoAndResponseCodeMap : BankCardNoAndResponseCodeMap.values()) {
+            if (bankCardNoAndResponseCodeMap.getBankCardNo().equals(bankCardNo)) {
+                return bankCardNoAndResponseCodeMap.getResponseCode();
             }
         }
         return null;
