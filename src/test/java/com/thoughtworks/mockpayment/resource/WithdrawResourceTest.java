@@ -1,7 +1,10 @@
 package com.thoughtworks.mockpayment.resource;
 
+import com.google.inject.Inject;
 import com.thoughtworks.mockpayment.entity.withdraw.BankCardNoAndResponseCodeMap;
+import com.thoughtworks.mockpayment.entity.withdraw.BankCodeAndQueryResponseCodeMap;
 import com.thoughtworks.mockpayment.entity.withdraw.WithdrawResponseCode;
+import com.thoughtworks.mockpayment.persistence.mapper.WithdrawOrderMapper;
 import com.thoughtworks.mockpayment.util.Json;
 import com.thoughtworks.mockpayment.util.MockPaymentResourceRunner;
 import com.thoughtworks.mockpayment.util.ResourceTest;
@@ -28,6 +31,9 @@ public class WithdrawResourceTest extends ResourceTest {
     protected WebTarget authTarget;
     protected Map<String, String> requestData = new HashMap<>();
 
+    @Inject
+    private WithdrawOrderMapper withdrawOrderMapper;
+
     @Before
     @Override
     public void setUp() throws Exception {
@@ -36,7 +42,6 @@ public class WithdrawResourceTest extends ResourceTest {
         requestData.put("cmd", "withdraw");
         requestData.put("customerId", "809080908090");
         requestData.put("orderId", "121121121121");
-        requestData.put("bankCode", "CCB");
         requestData.put("bankName", "www");
         requestData.put("userName", "aikin");
         requestData.put("amount", "100");
@@ -54,7 +59,9 @@ public class WithdrawResourceTest extends ResourceTest {
     public void should_client_response_success_when_bankCardNo_be_not_match() {
 
         final String UN_MATCH_BANK_CARD_NO = "123456789012345";
+        final String UN_MATCH_BANK_CODE = "abcdefg";
         requestData.put("bankCardNo", UN_MATCH_BANK_CARD_NO);
+        requestData.put("bankCode", UN_MATCH_BANK_CODE);
         Response response = authTarget
             .request()
             .post(Entity.entity(Json.toJSON(requestData), MediaType.APPLICATION_JSON));
@@ -68,6 +75,7 @@ public class WithdrawResourceTest extends ResourceTest {
     public void should_client_response_failure_when_bankCardNo_be_match_WITHDRAW_ORDER_ID_REPEATBALANCE() {
 
         requestData.put("bankCardNo", BankCardNoAndResponseCodeMap.WITHDRAW_ORDER_ID_REPEAT.getBankCardNo());
+        requestData.put("bankCode", BankCodeAndQueryResponseCodeMap.SUCCESS.getBankCode());
         Response response = authTarget
             .request()
             .post(Entity.entity(Json.toJSON(requestData), MediaType.APPLICATION_JSON));
@@ -81,6 +89,7 @@ public class WithdrawResourceTest extends ResourceTest {
     public void should_client_response_failure_when_bankCardNo_be_match_WITHDRAW_PROCESSING() {
 
         requestData.put("bankCardNo", BankCardNoAndResponseCodeMap.WITHDRAW_PROCESSING.getBankCardNo());
+        requestData.put("bankCode", BankCodeAndQueryResponseCodeMap.QUERY_PROCESSING.getBankCode());
         Response response = authTarget
             .request()
             .post(Entity.entity(Json.toJSON(requestData), MediaType.APPLICATION_JSON));

@@ -22,6 +22,10 @@ public class WithdrawOrder {
     private String responseCode;
     private String withdrawMessage;
     private Date withdrawAt;
+    private QueryStatus queryStatus;
+    private String queryMessage;
+    private String queryAt;
+    private String queryResponseCode;
     private Date createdAt;
 
 
@@ -37,6 +41,7 @@ public class WithdrawOrder {
         this.createdAt = DateTime.now().toDate();
         this.withdrawStatus = WithdrawStatus.PROCESSING;
         this.withdrawFlowId = UUID.randomUUID().toString();
+        this.queryStatus = QueryStatus.PROCESSING;
     }
 
     public long getId() {
@@ -143,6 +148,38 @@ public class WithdrawOrder {
         this.withdrawAt = withdrawAt;
     }
 
+    public QueryStatus getQueryStatus() {
+        return queryStatus;
+    }
+
+    public void setQueryStatus(QueryStatus queryStatus) {
+        this.queryStatus = queryStatus;
+    }
+
+    public String getQueryMessage() {
+        return queryMessage;
+    }
+
+    public void setQueryMessage(String queryMessage) {
+        this.queryMessage = queryMessage;
+    }
+
+    public String getQueryAt() {
+        return queryAt;
+    }
+
+    public void setQueryAt(String queryAt) {
+        this.queryAt = queryAt;
+    }
+
+    public String getQueryResponseCode() {
+        return queryResponseCode;
+    }
+
+    public void setQueryResponseCode(String queryResponseCode) {
+        this.queryResponseCode = queryResponseCode;
+    }
+
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -152,6 +189,10 @@ public class WithdrawOrder {
     }
 
     public static enum WithdrawStatus {
+        PROCESSING, SUCCESS, FAILURE
+    }
+
+    public static enum QueryStatus {
         PROCESSING, SUCCESS, FAILURE
     }
 }

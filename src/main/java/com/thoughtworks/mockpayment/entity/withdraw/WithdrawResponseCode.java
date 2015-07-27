@@ -5,10 +5,10 @@ import com.thoughtworks.mockpayment.persistence.model.WithdrawOrder.WithdrawStat
 
 public enum WithdrawResponseCode {
 
-    SUCCESS("001", WithdrawStatus.SUCCESS, "取现成功"),
+    SUCCESS("001", WithdrawStatus.SUCCESS, "已接收"),
     WITHDRAW_ORDER_ID_REPEAT("002", WithdrawStatus.SUCCESS, "订单号不合法或重复"),
     WITHDRAW_PROCESSING("003", WithdrawStatus.PROCESSING, "取现处理中"),
-    WITHDRAW_FAILURE_BANK_REJECT("004", WithdrawStatus.FAILURE, "取现失败，银行已退单"),
+    WITHDRAW_FAILURE_BANK_REJECT("004", WithdrawStatus.FAILURE, "已拒绝"),
     WITHDRAW_SYSTEM_ERROR("005", WithdrawStatus.FAILURE, "取现系统异常");
 
     private String code;

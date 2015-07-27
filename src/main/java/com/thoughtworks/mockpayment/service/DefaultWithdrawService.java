@@ -2,12 +2,11 @@ package com.thoughtworks.mockpayment.service;
 
 
 import com.google.inject.Inject;
-import com.thoughtworks.mockpayment.entity.withdraw.BankCardNoAndResponseCodeMap;
-import com.thoughtworks.mockpayment.entity.withdraw.WithdrawResponseCode;
-import com.thoughtworks.mockpayment.entity.withdraw.WithdrawResult;
+import com.thoughtworks.mockpayment.entity.withdraw.*;
 import com.thoughtworks.mockpayment.persistence.mapper.WithdrawOrderMapper;
 import com.thoughtworks.mockpayment.persistence.model.WithdrawOrder;
 import com.thoughtworks.mockpayment.util.Json;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,12 +42,20 @@ public class DefaultWithdrawService implements WithdrawService {
             withdrawResponseCode = WithdrawResponseCode.SUCCESS;
         }
 
+        String statusCode =  BankCodeAndQueryResponseCodeMap.fetchStatusCodeByBankCode(withdrawOrder.getBankCode());
+        QueryResponseCode queryResponseCode = QueryResponseCode.codeOf(statusCode);
+
+        if (queryResponseCode == null) {
+            logger.debug("*** input bankCardNo not match status withdraw response code ***" + withdrawOrder.getBankCardNo());
+            queryResponseCode = QueryResponseCode.SUCCESS;
+        }
+
         WithdrawResult withdrawResult = new WithdrawResult(withdrawOrder, withdrawResponseCode);
-        this.handleWithdrawOrder(withdrawResult, withdrawResponseCode);
+        this.handleWithdrawOrder(withdrawResult, withdrawResponseCode, queryResponseCode);
         return withdrawResult;
     }
 
-    private void handleWithdrawOrder(WithdrawResult withdrawResult, WithdrawResponseCode withdrawResponseCode) {
+    private void handleWithdrawOrder(WithdrawResult withdrawResult, WithdrawResponseCode withdrawResponseCode, QueryResponseCode queryResponseCode) {
         try {
             Thread.sleep(WAIT_RESPONSE_WITHDRAW_RESULT);
         } catch (InterruptedException e) {
@@ -61,6 +68,14 @@ public class DefaultWithdrawService implements WithdrawService {
             withdrawResponseCode.getStatus(),
             withdrawResponseCode.getCode(),
             withdrawResponseCode.getDescription()
+        );
+
+        this.withdrawOrderMapper.updateQueryStatus(
+            withdrawResult.getWithdrawFlowId(),
+            DateTime.now().toDate(),
+            queryResponseCode.getStatus(),
+            queryResponseCode.getCode(),
+            queryResponseCode.getDescription()
         );
     }
 }
