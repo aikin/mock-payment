@@ -32,6 +32,19 @@ public class DefaultWithdrawService implements WithdrawService {
         return Json.toJSON(withdrawResult);
     }
 
+    @Override
+    public String handleWithdrawQueryRequest (Map<String, String> queryRequest) {
+
+        logger.debug("*** in handle withdraw request ***" + queryRequest);
+
+        String orderId = queryRequest.get("orderId");
+        String flowId = queryRequest.get("flowId");
+//        WithdrawOrder withdrawOrder = withdrawOrderMapper.findOrderByOrderId(orderId);
+        WithdrawOrder withdrawOrder = withdrawOrderMapper.findOrderByFlowId(flowId);
+
+        return Json.toJSON(withdrawOrder);
+    }
+
     private WithdrawResult generateWithdrawResult(WithdrawOrder withdrawOrder) {
 
         String responseCode =  BankCardNoAndResponseCodeMap.fetchStatusCodeByBankCardNo(withdrawOrder.getBankCardNo());
@@ -66,16 +79,16 @@ public class DefaultWithdrawService implements WithdrawService {
             withdrawResult.getWithdrawFlowId(),
             withdrawResult.getWithdrawAt(),
             withdrawResponseCode.getStatus(),
-            withdrawResponseCode.getCode(),
-            withdrawResponseCode.getDescription()
+            withdrawResponseCode.getDescription(),
+            withdrawResponseCode.getCode()
         );
 
         this.withdrawOrderMapper.updateQueryStatus(
             withdrawResult.getWithdrawFlowId(),
             DateTime.now().toDate(),
             queryResponseCode.getStatus(),
-            queryResponseCode.getCode(),
-            queryResponseCode.getDescription()
+            queryResponseCode.getDescription(),
+            queryResponseCode.getCode()
         );
     }
 }

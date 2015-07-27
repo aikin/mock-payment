@@ -31,4 +31,14 @@ public class WithdrawResource {
         return Response.ok().entity(result).build();
     }
 
+    @POST
+    @Path("/query")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response withdrawQuery(Map request) {
+
+        String result = withdrawService.handleWithdrawQueryRequest(request);
+        return  Response.ok().entity(result).build();
+    }
+
 }

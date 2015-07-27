@@ -22,7 +22,7 @@
           D.DEPOSITS_MESSAGE AS D_DEPOSITS_MESSAGE,
           D.RESPONSE_CODE AS D_RESPONSE_CODE,
           D.DEPOSITS_AT AS D_DEPOSITS_AT,
-          D.CREATED_AT AS D_CREATED_AT,
+          D.CREATED_AT AS D_CREATED_AT
     </sql>
 
     <resultMap id="depositsOrder" type="com.thoughtworks.mockpayment.persistence.model.DepositsOrder">

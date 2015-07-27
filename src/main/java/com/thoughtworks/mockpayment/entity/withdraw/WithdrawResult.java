@@ -22,7 +22,7 @@ public class WithdrawResult {
         this.withdrawFlowId = withdrawOrder.getWithdrawFlowId();
         this.customerId = withdrawOrder.getCustomerId();
         this.orderId = withdrawOrder.getOrderId();
-        this.amount = withdrawOrder.getAmount();
+        this.amount = String.valueOf(withdrawOrder.getAmount());
         this.bankCardNo = withdrawOrder.getBankCardNo();
         this.responseCode = withdrawResponseCode.getCode();
         this.withdrawMessage = withdrawResponseCode.getDescription();

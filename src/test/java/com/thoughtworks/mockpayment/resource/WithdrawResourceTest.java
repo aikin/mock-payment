@@ -3,8 +3,10 @@ package com.thoughtworks.mockpayment.resource;
 import com.google.inject.Inject;
 import com.thoughtworks.mockpayment.entity.withdraw.BankCardNoAndResponseCodeMap;
 import com.thoughtworks.mockpayment.entity.withdraw.BankCodeAndQueryResponseCodeMap;
+import com.thoughtworks.mockpayment.entity.withdraw.QueryResponseCode;
 import com.thoughtworks.mockpayment.entity.withdraw.WithdrawResponseCode;
 import com.thoughtworks.mockpayment.persistence.mapper.WithdrawOrderMapper;
+import com.thoughtworks.mockpayment.persistence.model.WithdrawOrder;
 import com.thoughtworks.mockpayment.util.Json;
 import com.thoughtworks.mockpayment.util.MockPaymentResourceRunner;
 import com.thoughtworks.mockpayment.util.ResourceTest;
@@ -67,8 +69,13 @@ public class WithdrawResourceTest extends ResourceTest {
             .post(Entity.entity(Json.toJSON(requestData), MediaType.APPLICATION_JSON));
 
         HashMap respondMap = response.readEntity(HashMap.class);
+
+        WithdrawOrder withdrawOrder = withdrawOrderMapper.findOrderByFlowId((String)respondMap.get("withdrawFlowId"));
+
         assertThat(respondMap.get("withdrawMessage"), is(WithdrawResponseCode.SUCCESS.getDescription()));
         assertThat(respondMap.get("responseCode"), is(WithdrawResponseCode.SUCCESS.getCode()));
+        assertThat(withdrawOrder.getQueryResponseCode(), is(QueryResponseCode.SUCCESS.getCode()));
+        assertThat(withdrawOrder.getQueryMessage(), is(QueryResponseCode.SUCCESS.getDescription()));
     }
 
     @Test
@@ -81,8 +88,12 @@ public class WithdrawResourceTest extends ResourceTest {
             .post(Entity.entity(Json.toJSON(requestData), MediaType.APPLICATION_JSON));
 
         HashMap respondMap = response.readEntity(HashMap.class);
+        WithdrawOrder withdrawOrder = withdrawOrderMapper.findOrderByFlowId((String) respondMap.get("withdrawFlowId"));
+
         assertThat(respondMap.get("withdrawMessage"), is(WithdrawResponseCode.WITHDRAW_ORDER_ID_REPEAT.getDescription()));
         assertThat(respondMap.get("responseCode"), is(WithdrawResponseCode.WITHDRAW_ORDER_ID_REPEAT.getCode()));
+        assertThat(withdrawOrder.getQueryResponseCode(), is(QueryResponseCode.SUCCESS.getCode()));
+        assertThat(withdrawOrder.getQueryMessage(), is(QueryResponseCode.SUCCESS.getDescription()));
     }
 
     @Test
@@ -95,8 +106,12 @@ public class WithdrawResourceTest extends ResourceTest {
             .post(Entity.entity(Json.toJSON(requestData), MediaType.APPLICATION_JSON));
 
         HashMap respondMap = response.readEntity(HashMap.class);
+        WithdrawOrder withdrawOrder = withdrawOrderMapper.findOrderByFlowId((String) respondMap.get("withdrawFlowId"));
+
         assertThat(respondMap.get("withdrawMessage"), is(WithdrawResponseCode.WITHDRAW_PROCESSING.getDescription()));
         assertThat(respondMap.get("responseCode"), is(WithdrawResponseCode.WITHDRAW_PROCESSING.getCode()));
+        assertThat(withdrawOrder.getQueryResponseCode(), is(QueryResponseCode.QUERY_PROCESSING.getCode()));
+        assertThat(withdrawOrder.getQueryMessage(), is(QueryResponseCode.QUERY_PROCESSING.getDescription()));
     }
 
 }

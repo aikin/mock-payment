@@ -22,7 +22,7 @@
           W.QUERY_MESSAGE AS W_QUERY_MESSAGE,
           W.QUERY_RESPONSE_CODE AS W_QUERY_RESPONSE_CODE,
           W.QUERY_AT AS W_QUERY_AT,
-          W.CREATED_AT AS W_CREATED_AT,
+          W.CREATED_AT AS W_CREATED_AT
     </sql>
 
     <resultMap id="withdrawOrder" type="com.thoughtworks.mockpayment.persistence.model.WithdrawOrder">
@@ -66,10 +66,17 @@
         WHERE WITHDRAW_FLOW_ID=#{withdrawFlowId}
     </update>
 
-    <select id="findOrderByFlowId" parameterType="String" resultMap="withdrawOrder">
+    <select id="findOrderByFlowId" resultMap="withdrawOrder">
         SELECT
         <include refid="orderColumns"/>
         FROM WITHDRAW_ORDER W
         WHERE W.WITHDRAW_FLOW_ID=#{withdrawFlowId}
+    </select>
+
+    <select id="findOrderByOrderId" resultMap="withdrawOrder">
+        SELECT
+        <include refid="orderColumns"/>
+        FROM WITHDRAW_ORDER W
+        WHERE W.ORDER_ID=#{orderId}
     </select>
 </mapper>

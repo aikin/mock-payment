@@ -17,17 +17,20 @@ public class WithdrawOrder {
     private String bankCardNo;
     private String bankName;
     private String userName;
-    private String amount;
+    private double amount;
     private WithdrawStatus withdrawStatus;
     private String responseCode;
     private String withdrawMessage;
     private Date withdrawAt;
     private QueryStatus queryStatus;
     private String queryMessage;
-    private String queryAt;
+    private Date queryAt;
     private String queryResponseCode;
     private Date createdAt;
 
+    public WithdrawOrder() {
+
+    }
 
     public WithdrawOrder(Map<String, String> request) {
 
@@ -37,7 +40,7 @@ public class WithdrawOrder {
         this.bankName = request.get("bankName");
         this.bankCardNo = request.get("bankCardNo");
         this.userName = request.get("userName");
-        this.amount = request.get("amount");
+        this.amount = Double.valueOf(request.get("amount"));
         this.createdAt = DateTime.now().toDate();
         this.withdrawStatus = WithdrawStatus.PROCESSING;
         this.withdrawFlowId = UUID.randomUUID().toString();
@@ -108,11 +111,11 @@ public class WithdrawOrder {
         this.userName = userName;
     }
 
-    public String getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
@@ -164,11 +167,11 @@ public class WithdrawOrder {
         this.queryMessage = queryMessage;
     }
 
-    public String getQueryAt() {
+    public Date getQueryAt() {
         return queryAt;
     }
 
-    public void setQueryAt(String queryAt) {
+    public void setQueryAt(Date queryAt) {
         this.queryAt = queryAt;
     }
 
