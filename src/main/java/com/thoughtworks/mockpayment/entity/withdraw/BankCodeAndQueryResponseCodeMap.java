@@ -6,7 +6,8 @@ public enum BankCodeAndQueryResponseCodeMap {
     SUCCESS("PBC", QueryResponseCode.SUCCESS.getCode()),
     QUERY_PROCESSING("BOC", QueryResponseCode.QUERY_PROCESSING.getCode()),
     QUERY_FAILURE_BANK_REJECT("ICBC", QueryResponseCode.QUERY_FAILURE_BANK_REJECT.getCode()),
-    QUERY_SYSTEM_ERROR("CCB", QueryResponseCode.QUERY_SYSTEM_ERROR.getCode());
+    QUERY_SYSTEM_ERROR("CCB", QueryResponseCode.QUERY_SYSTEM_ERROR.getCode()),
+    UN_SET_QUERY("UN_USE_BANK_CODE", QueryResponseCode.UN_SET_QUERY.getCode());
 
     private String bankCode;
     private String responseCode;

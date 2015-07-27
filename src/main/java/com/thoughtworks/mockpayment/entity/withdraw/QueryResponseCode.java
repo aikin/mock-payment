@@ -8,7 +8,8 @@ public enum QueryResponseCode {
     SUCCESS("0001", QueryStatus.SUCCESS, "取现成功"),
     QUERY_PROCESSING("0002", QueryStatus.PROCESSING, "银行处理中"),
     QUERY_FAILURE_BANK_REJECT("0003", QueryStatus.FAILURE, "银行拒绝"),
-    QUERY_SYSTEM_ERROR("0004", QueryStatus.FAILURE, "取款失败");
+    QUERY_SYSTEM_ERROR("0004", QueryStatus.FAILURE, "取款失败"),
+    UN_SET_QUERY("0005", null, "");
 
     private String code;
     private QueryStatus status;

@@ -27,6 +27,11 @@ public class DepositsOrder {
     private String depositsMessage;
     private Date depositsAt;
 
+
+    public DepositsOrder() {
+
+    }
+
     public DepositsOrder(Map<String, String> depositsRequest) {
 
         this.customerId = depositsRequest.get("customerId");
