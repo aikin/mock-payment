@@ -33,6 +33,20 @@ public class DepositsResult {
         this.bankSerialNo = DateTime.now().toDate().toString();
     }
 
+    public DepositsResult(DepositsOrder depositOrder) {
+
+        this.depositsFlowId = depositOrder.getDepositsFlowId();
+        this.customerId = depositOrder.getCustomerId();
+        this.orderId = depositOrder.getOrderId();
+        this.amount = depositOrder.getAmount();
+        this.currency = depositOrder.getCurrency();
+        this.expandInfo = depositOrder.getExpandInfo();
+        this.responseCode = depositOrder.getResponseCode();
+        this.depositsMessage = depositOrder.getDepositsMessage();
+        this.depositsAt = depositOrder.getDepositsAt();
+        this.bankSerialNo = depositOrder.getBankSerialNo();
+    }
+
     public String getDepositsFlowId() {
         return depositsFlowId;
     }

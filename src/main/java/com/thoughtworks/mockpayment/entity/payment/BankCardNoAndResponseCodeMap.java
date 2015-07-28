@@ -8,7 +8,8 @@ public enum BankCardNoAndResponseCodeMap {
     LIMITED_BANK_CARD_NO("040404040404040", DepositsResponseCode.LIMITED_BANK_CARD_NO.getCode()),
     EXPIRED_BALANCE_BANK_CARD_NO("050505050505050", DepositsResponseCode.EXPIRED_BALANCE_BANK_CARD_NO.getCode()),
     DEPOSITS_PROCESSING("060606060606060", DepositsResponseCode.DEPOSITS_PROCESSING.getCode()),
-    DEPOSITS_SYSTEM_ERROR("070707070707070", DepositsResponseCode.DEPOSITS_SYSTEM_ERROR.getCode());
+    DEPOSITS_SYSTEM_ERROR("070707070707070", DepositsResponseCode.DEPOSITS_SYSTEM_ERROR.getCode()),
+    ORDER_ID_REPEAT("080808080808080", DepositsResponseCode.ORDER_ID_REPEAT.getCode());
 
     private String bankCardNo;
     private String responseCode;

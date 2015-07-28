@@ -28,15 +28,11 @@ public class PaymentResource {
         return Response.ok().entity(result).build();
     }
 
-    @GET
-    @Path("query")
-    public String query() {
-        return "quering";
-    }
 
     @POST
-    @Path("query")
-    public String query(Map request) {
-        return "quering by post";
+    @Path("deposits-query")
+    public Response query(Map request) {
+        String result = paymentService.handleDepositsQueryRequest((Map<String, String>)request);
+        return Response.ok().entity(result).build();
     }
 }

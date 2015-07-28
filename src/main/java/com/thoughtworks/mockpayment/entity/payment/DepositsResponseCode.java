@@ -10,8 +10,9 @@ public enum DepositsResponseCode {
     EXCEED_BALANCE("03", DepositsStatus.FAILURE, "超出充值限额"),
     LIMITED_BANK_CARD_NO("04", DepositsStatus.FAILURE, "银行卡被限制"),
     EXPIRED_BALANCE_BANK_CARD_NO("05", DepositsStatus.FAILURE, "银行卡过期"),
-    DEPOSITS_PROCESSING("06", DepositsStatus.PROCESSING, "充值处理中"),
-    DEPOSITS_SYSTEM_ERROR("07", DepositsStatus.FAILURE, "充值系统异常");
+    DEPOSITS_PROCESSING("06", DepositsStatus.FAILURE, "系统繁忙"),
+    DEPOSITS_SYSTEM_ERROR("07", DepositsStatus.FAILURE, "充值系统异常"),
+    ORDER_ID_REPEAT("08", DepositsStatus.SUCCESS, "重复业务，订单号重复");
 
     private String code;
     private DepositsStatus status;

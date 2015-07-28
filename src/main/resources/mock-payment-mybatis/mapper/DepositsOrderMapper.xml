@@ -16,8 +16,8 @@
           D.BANK_NAME AS D_BANK_NAME,
           D.EXPAND_INFO AS D_EXPAND_INFO,
           D.AMOUNT AS D_AMOUNT,
-          D.CURRENCY AS D_CURRENCY
-          D.BANK_SERIAL_NO AS D_BANK_SERIAL_NO
+          D.CURRENCY AS D_CURRENCY,
+          D.BANK_SERIAL_NO AS D_BANK_SERIAL_NO,
           D.DEPOSITS_STATUS AS D_DEPOSITS_STATUS,
           D.DEPOSITS_MESSAGE AS D_DEPOSITS_MESSAGE,
           D.RESPONSE_CODE AS D_RESPONSE_CODE,
@@ -59,5 +59,13 @@
                         DEPOSITS_MESSAGE=#{depositsMessage}, RESPONSE_CODE=#{responseCode}, DEPOSITS_AT=#{depositsAt}
         WHERE DEPOSITS_FLOW_ID=#{depositsFlowId}
     </update>
+
+    <select id="findOrderByFlowId" resultMap="depositsOrder">
+        SELECT
+        <include refid="orderColumns"/>
+        FROM DEPOSITS_ORDER D
+        WHERE D.DEPOSITS_FLOW_ID=#{depositsFlowId}
+    </select>
+
 
 </mapper>

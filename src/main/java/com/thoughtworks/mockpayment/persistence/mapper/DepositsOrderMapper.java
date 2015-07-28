@@ -16,4 +16,6 @@ public interface DepositsOrderMapper {
                                @Param("responseCode") String responseCode,
                                @Param("depositsAt") Date depositsAt,
                                @Param("bankSerialNo") String bankSerialNo);
+
+    DepositsOrder findOrderByFlowId(@Param("depositsFlowId") String depositsFlowId);
 }

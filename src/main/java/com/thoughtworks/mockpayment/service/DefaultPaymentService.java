@@ -32,6 +32,18 @@ public class DefaultPaymentService implements PaymentService {
         return Json.toJSON(depositsResult);
     }
 
+    @Override
+    public String handleDepositsQueryRequest(Map<String, String> queryRequest) {
+        logger.debug("*** in handle withdraw request ***" + queryRequest);
+
+        String orderId = queryRequest.get("orderId");
+        String flowId = queryRequest.get("flowId");
+        DepositsOrder depositOrder = depositsOrderMapper.findOrderByFlowId(flowId);
+        DepositsResult depositsResult = new DepositsResult(depositOrder);
+
+        return Json.toJSON(depositsResult);
+    }
+
     private DepositsResult generateDepositsResult(DepositsOrder depositsOrder) {
 
         String responseCode =  BankCardNoAndResponseCodeMap.fetchStatusCodeByBankCardNo(depositsOrder.getBankCardNo());
