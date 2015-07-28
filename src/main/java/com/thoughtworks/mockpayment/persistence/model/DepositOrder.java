@@ -6,10 +6,10 @@ import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
-public class DepositsOrder {
+public class DepositOrder {
 
     private long id;
-    private String depositsFlowId;
+    private String depositFlowId;
     private String customerId;
     private String orderId;
     private String userName;
@@ -22,31 +22,29 @@ public class DepositsOrder {
     private String currency;
     private Date createdAt;
     private String bankSerialNo;
-    private DepositsStatus depositsStatus;
+    private DepositStatus depositStatus;
     private String responseCode;
-    private String depositsMessage;
-    private Date depositsAt;
+    private String depositMessage;
+    private Date depositAt;
 
-
-    public DepositsOrder() {
+    public DepositOrder() {
 
     }
 
-    public DepositsOrder(Map<String, String> depositsRequest) {
-
-        this.customerId = depositsRequest.get("customerId");
-        this.orderId = depositsRequest.get("orderId");
-        this.userName = depositsRequest.get("userName");
-        this.idCardNo = depositsRequest.get("idCardNo");
-        this.bankCode = depositsRequest.get("bankCode");
-        this.bankCardNo = depositsRequest.get("bankCardNo");
-        this.bankName = depositsRequest.get("bankName");
-        this.expandInfo = depositsRequest.get("expandInfo");
-        this.amount = depositsRequest.get("amount");
-        this.currency = depositsRequest.get("currency");
+    public DepositOrder(Map<String, String> depositRequest) {
+        this.customerId = depositRequest.get("customerId");
+        this.orderId = depositRequest.get("orderId");
+        this.userName = depositRequest.get("userName");
+        this.idCardNo = depositRequest.get("idCardNo");
+        this.bankCode = depositRequest.get("bankCode");
+        this.bankCardNo = depositRequest.get("bankCardNo");
+        this.bankName = depositRequest.get("bankName");
+        this.expandInfo = depositRequest.get("expandInfo");
+        this.amount = depositRequest.get("amount");
+        this.currency = depositRequest.get("currency");
         this.createdAt = DateTime.now().toDate();
-        this.depositsFlowId = UUID.randomUUID().toString();
-        this.depositsStatus = DepositsStatus.PROCESSING;
+        this.depositFlowId = UUID.randomUUID().toString();
+        this.depositStatus = DepositStatus.PENDING;
     }
 
 
@@ -138,12 +136,12 @@ public class DepositsOrder {
         this.currency = currency;
     }
 
-    public String getDepositsFlowId() {
-        return depositsFlowId;
+    public String getDepositFlowId() {
+        return depositFlowId;
     }
 
-    public void setDepositsFlowId(String depositsFlowId) {
-        this.depositsFlowId = depositsFlowId;
+    public void setDepositFlowId(String depositFlowId) {
+        this.depositFlowId = depositFlowId;
     }
 
     public Date getCreatedAt() {
@@ -162,20 +160,20 @@ public class DepositsOrder {
         this.bankSerialNo = bankSerialNo;
     }
 
-    public DepositsStatus getDepositsStatus() {
-        return depositsStatus;
+    public DepositStatus getDepositStatus() {
+        return depositStatus;
     }
 
-    public void setDepositsStatus(DepositsStatus depositsStatus) {
-        this.depositsStatus = depositsStatus;
+    public void setDepositStatus(DepositStatus depositStatus) {
+        this.depositStatus = depositStatus;
     }
 
-    public String getDepositsMessage() {
-        return depositsMessage;
+    public String getDepositMessage() {
+        return depositMessage;
     }
 
-    public void setDepositsMessage(String depositsMessage) {
-        this.depositsMessage = depositsMessage;
+    public void setDepositMessage(String depositMessage) {
+        this.depositMessage = depositMessage;
     }
 
     public String getResponseCode() {
@@ -186,15 +184,15 @@ public class DepositsOrder {
         this.responseCode = responseCode;
     }
 
-    public Date getDepositsAt() {
-        return depositsAt;
+    public Date getDepositAt() {
+        return depositAt;
     }
 
-    public void setDepositsAt(Date depositsAt) {
-        this.depositsAt = depositsAt;
+    public void setDepositAt(Date depositAt) {
+        this.depositAt = depositAt;
     }
 
-    public static enum DepositsStatus {
-        PROCESSING, SUCCESS, FAILURE
+    public static enum DepositStatus {
+        PENDING, SUCCESS, FAILURE
     }
 }

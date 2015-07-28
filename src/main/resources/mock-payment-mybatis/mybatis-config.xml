@@ -22,7 +22,7 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="mock-payment-mybatis/mapper/DepositsOrderMapper.xml"/>
+        <mapper resource="mock-payment-mybatis/mapper/DepositOrderMapper.xml"/>
         <mapper resource="mock-payment-mybatis/mapper/WithdrawOrderMapper.xml"/>
     </mappers>
 </configuration>

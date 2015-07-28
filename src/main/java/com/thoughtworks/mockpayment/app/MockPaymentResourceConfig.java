@@ -24,7 +24,7 @@ public class MockPaymentResourceConfig extends ResourceConfig {
                 @Override
                 protected void configure() {
                     bind(BankCardAuthService.class).to(DefaultBankCardAuthService.class);
-                    bind(PaymentService.class).to(DefaultPaymentService.class);
+                    bind(DepositService.class).to(DefaultDepositService.class);
                     bind(WithdrawService.class).to(DefaultWithdrawService.class);
                 }
             }

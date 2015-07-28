@@ -22,7 +22,6 @@ public class DefaultWithdrawService implements WithdrawService {
 
     @Override
     public String handleWithdrawRequest(Map<String, String> withdrawRequest) {
-
         logger.debug("*** in handle withdraw request ***" + withdrawRequest);
 
         WithdrawOrder withdrawOrder = new WithdrawOrder(withdrawRequest);
@@ -34,7 +33,6 @@ public class DefaultWithdrawService implements WithdrawService {
 
     @Override
     public String handleWithdrawQueryRequest (Map<String, String> queryRequest) {
-
         logger.debug("*** in handle withdraw request ***" + queryRequest);
 
         String orderId = queryRequest.get("orderId");

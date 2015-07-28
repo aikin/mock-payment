@@ -17,7 +17,7 @@ import java.util.Map;
 @Path("withdraw")
 public class WithdrawResource {
 
-    private static final Logger logger = LoggerFactory.getLogger(PaymentResource.class);
+    private static final Logger logger = LoggerFactory.getLogger(DepositResource.class);
 
     @Inject
     private WithdrawService withdrawService;
@@ -26,7 +26,6 @@ public class WithdrawResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response withdraw(Map request) {
-
         String result = withdrawService.handleWithdrawRequest(request);
         return Response.ok().entity(result).build();
     }

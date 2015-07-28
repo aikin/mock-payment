@@ -1,7 +1,7 @@
-package com.thoughtworks.mockpayment.entity.payment;
+package com.thoughtworks.mockpayment.entity.deposit;
 
 
-import com.thoughtworks.mockpayment.persistence.model.DepositsOrder;
+import com.thoughtworks.mockpayment.persistence.model.DepositOrder;
 
 import java.util.Date;
 
@@ -11,19 +11,19 @@ public class DepositQueryResult {
     private String flowId;
     private String message;
     private String responseCode;
-    private Date depositsAt;
+    private Date depositAt;
     private String bankSerialNo;
     private String orderId;
     private String amount;
 
-    public DepositQueryResult(DepositsOrder depositOrder) {
+    public DepositQueryResult(DepositOrder depositOrder) {
 
-        this.flowId = depositOrder.getDepositsFlowId();
+        this.flowId = depositOrder.getDepositFlowId();
         this.orderId = depositOrder.getOrderId();
         this.amount = depositOrder.getAmount();
         this.responseCode = depositOrder.getResponseCode();
-        this.message = depositOrder.getDepositsMessage();
-        this.depositsAt = depositOrder.getDepositsAt();
+        this.message = depositOrder.getDepositMessage();
+        this.depositAt = depositOrder.getDepositAt();
         this.bankSerialNo = depositOrder.getBankSerialNo();
     }
 
@@ -51,12 +51,12 @@ public class DepositQueryResult {
         this.responseCode = responseCode;
     }
 
-    public Date getDepositsAt() {
-        return depositsAt;
+    public Date getDepositAt() {
+        return depositAt;
     }
 
-    public void setDepositsAt(Date depositsAt) {
-        this.depositsAt = depositsAt;
+    public void setDepositAt(Date depositAt) {
+        this.depositAt = depositAt;
     }
 
     public String getBankSerialNo() {

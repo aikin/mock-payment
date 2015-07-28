@@ -1,0 +1,78 @@
+package com.thoughtworks.mockpayment.service;
+
+import com.thoughtworks.mockpayment.entity.deposit.BankCardNoAndResponseCodeMap;
+import com.thoughtworks.mockpayment.entity.deposit.DepositQueryResult;
+import com.thoughtworks.mockpayment.entity.deposit.DepositResponseCode;
+import com.thoughtworks.mockpayment.entity.deposit.DepositResult;
+import com.thoughtworks.mockpayment.persistence.mapper.DepositOrderMapper;
+import com.thoughtworks.mockpayment.persistence.model.DepositOrder;
+import com.thoughtworks.mockpayment.util.Json;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.inject.Inject;
+import java.util.Map;
+import java.util.Objects;
+
+public class DefaultDepositService implements DepositService {
+
+    private static final Logger logger = LoggerFactory.getLogger(DefaultDepositService.class);
+    private static final int WAIT_RESPONSE_DEPOSIT_RESULT = 1000;
+
+    @Inject
+    private DepositOrderMapper depositOrderMapper;
+
+    // TODO: change the ‘deposits’ to 'deposit'
+    @Override
+    public String handleDepositRequest(Map<String, String> depositRequest) {
+        logger.debug("*** in handle deposit request ***" + depositRequest);
+
+        DepositOrder depositOrder = new DepositOrder(depositRequest);
+        depositOrderMapper.insertNewOrder(depositOrder);
+        DepositResult depositResult = this.generateDepositResult(depositOrder);
+
+        return Json.toJSON(depositResult);
+    }
+
+    @Override
+    public String handleDepositQueryRequest(Map<String, String> queryRequest) {
+        logger.debug("*** in handle withdraw request ***" + queryRequest);
+
+        String flowId = queryRequest.get("flowId");
+        DepositOrder depositOrder = depositOrderMapper.findOrderByFlowId(flowId);
+        DepositQueryResult queryResult = new DepositQueryResult(depositOrder);
+
+        return Json.toJSON(queryResult);
+    }
+
+    private DepositResult generateDepositResult(DepositOrder depositOrder) {
+        String responseCode = BankCardNoAndResponseCodeMap.fetchStatusCodeByBankCardNo(depositOrder.getBankCardNo());
+        DepositResponseCode depositResponseCode = DepositResponseCode.codeOf(responseCode);
+
+        if (Objects.isNull(depositResponseCode)) {
+            logger.debug("*** input bankCardNo not match status deposit response code ***" + depositOrder.getBankCardNo());
+            depositResponseCode = DepositResponseCode.SUCCESS;
+        }
+
+        DepositResult depositResult = new DepositResult(depositOrder, depositResponseCode);
+        this.handleDepositOrder(depositResult, depositResponseCode);
+        return depositResult;
+    }
+
+    private void handleDepositOrder(DepositResult depositResult, DepositResponseCode depositResponseCode) {
+        try {
+            Thread.sleep(WAIT_RESPONSE_DEPOSIT_RESULT);
+        } catch (InterruptedException e) {
+            logger.error(e.getLocalizedMessage(), e);
+        }
+
+        this.depositOrderMapper.updateDepositStatus(
+            depositResult.getDepositFlowId(),
+            depositResponseCode.getStatus(),
+            depositResponseCode.getDescription(),
+            depositResponseCode.getCode(),
+            depositResult.getDepositAt(),
+            depositResult.getBankSerialNo()
+        );
+    }
+}

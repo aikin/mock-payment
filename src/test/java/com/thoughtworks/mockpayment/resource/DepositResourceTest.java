@@ -1,7 +1,7 @@
 package com.thoughtworks.mockpayment.resource;
 
-import com.thoughtworks.mockpayment.entity.payment.BankCardNoAndResponseCodeMap;
-import com.thoughtworks.mockpayment.entity.payment.DepositsResponseCode;
+import com.thoughtworks.mockpayment.entity.deposit.BankCardNoAndResponseCodeMap;
+import com.thoughtworks.mockpayment.entity.deposit.DepositResponseCode;
 import com.thoughtworks.mockpayment.util.Json;
 import com.thoughtworks.mockpayment.util.MockPaymentResourceRunner;
 import com.thoughtworks.mockpayment.util.ResourceTest;
@@ -22,7 +22,7 @@ import static org.hamcrest.Matchers.is;
 
 
 @RunWith(MockPaymentResourceRunner.class)
-public class PaymentResourceTest extends ResourceTest {
+public class DepositResourceTest extends ResourceTest {
 
     protected WebTarget authTarget;
     protected Map<String, String> requestData = new HashMap<>();
@@ -31,8 +31,8 @@ public class PaymentResourceTest extends ResourceTest {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        authTarget = target().path("/payment/deposits");
-        requestData.put("cmd", "deposits");
+        authTarget = target().path("/deposit");
+        requestData.put("cmd", "deposit");
         requestData.put("customerId", "809080908090");
         requestData.put("userName", "aikin");
         requestData.put("idCardNo", "362329199103120018");
@@ -63,8 +63,8 @@ public class PaymentResourceTest extends ResourceTest {
 //        Gson gson = new Gson();
 //        HashMap respondMap = gson.fromJson(response.readEntity(String.class), HashMap.class);
         HashMap respondMap = response.readEntity(HashMap.class);
-        assertThat(respondMap.get("depositsMessage"), is(DepositsResponseCode.SUCCESS.getDescription()));
-        assertThat(respondMap.get("responseCode"), is(DepositsResponseCode.SUCCESS.getCode()));
+        assertThat(respondMap.get("depositMessage"), is(DepositResponseCode.SUCCESS.getDescription()));
+        assertThat(respondMap.get("responseCode"), is(DepositResponseCode.SUCCESS.getCode()));
     }
 
     @Test
@@ -76,20 +76,20 @@ public class PaymentResourceTest extends ResourceTest {
             .post(Entity.entity(Json.toJSON(requestData), MediaType.APPLICATION_JSON));
 
         HashMap respondMap = response.readEntity(HashMap.class);
-        assertThat(respondMap.get("depositsMessage"), is(DepositsResponseCode.SHORT_BALANCE.getDescription()));
-        assertThat(respondMap.get("responseCode"), is(DepositsResponseCode.SHORT_BALANCE.getCode()));
+        assertThat(respondMap.get("depositMessage"), is(DepositResponseCode.SHORT_BALANCE.getDescription()));
+        assertThat(respondMap.get("responseCode"), is(DepositResponseCode.SHORT_BALANCE.getCode()));
     }
 
     @Test
-    public void should_client_response_failure_when_bankCardNo_be_match_DEPOSITS_PROCESSING() {
+    public void should_client_response_failure_when_bankCardNo_be_match_DEPOSIT_PROCESSING() {
 
-        requestData.put("bankCardNo", BankCardNoAndResponseCodeMap.DEPOSITS_PROCESSING.getBankCardNo());
+        requestData.put("bankCardNo", BankCardNoAndResponseCodeMap.DEPOSIT_PROCESSING.getBankCardNo());
         Response response = authTarget
             .request()
             .post(Entity.entity(Json.toJSON(requestData), MediaType.APPLICATION_JSON));
 
         HashMap respondMap = response.readEntity(HashMap.class);
-        assertThat(respondMap.get("depositsMessage"), is(DepositsResponseCode.DEPOSITS_PROCESSING.getDescription()));
-        assertThat(respondMap.get("responseCode"), is(DepositsResponseCode.DEPOSITS_PROCESSING.getCode()));
+        assertThat(respondMap.get("depositMessage"), is(DepositResponseCode.DEPOSIT_PROCESSING.getDescription()));
+        assertThat(respondMap.get("responseCode"), is(DepositResponseCode.DEPOSIT_PROCESSING.getCode()));
     }
 }

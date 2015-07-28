@@ -2,12 +2,12 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.thoughtworks.mockpayment.persistence.mapper.DepositsOrderMapper">
+<mapper namespace="com.thoughtworks.mockpayment.persistence.mapper.DepositOrderMapper">
 
     <sql id="orderColumns">
           D.ID AS D_ID,
           D.CUSTOMER_ID AS D_CUSTOMER_ID,
-          D.DEPOSITS_FLOW_ID AS D_DEPOSITS_FLOW_ID,
+          D.DEPOSIT_FLOW_ID AS D_DEPOSIT_FLOW_ID,
           D.ORDER_ID AS  D_ORDER_ID,
           D.USER_NAME AS D_USER_NAME,
           D.ID_CARD_NO AS D_ID_CARD_NO,
@@ -18,17 +18,17 @@
           D.AMOUNT AS D_AMOUNT,
           D.CURRENCY AS D_CURRENCY,
           D.BANK_SERIAL_NO AS D_BANK_SERIAL_NO,
-          D.DEPOSITS_STATUS AS D_DEPOSITS_STATUS,
-          D.DEPOSITS_MESSAGE AS D_DEPOSITS_MESSAGE,
+          D.DEPOSIT_STATUS AS D_DEPOSIT_STATUS,
+          D.DEPOSIT_MESSAGE AS D_DEPOSIT_MESSAGE,
           D.RESPONSE_CODE AS D_RESPONSE_CODE,
-          D.DEPOSITS_AT AS D_DEPOSITS_AT,
+          D.DEPOSIT_AT AS D_DEPOSIT_AT,
           D.CREATED_AT AS D_CREATED_AT
     </sql>
 
-    <resultMap id="depositsOrder" type="com.thoughtworks.mockpayment.persistence.model.DepositsOrder">
+    <resultMap id="depositOrder" type="com.thoughtworks.mockpayment.persistence.model.DepositOrder">
         <id column="D_ID" property="id"/>
         <result column="D_CUSTOMER_ID" property="customerId"/>
-        <result column="D_DEPOSITS_FLOW_ID" property="depositsFlowId"/>
+        <result column="D_DEPOSIT_FLOW_ID" property="depositFlowId"/>
         <result column="D_ORDER_ID" property="orderId"/>
         <result column="D_USER_NAME" property="userName"/>
         <result column="D_ID_CARD_NO" property="idCardNo"/>
@@ -39,32 +39,32 @@
         <result column="D_AMOUNT" property="amount"/>
         <result column="D_CURRENCY" property="currency"/>
         <result column="D_BANK_SERIAL_NO" property="bankSerialNo"/>
-        <result column="D_DEPOSITS_STATUS" property="depositsStatus"/>
-        <result column="D_DEPOSITS_MESSAGE" property="depositsMessage"/>
+        <result column="D_DEPOSIT_STATUS" property="depositStatus"/>
+        <result column="D_DEPOSIT_MESSAGE" property="depositMessage"/>
         <result column="D_RESPONSE_CODE" property="responseCode"/>
-        <result column="D_DEPOSITS_AT" property="depositsAt"/>
+        <result column="D_DEPOSIT_AT" property="depositAt"/>
         <result column="D_CREATED_AT" property="createdAt"/>
     </resultMap>
 
     <insert id="insertNewOrder">
-        INSERT INTO DEPOSITS_ORDER(CUSTOMER_ID, DEPOSITS_FLOW_ID, ORDER_ID, USER_NAME, ID_CARD_NO, BANK_CODE, BANK_CARD_NO, BANK_NAME,
-                        EXPAND_INFO, AMOUNT, CURRENCY, DEPOSITS_STATUS, CREATED_AT)
-        VALUES (#{order.customerId}, #{order.depositsFlowId}, #{order.orderId}, #{order.userName}, #{order.idCardNo}, #{order.bankCode},
+        INSERT INTO DEPOSIT_ORDER(CUSTOMER_ID, DEPOSIT_FLOW_ID, ORDER_ID, USER_NAME, ID_CARD_NO, BANK_CODE, BANK_CARD_NO, BANK_NAME,
+                        EXPAND_INFO, AMOUNT, CURRENCY, DEPOSIT_STATUS, CREATED_AT)
+        VALUES (#{order.customerId}, #{order.depositFlowId}, #{order.orderId}, #{order.userName}, #{order.idCardNo}, #{order.bankCode},
                 #{order.bankCardNo}, #{order.bankName},#{order.expandInfo}, #{order.amount}, #{order.currency},
-                #{order.depositsStatus}, #{order.createdAt})
+                #{order.depositStatus}, #{order.createdAt})
     </insert>
 
-    <update id="updateDepositsStatus">
-        UPDATE DEPOSITS_ORDER SET BANK_SERIAL_NO=#{bankSerialNo}, DEPOSITS_STATUS=#{depositsStatus},
-                        DEPOSITS_MESSAGE=#{depositsMessage}, RESPONSE_CODE=#{responseCode}, DEPOSITS_AT=#{depositsAt}
-        WHERE DEPOSITS_FLOW_ID=#{depositsFlowId}
+    <update id="updateDepositStatus">
+        UPDATE DEPOSIT_ORDER SET BANK_SERIAL_NO=#{bankSerialNo}, DEPOSIT_STATUS=#{depositStatus},
+                        DEPOSIT_MESSAGE=#{depositMessage}, RESPONSE_CODE=#{responseCode}, DEPOSIT_AT=#{depositAt}
+        WHERE DEPOSIT_FLOW_ID=#{depositFlowId}
     </update>
 
-    <select id="findOrderByFlowId" resultMap="depositsOrder">
+    <select id="findOrderByFlowId" resultMap="depositOrder">
         SELECT
         <include refid="orderColumns"/>
-        FROM DEPOSITS_ORDER D
-        WHERE D.DEPOSITS_FLOW_ID=#{depositsFlowId}
+        FROM DEPOSIT_ORDER D
+        WHERE D.DEPOSIT_FLOW_ID=#{depositFlowId}
     </select>
 
 

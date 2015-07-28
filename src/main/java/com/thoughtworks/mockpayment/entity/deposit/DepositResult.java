@@ -1,16 +1,16 @@
-package com.thoughtworks.mockpayment.entity.payment;
+package com.thoughtworks.mockpayment.entity.deposit;
 
-import com.thoughtworks.mockpayment.persistence.model.DepositsOrder;
+import com.thoughtworks.mockpayment.persistence.model.DepositOrder;
 import org.joda.time.DateTime;
 
 import java.util.Date;
 
-public class DepositsResult {
+public class DepositResult {
 
-    private String depositsFlowId;
-    private String depositsMessage;
+    private String depositFlowId;
+    private String depositMessage;
     private String responseCode;
-    private Date depositsAt;
+    private Date depositAt;
     private String bankSerialNo;
     private String customerId;
     private String orderId;
@@ -19,34 +19,33 @@ public class DepositsResult {
     private String expandInfo;
 
 
-    public DepositsResult(DepositsOrder depositsOrder, DepositsResponseCode depositsResponseCode) {
-
-        this.depositsFlowId = depositsOrder.getDepositsFlowId();
-        this.customerId = depositsOrder.getCustomerId();
-        this.orderId = depositsOrder.getOrderId();
-        this.amount = depositsOrder.getAmount();
-        this.currency = depositsOrder.getCurrency();
-        this.expandInfo = depositsOrder.getExpandInfo();
-        this.responseCode = depositsResponseCode.getCode();
-        this.depositsMessage = depositsResponseCode.getDescription();
-        this.depositsAt = DateTime.now().toDate();
+    public DepositResult(DepositOrder depositOrder, DepositResponseCode depositResponseCode) {
+        this.depositFlowId = depositOrder.getDepositFlowId();
+        this.customerId = depositOrder.getCustomerId();
+        this.orderId = depositOrder.getOrderId();
+        this.amount = depositOrder.getAmount();
+        this.currency = depositOrder.getCurrency();
+        this.expandInfo = depositOrder.getExpandInfo();
+        this.responseCode = depositResponseCode.getCode();
+        this.depositMessage = depositResponseCode.getDescription();
+        this.depositAt = DateTime.now().toDate();
         this.bankSerialNo = DateTime.now().toDate().toString();
     }
 
-    public String getDepositsFlowId() {
-        return depositsFlowId;
+    public String getDepositFlowId() {
+        return depositFlowId;
     }
 
-    public void setDepositsFlowId(String depositsFlowId) {
-        this.depositsFlowId = depositsFlowId;
+    public void setDepositFlowId(String depositFlowId) {
+        this.depositFlowId = depositFlowId;
     }
 
-    public String getDepositsMessage() {
-        return depositsMessage;
+    public String getDepositMessage() {
+        return depositMessage;
     }
 
-    public void setDepositsMessage(String depositsMessage) {
-        this.depositsMessage = depositsMessage;
+    public void setDepositMessage(String depositMessage) {
+        this.depositMessage = depositMessage;
     }
 
     public String getResponseCode() {
@@ -57,12 +56,12 @@ public class DepositsResult {
         this.responseCode = responseCode;
     }
 
-    public Date getDepositsAt() {
-        return depositsAt;
+    public Date getDepositAt() {
+        return depositAt;
     }
 
-    public void setDepositsAt(Date depositsAt) {
-        this.depositsAt = depositsAt;
+    public void setDepositAt(Date depositAt) {
+        this.depositAt = depositAt;
     }
 
     public String getBankSerialNo() {
