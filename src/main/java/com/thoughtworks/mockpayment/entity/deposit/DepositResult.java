@@ -4,6 +4,7 @@ import com.thoughtworks.mockpayment.persistence.model.DepositOrder;
 import org.joda.time.DateTime;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class DepositResult {
 
@@ -29,7 +30,7 @@ public class DepositResult {
         this.responseCode = depositResponseCode.getCode();
         this.depositMessage = depositResponseCode.getDescription();
         this.depositAt = DateTime.now().toDate();
-        this.bankSerialNo = DateTime.now().toDate().toString();
+        this.bankSerialNo = UUID.randomUUID().toString();
     }
 
     public String getDepositFlowId() {

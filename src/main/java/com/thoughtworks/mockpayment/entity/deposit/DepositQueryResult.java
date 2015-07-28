@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class DepositQueryResult {
 
-
+    private String customerId;
     private String flowId;
     private String message;
     private String responseCode;
@@ -18,6 +18,7 @@ public class DepositQueryResult {
 
     public DepositQueryResult(DepositOrder depositOrder) {
 
+        this.customerId = depositOrder.getCustomerId();
         this.flowId = depositOrder.getDepositFlowId();
         this.orderId = depositOrder.getOrderId();
         this.amount = depositOrder.getAmount();
@@ -25,6 +26,14 @@ public class DepositQueryResult {
         this.message = depositOrder.getDepositMessage();
         this.depositAt = depositOrder.getDepositAt();
         this.bankSerialNo = depositOrder.getBankSerialNo();
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 
     public String getFlowId() {

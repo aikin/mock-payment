@@ -60,12 +60,21 @@
         WHERE DEPOSIT_FLOW_ID=#{depositFlowId}
     </update>
 
-    <select id="findOrderByFlowId" resultMap="depositOrder">
+    <select id="findOrderByFlowIdAndCustomerId" resultMap="depositOrder">
         SELECT
         <include refid="orderColumns"/>
         FROM DEPOSIT_ORDER D
-        WHERE D.DEPOSIT_FLOW_ID=#{depositFlowId}
+        WHERE D.DEPOSIT_FLOW_ID=#{depositFlowId} AND D.CUSTOMER_ID=#{customerId}
     </select>
 
+    <insert id="insertNewFullOrder">
+        INSERT INTO DEPOSIT_ORDER(CUSTOMER_ID, DEPOSIT_FLOW_ID, ORDER_ID, USER_NAME, ID_CARD_NO, BANK_CODE,
+        BANK_CARD_NO, BANK_NAME, EXPAND_INFO, AMOUNT, CURRENCY, BANK_SERIAL_NO, DEPOSIT_STATUS,
+        DEPOSIT_MESSAGE, RESPONSE_CODE, DEPOSIT_AT, CREATED_AT)
+        VALUES (#{order.customerId}, #{order.depositFlowId}, #{order.orderId}, #{order.userName}, #{order.idCardNo},
+        #{order.bankCode}, #{order.bankCardNo}, #{order.bankName}, #{order.expandInfo}, #{order.amount},
+        #{order.currency}, #{order.bankSerialNo}, #{order.depositStatus}, #{order.depositMessage},
+        #{order.responseCode}, #{order.depositAt}, #{order.createdAt})
+    </insert>
 
 </mapper>

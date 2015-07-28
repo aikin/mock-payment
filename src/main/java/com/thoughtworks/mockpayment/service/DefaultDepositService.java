@@ -39,7 +39,8 @@ public class DefaultDepositService implements DepositService {
         logger.debug("*** in handle withdraw request ***" + queryRequest);
 
         String flowId = queryRequest.get("flowId");
-        DepositOrder depositOrder = depositOrderMapper.findOrderByFlowId(flowId);
+        String customerId = queryRequest.get("customerId");
+        DepositOrder depositOrder = depositOrderMapper.findOrderByFlowIdAndCustomerId(flowId, customerId);
         DepositQueryResult queryResult = new DepositQueryResult(depositOrder);
 
         return Json.toJSON(queryResult);

@@ -8,14 +8,17 @@ import java.util.Date;
 
 public interface DepositOrderMapper {
 
-     void insertNewOrder(@Param("order") DepositOrder newOrder);
+    void insertNewOrder(@Param("order") DepositOrder newOrder);
 
-     void updateDepositStatus(@Param("depositFlowId") String depositFlowId,
+    void insertNewFullOrder(@Param("order") DepositOrder newOrder);
+
+    void updateDepositStatus(@Param("depositFlowId") String depositFlowId,
                               @Param("depositStatus") DepositStatus depositStatus,
                               @Param("depositMessage") String depositMessage,
                               @Param("responseCode") String responseCode,
                               @Param("depositAt") Date depositAt,
                               @Param("bankSerialNo") String bankSerialNo);
 
-    DepositOrder findOrderByFlowId(@Param("depositFlowId") String depositFlowId);
+    DepositOrder findOrderByFlowIdAndCustomerId(@Param("depositFlowId") String depositFlowId,
+                                                @Param("customerId") String customerId);
 }
