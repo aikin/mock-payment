@@ -27,7 +27,7 @@ public class BankCardAuthResourceTest extends ResourceTest {
     public void setUp() throws Exception {
         super.setUp();
         authTarget = target()
-            .path("/bank-card-auth")
+            .path("mockpayment/bank-card-auth")
             .queryParam("cmd", "mockAuthentication")
             .queryParam("customerId", "809080908090")
             .queryParam("name", "lulaijin")

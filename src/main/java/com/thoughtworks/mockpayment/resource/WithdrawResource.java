@@ -32,7 +32,7 @@ public class WithdrawResource {
     }
 
     @POST
-    @Path("/query")
+    @Path("/withdraw-query")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response withdrawQuery(Map request) {
