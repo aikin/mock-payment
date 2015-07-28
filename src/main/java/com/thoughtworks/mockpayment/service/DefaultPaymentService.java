@@ -1,6 +1,7 @@
 package com.thoughtworks.mockpayment.service;
 
 import com.thoughtworks.mockpayment.entity.payment.BankCardNoAndResponseCodeMap;
+import com.thoughtworks.mockpayment.entity.payment.DepositQueryResult;
 import com.thoughtworks.mockpayment.entity.payment.DepositsResponseCode;
 import com.thoughtworks.mockpayment.entity.payment.DepositsResult;
 import com.thoughtworks.mockpayment.persistence.mapper.DepositsOrderMapper;
@@ -39,9 +40,9 @@ public class DefaultPaymentService implements PaymentService {
         String orderId = queryRequest.get("orderId");
         String flowId = queryRequest.get("flowId");
         DepositsOrder depositOrder = depositsOrderMapper.findOrderByFlowId(flowId);
-        DepositsResult depositsResult = new DepositsResult(depositOrder);
+        DepositQueryResult queryResult = new DepositQueryResult(depositOrder);
 
-        return Json.toJSON(depositsResult);
+        return Json.toJSON(queryResult);
     }
 
     private DepositsResult generateDepositsResult(DepositsOrder depositsOrder) {
@@ -70,8 +71,8 @@ public class DefaultPaymentService implements PaymentService {
         this.depositsOrderMapper.updateDepositsStatus(
             depositsResult.getDepositsFlowId(),
             depositsResponseCode.getStatus(),
-            depositsResponseCode.getCode(),
             depositsResponseCode.getDescription(),
+            depositsResponseCode.getCode(),
             depositsResult.getDepositsAt(),
             depositsResult.getBankSerialNo()
         );
