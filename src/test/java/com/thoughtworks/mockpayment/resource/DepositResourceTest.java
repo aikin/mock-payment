@@ -31,7 +31,7 @@ public class DepositResourceTest extends ResourceTest {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        authTarget = target().path("/deposit");
+        authTarget = target().path("/mockpayment/deposit");
         requestData.put("cmd", "deposit");
         requestData.put("customerId", "809080908090");
         requestData.put("userName", "aikin");
