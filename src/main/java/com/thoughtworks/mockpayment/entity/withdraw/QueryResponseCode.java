@@ -6,10 +6,10 @@ import com.thoughtworks.mockpayment.persistence.model.WithdrawOrder.QueryStatus;
 public enum QueryResponseCode {
 
     SUCCESS("0001", QueryStatus.SUCCESS, "取现成功"),
-    QUERY_PROCESSING("0002", QueryStatus.PROCESSING, "银行处理中"),
+    QUERY_PENDING("0002", QueryStatus.PENDING, "银行处理中"),
     QUERY_FAILURE_BANK_REJECT("0003", QueryStatus.FAILURE, "银行拒绝"),
     QUERY_SYSTEM_ERROR("0004", QueryStatus.FAILURE, "取款失败"),
-    UN_SET_QUERY("0005", null, "");
+    FAILURE_WITHDRAW("0005", QueryStatus.FAILURE, "查询前取现已经失败");
 
     private String code;
     private QueryStatus status;

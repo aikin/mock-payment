@@ -22,7 +22,6 @@ public class DefaultDepositService implements DepositService {
     @Inject
     private DepositOrderMapper depositOrderMapper;
 
-    // TODO: change the ‘deposits’ to 'deposit'
     @Override
     public String handleDepositRequest(Map<String, String> depositRequest) {
         logger.debug("*** in handle deposit request ***" + depositRequest);

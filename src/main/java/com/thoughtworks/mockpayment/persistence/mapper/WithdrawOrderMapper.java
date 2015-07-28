@@ -23,7 +23,8 @@ public interface WithdrawOrderMapper {
                               @Param("queryMessage") String queryMessage,
                               @Param("queryResponseCode") String queryResponseCode);
 
-    WithdrawOrder findOrderByFlowId(@Param("withdrawFlowId") String withdrawFlowId);
+    WithdrawOrder findOrderByFlowIdAndCustomerId(@Param("withdrawFlowId") String withdrawFlowId,
+                                    @Param("customerId") String customerId);
 
-    WithdrawOrder findOrderByOrderId(@Param("orderId") String orderId);
+    WithdrawOrder findOrderByFlowId(@Param("withdrawFlowId") String withdrawFlowId);
 }

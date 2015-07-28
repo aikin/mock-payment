@@ -66,17 +66,17 @@
         WHERE WITHDRAW_FLOW_ID=#{withdrawFlowId}
     </update>
 
+    <select id="findOrderByFlowIdAndCustomerId" resultMap="withdrawOrder">
+        SELECT
+        <include refid="orderColumns"/>
+        FROM WITHDRAW_ORDER W
+        WHERE W.WITHDRAW_FLOW_ID=#{withdrawFlowId} AND W.CUSTOMER_ID=#{customerId}
+    </select>
+
     <select id="findOrderByFlowId" resultMap="withdrawOrder">
         SELECT
         <include refid="orderColumns"/>
         FROM WITHDRAW_ORDER W
         WHERE W.WITHDRAW_FLOW_ID=#{withdrawFlowId}
-    </select>
-
-    <select id="findOrderByOrderId" resultMap="withdrawOrder">
-        SELECT
-        <include refid="orderColumns"/>
-        FROM WITHDRAW_ORDER W
-        WHERE W.ORDER_ID=#{orderId}
     </select>
 </mapper>

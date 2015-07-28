@@ -42,9 +42,9 @@ public class WithdrawOrder {
         this.userName = request.get("userName");
         this.amount = Double.valueOf(request.get("amount"));
         this.createdAt = DateTime.now().toDate();
-        this.withdrawStatus = WithdrawStatus.PROCESSING;
+        this.withdrawStatus = WithdrawStatus.PENDING;
         this.withdrawFlowId = UUID.randomUUID().toString();
-        this.queryStatus = QueryStatus.PROCESSING;
+        this.queryStatus = QueryStatus.PENDING;
     }
 
     public long getId() {
@@ -192,10 +192,10 @@ public class WithdrawOrder {
     }
 
     public static enum WithdrawStatus {
-        PROCESSING, SUCCESS, FAILURE
+        PENDING, SUCCESS, FAILURE
     }
 
     public static enum QueryStatus {
-        PROCESSING, SUCCESS, FAILURE
+        PENDING, SUCCESS, FAILURE
     }
 }

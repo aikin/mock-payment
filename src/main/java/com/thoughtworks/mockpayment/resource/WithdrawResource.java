@@ -14,7 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Map;
 
-@Path("withdraw")
+@Path("mockpayment")
 public class WithdrawResource {
 
     private static final Logger logger = LoggerFactory.getLogger(DepositResource.class);
@@ -23,6 +23,7 @@ public class WithdrawResource {
     private WithdrawService withdrawService;
 
     @POST
+    @Path("/withdraw")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response withdraw(Map request) {

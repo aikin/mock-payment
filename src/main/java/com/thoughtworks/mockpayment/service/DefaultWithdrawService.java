@@ -5,12 +5,14 @@ import com.google.inject.Inject;
 import com.thoughtworks.mockpayment.entity.withdraw.*;
 import com.thoughtworks.mockpayment.persistence.mapper.WithdrawOrderMapper;
 import com.thoughtworks.mockpayment.persistence.model.WithdrawOrder;
+import com.thoughtworks.mockpayment.persistence.model.WithdrawOrder.WithdrawStatus;
 import com.thoughtworks.mockpayment.util.Json;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class DefaultWithdrawService implements WithdrawService {
 
@@ -35,30 +37,33 @@ public class DefaultWithdrawService implements WithdrawService {
     public String handleWithdrawQueryRequest (Map<String, String> queryRequest) {
         logger.debug("*** in handle withdraw request ***" + queryRequest);
 
-        String orderId = queryRequest.get("orderId");
         String flowId = queryRequest.get("flowId");
-//        WithdrawOrder withdrawOrder = withdrawOrderMapper.findOrderByOrderId(orderId);
-        WithdrawOrder withdrawOrder = withdrawOrderMapper.findOrderByFlowId(flowId);
+        String customerId = queryRequest.get("customerId");
+        WithdrawOrder withdrawOrder = withdrawOrderMapper.findOrderByFlowIdAndCustomerId(flowId, customerId);
 
         return Json.toJSON(withdrawOrder);
     }
 
     private WithdrawResult generateWithdrawResult(WithdrawOrder withdrawOrder) {
 
-        String responseCode =  BankCardNoAndResponseCodeMap.fetchStatusCodeByBankCardNo(withdrawOrder.getBankCardNo());
-        WithdrawResponseCode withdrawResponseCode = WithdrawResponseCode.codeOf(responseCode);
+        String withdrawStatusCode = BankCardNoAndWithdrawResponseCodeMap.fetchStatusCodeByBankCardNo(withdrawOrder.getBankCardNo());
+        WithdrawResponseCode withdrawResponseCode = WithdrawResponseCode.codeOf(withdrawStatusCode);
 
-        if (withdrawResponseCode == null) {
-            logger.debug("*** input bankCardNo not match status withdraw response code ***" + withdrawOrder.getBankCardNo());
+        String queryStatusCode = BankCardNoAndQueryResponseCodeMap.fetchStatusCodeByBankCardNo(withdrawOrder.getBankCardNo());
+        QueryResponseCode queryResponseCode = QueryResponseCode.codeOf(queryStatusCode);
+
+        if (Objects.isNull(withdrawResponseCode) && Objects.isNull(queryResponseCode)) {
             withdrawResponseCode = WithdrawResponseCode.SUCCESS;
-        }
-
-        String statusCode =  BankCodeAndQueryResponseCodeMap.fetchStatusCodeByBankCode(withdrawOrder.getBankCode());
-        QueryResponseCode queryResponseCode = QueryResponseCode.codeOf(statusCode);
-
-        if (queryResponseCode == null) {
-            logger.debug("*** input bankCardNo not match status withdraw response code ***" + withdrawOrder.getBankCardNo());
             queryResponseCode = QueryResponseCode.SUCCESS;
+        }
+        if (!Objects.isNull(withdrawResponseCode) && withdrawResponseCode.getStatus() == WithdrawStatus.SUCCESS) {
+            queryResponseCode = QueryResponseCode.SUCCESS;
+        }
+        if (!Objects.isNull(withdrawResponseCode) && withdrawResponseCode.getStatus() != WithdrawStatus.SUCCESS) {
+            queryResponseCode = QueryResponseCode.FAILURE_WITHDRAW;
+        }
+        if (Objects.isNull(withdrawResponseCode)) {
+            withdrawResponseCode = WithdrawResponseCode.SUCCESS;
         }
 
         WithdrawResult withdrawResult = new WithdrawResult(withdrawOrder, withdrawResponseCode);

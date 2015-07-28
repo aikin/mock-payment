@@ -1,8 +1,8 @@
 package com.thoughtworks.mockpayment.resource;
 
 import com.google.inject.Inject;
-import com.thoughtworks.mockpayment.entity.withdraw.BankCardNoAndResponseCodeMap;
-import com.thoughtworks.mockpayment.entity.withdraw.BankCodeAndQueryResponseCodeMap;
+import com.thoughtworks.mockpayment.entity.withdraw.BankCardNoAndQueryResponseCodeMap;
+import com.thoughtworks.mockpayment.entity.withdraw.BankCardNoAndWithdrawResponseCodeMap;
 import com.thoughtworks.mockpayment.entity.withdraw.QueryResponseCode;
 import com.thoughtworks.mockpayment.entity.withdraw.WithdrawResponseCode;
 import com.thoughtworks.mockpayment.persistence.mapper.WithdrawOrderMapper;
@@ -40,10 +40,11 @@ public class WithdrawResourceTest extends ResourceTest {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        authTarget = target().path("/withdraw");
+        authTarget = target().path("/mockpayment/withdraw");
         requestData.put("cmd", "withdraw");
         requestData.put("customerId", "809080908090");
         requestData.put("orderId", "121121121121");
+        requestData.put("bankCode", "CCB");
         requestData.put("bankName", "www");
         requestData.put("userName", "aikin");
         requestData.put("amount", "100");
@@ -61,9 +62,7 @@ public class WithdrawResourceTest extends ResourceTest {
     public void should_client_response_success_when_bankCardNo_be_not_match() {
 
         final String UN_MATCH_BANK_CARD_NO = "123456789012345";
-        final String UN_MATCH_BANK_CODE = "abcdefg";
         requestData.put("bankCardNo", UN_MATCH_BANK_CARD_NO);
-        requestData.put("bankCode", UN_MATCH_BANK_CODE);
         Response response = authTarget
             .request()
             .post(Entity.entity(Json.toJSON(requestData), MediaType.APPLICATION_JSON));
@@ -79,10 +78,9 @@ public class WithdrawResourceTest extends ResourceTest {
     }
 
     @Test
-    public void should_client_response_failure_when_bankCardNo_be_match_WITHDRAW_ORDER_ID_REPEATBALANCE() {
+    public void should_client_response_repeat_when_bankCardNo_be_match_WITHDRAW_ORDER_ID_REPEAT() {
 
-        requestData.put("bankCardNo", BankCardNoAndResponseCodeMap.WITHDRAW_ORDER_ID_REPEAT.getBankCardNo());
-        requestData.put("bankCode", BankCodeAndQueryResponseCodeMap.SUCCESS.getBankCode());
+        requestData.put("bankCardNo", BankCardNoAndWithdrawResponseCodeMap.WITHDRAW_ORDER_ID_REPEAT.getBankCardNo());
         Response response = authTarget
             .request()
             .post(Entity.entity(Json.toJSON(requestData), MediaType.APPLICATION_JSON));
@@ -97,10 +95,9 @@ public class WithdrawResourceTest extends ResourceTest {
     }
 
     @Test
-    public void should_client_response_failure_when_bankCardNo_be_match_WITHDRAW_PROCESSING() {
+    public void should_client_response_pending_when_bankCardNo_be_match_WITHDRAW_PENDING() {
 
-        requestData.put("bankCardNo", BankCardNoAndResponseCodeMap.WITHDRAW_PROCESSING.getBankCardNo());
-        requestData.put("bankCode", BankCodeAndQueryResponseCodeMap.QUERY_PROCESSING.getBankCode());
+        requestData.put("bankCardNo", BankCardNoAndWithdrawResponseCodeMap.WITHDRAW_PENDING.getBankCardNo());
         Response response = authTarget
             .request()
             .post(Entity.entity(Json.toJSON(requestData), MediaType.APPLICATION_JSON));
@@ -108,10 +105,44 @@ public class WithdrawResourceTest extends ResourceTest {
         HashMap respondMap = response.readEntity(HashMap.class);
         WithdrawOrder withdrawOrder = withdrawOrderMapper.findOrderByFlowId((String) respondMap.get("withdrawFlowId"));
 
-        assertThat(respondMap.get("withdrawMessage"), is(WithdrawResponseCode.WITHDRAW_PROCESSING.getDescription()));
-        assertThat(respondMap.get("responseCode"), is(WithdrawResponseCode.WITHDRAW_PROCESSING.getCode()));
-        assertThat(withdrawOrder.getQueryResponseCode(), is(QueryResponseCode.QUERY_PROCESSING.getCode()));
-        assertThat(withdrawOrder.getQueryMessage(), is(QueryResponseCode.QUERY_PROCESSING.getDescription()));
+        assertThat(respondMap.get("withdrawMessage"), is(WithdrawResponseCode.WITHDRAW_PENDING.getDescription()));
+        assertThat(respondMap.get("responseCode"), is(WithdrawResponseCode.WITHDRAW_PENDING.getCode()));
+        assertThat(withdrawOrder.getQueryResponseCode(), is(QueryResponseCode.FAILURE_WITHDRAW.getCode()));
+        assertThat(withdrawOrder.getQueryMessage(), is(QueryResponseCode.FAILURE_WITHDRAW.getDescription()));
+    }
+
+    @Test
+    public void should_client_response_success_when_bankCardNo_be_match_QUERY_SUCCESS() {
+
+        requestData.put("bankCardNo", BankCardNoAndQueryResponseCodeMap.QUERY_SUCCESS.getBankCardNo());
+        Response response = authTarget
+            .request()
+            .post(Entity.entity(Json.toJSON(requestData), MediaType.APPLICATION_JSON));
+
+        HashMap respondMap = response.readEntity(HashMap.class);
+        WithdrawOrder withdrawOrder = withdrawOrderMapper.findOrderByFlowId((String) respondMap.get("withdrawFlowId"));
+
+        assertThat(respondMap.get("withdrawMessage"), is(WithdrawResponseCode.SUCCESS.getDescription()));
+        assertThat(respondMap.get("responseCode"), is(WithdrawResponseCode.SUCCESS.getCode()));
+        assertThat(withdrawOrder.getQueryResponseCode(), is(QueryResponseCode.SUCCESS.getCode()));
+        assertThat(withdrawOrder.getQueryMessage(), is(QueryResponseCode.SUCCESS.getDescription()));
+    }
+
+    @Test
+    public void should_client_response_success_when_bankCardNo_be_match_QUERY_FAILURE_BANK_REJECT() {
+
+        requestData.put("bankCardNo", BankCardNoAndQueryResponseCodeMap.QUERY_FAILURE_BANK_REJECT.getBankCardNo());
+        Response response = authTarget
+            .request()
+            .post(Entity.entity(Json.toJSON(requestData), MediaType.APPLICATION_JSON));
+
+        HashMap respondMap = response.readEntity(HashMap.class);
+        WithdrawOrder withdrawOrder = withdrawOrderMapper.findOrderByFlowId((String) respondMap.get("withdrawFlowId"));
+
+        assertThat(respondMap.get("withdrawMessage"), is(WithdrawResponseCode.SUCCESS.getDescription()));
+        assertThat(respondMap.get("responseCode"), is(WithdrawResponseCode.SUCCESS.getCode()));
+        assertThat(withdrawOrder.getQueryResponseCode(), is(QueryResponseCode.QUERY_FAILURE_BANK_REJECT.getCode()));
+        assertThat(withdrawOrder.getQueryMessage(), is(QueryResponseCode.QUERY_FAILURE_BANK_REJECT.getDescription()));
     }
 
 }
