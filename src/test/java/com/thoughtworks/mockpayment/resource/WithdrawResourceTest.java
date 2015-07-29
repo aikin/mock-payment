@@ -107,8 +107,8 @@ public class WithdrawResourceTest extends ResourceTest {
 
         assertThat(respondMap.get("withdrawMessage"), is(WithdrawResponseCode.WITHDRAW_PENDING.getDescription()));
         assertThat(respondMap.get("responseCode"), is(WithdrawResponseCode.WITHDRAW_PENDING.getCode()));
-        assertThat(withdrawOrder.getQueryResponseCode(), is(QueryResponseCode.FAILURE_WITHDRAW.getCode()));
-        assertThat(withdrawOrder.getQueryMessage(), is(QueryResponseCode.FAILURE_WITHDRAW.getDescription()));
+        assertThat(withdrawOrder.getQueryResponseCode(), is(QueryResponseCode.SUCCESS.getCode()));
+        assertThat(withdrawOrder.getQueryMessage(), is(QueryResponseCode.SUCCESS.getDescription()));
     }
 
     @Test

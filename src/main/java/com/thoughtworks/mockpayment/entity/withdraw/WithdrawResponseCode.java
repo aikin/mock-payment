@@ -7,7 +7,7 @@ public enum WithdrawResponseCode {
 
     SUCCESS("001", WithdrawStatus.SUCCESS, "已接收"),
     WITHDRAW_ORDER_ID_REPEAT("002", WithdrawStatus.SUCCESS, "订单号不合法或重复"),
-    WITHDRAW_PENDING("003", WithdrawStatus.PENDING, "取现处理中"),
+    WITHDRAW_PENDING("003", WithdrawStatus.SUCCESS, "取现处理中"),
     WITHDRAW_FAILURE_BANK_REJECT("004", WithdrawStatus.FAILURE, "已拒绝"),
     WITHDRAW_SYSTEM_ERROR("005", WithdrawStatus.FAILURE, "取现系统异常");
 
