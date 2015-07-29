@@ -40,8 +40,9 @@ public class DefaultWithdrawService implements WithdrawService {
         String flowId = queryRequest.get("flowId");
         String customerId = queryRequest.get("customerId");
         WithdrawOrder withdrawOrder = withdrawOrderMapper.findOrderByFlowIdAndCustomerId(flowId, customerId);
+        WithdrawQueryResult queryResult = new WithdrawQueryResult(withdrawOrder);
 
-        return Json.toJSON(withdrawOrder);
+        return Json.toJSON(queryResult);
     }
 
     private WithdrawResult generateWithdrawResult(WithdrawOrder withdrawOrder) {
