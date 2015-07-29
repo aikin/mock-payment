@@ -81,15 +81,15 @@ public class DepositResourceTest extends ResourceTest {
     }
 
     @Test
-    public void should_client_response_failure_when_bankCardNo_be_match_DEPOSIT_PROCESSING() {
+    public void should_client_response_failure_when_bankCardNo_be_match_DEPOSIT_PENDING() {
 
-        requestData.put("bankCardNo", BankCardNoAndResponseCodeMap.DEPOSIT_PROCESSING.getBankCardNo());
+        requestData.put("bankCardNo", BankCardNoAndResponseCodeMap.DEPOSIT_PENDING.getBankCardNo());
         Response response = authTarget
             .request()
             .post(Entity.entity(Json.toJSON(requestData), MediaType.APPLICATION_JSON));
 
         HashMap respondMap = response.readEntity(HashMap.class);
-        assertThat(respondMap.get("depositMessage"), is(DepositResponseCode.DEPOSIT_PROCESSING.getDescription()));
-        assertThat(respondMap.get("responseCode"), is(DepositResponseCode.DEPOSIT_PROCESSING.getCode()));
+        assertThat(respondMap.get("depositMessage"), is(DepositResponseCode.DEPOSIT_PENDING.getDescription()));
+        assertThat(respondMap.get("responseCode"), is(DepositResponseCode.DEPOSIT_PENDING.getCode()));
     }
 }
