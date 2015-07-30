@@ -21,4 +21,8 @@ public interface DepositOrderMapper {
 
     DepositOrder findOrderByFlowIdAndCustomerId(@Param("depositFlowId") String depositFlowId,
                                                 @Param("customerId") String customerId);
+
+
+    DepositOrder findOrderByOrderIdAndCustomerId(@Param("orderId") String orderId,
+                                                 @Param("customerId") String customerId);
 }

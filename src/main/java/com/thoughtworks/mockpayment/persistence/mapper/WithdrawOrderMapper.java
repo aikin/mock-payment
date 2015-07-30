@@ -27,4 +27,7 @@ public interface WithdrawOrderMapper {
                                     @Param("customerId") String customerId);
 
     WithdrawOrder findOrderByFlowId(@Param("withdrawFlowId") String withdrawFlowId);
+
+    WithdrawOrder findOrderByOrderIdAndCustomerId(@Param("orderId") String orderId,
+                                    @Param("customerId") String customerId);
 }

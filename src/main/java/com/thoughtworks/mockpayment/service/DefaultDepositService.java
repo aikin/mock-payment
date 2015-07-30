@@ -26,8 +26,15 @@ public class DefaultDepositService implements DepositService {
     public String handleDepositRequest(Map<String, String> depositRequest) {
         logger.debug("*** in handle deposit request ***" + depositRequest);
 
-        DepositOrder depositOrder = new DepositOrder(depositRequest);
-        depositOrderMapper.insertNewOrder(depositOrder);
+        DepositOrder depositOrder = depositOrderMapper.findOrderByOrderIdAndCustomerId(
+            depositRequest.get("orderId"),
+            depositRequest.get("customerId"));
+
+        if (Objects.isNull(depositOrder)) {
+            depositOrder = new DepositOrder(depositRequest);
+            depositOrderMapper.insertNewOrder(depositOrder);
+        }
+
         DepositResult depositResult = this.generateDepositResult(depositOrder);
 
         return Json.toJSON(depositResult);

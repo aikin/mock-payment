@@ -67,6 +67,13 @@
         WHERE D.DEPOSIT_FLOW_ID=#{depositFlowId} AND D.CUSTOMER_ID=#{customerId}
     </select>
 
+    <select id="findOrderByOrderIdAndCustomerId" resultMap="depositOrder">
+        SELECT
+        <include refid="orderColumns"/>
+        FROM DEPOSIT_ORDER D
+        WHERE D.ORDER_ID=#{orderId} AND D.CUSTOMER_ID=#{customerId}
+    </select>
+
     <insert id="insertNewFullOrder">
         INSERT INTO DEPOSIT_ORDER(CUSTOMER_ID, DEPOSIT_FLOW_ID, ORDER_ID, USER_NAME, ID_CARD_NO, BANK_CODE,
         BANK_CARD_NO, BANK_NAME, EXPAND_INFO, AMOUNT, CURRENCY, BANK_SERIAL_NO, DEPOSIT_STATUS,

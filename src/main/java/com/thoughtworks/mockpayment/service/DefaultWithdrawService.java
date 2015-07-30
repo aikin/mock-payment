@@ -26,9 +26,14 @@ public class DefaultWithdrawService implements WithdrawService {
     public String handleWithdrawRequest(Map<String, String> withdrawRequest) {
         logger.debug("*** in handle withdraw request ***" + withdrawRequest);
 
-        WithdrawOrder withdrawOrder = new WithdrawOrder(withdrawRequest);
-        withdrawOrderMapper.insertNewOrder(withdrawOrder);
+        WithdrawOrder withdrawOrder = withdrawOrderMapper.findOrderByOrderIdAndCustomerId(
+            withdrawRequest.get("orderId"),
+            withdrawRequest.get("customerId"));
 
+        if (Objects.isNull(withdrawOrder)) {
+            withdrawOrder = new WithdrawOrder(withdrawRequest);
+            withdrawOrderMapper.insertNewOrder(withdrawOrder);
+        }
         WithdrawResult withdrawResult = this.generateWithdrawResult(withdrawOrder);
         return Json.toJSON(withdrawResult);
     }
