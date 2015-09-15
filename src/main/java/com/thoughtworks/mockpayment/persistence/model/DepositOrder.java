@@ -17,7 +17,6 @@ public class DepositOrder {
     private String bankCode;
     private String bankCardNo;
     private String bankName;
-    private String expandInfo;
     private String amount;
     private Date createdAt;
     private DepositStatus depositStatus;
@@ -37,7 +36,6 @@ public class DepositOrder {
         this.bankCode = depositRequest.get("bankCode");
         this.bankCardNo = depositRequest.get("bankCardNo");
         this.bankName = depositRequest.get("bankName");
-        this.expandInfo = depositRequest.get("expandInfo");
         this.amount = depositRequest.get("amount");
         this.createdAt = DateTime.now().toDate();
         this.flowId = UUID.randomUUID().toString();
@@ -106,14 +104,6 @@ public class DepositOrder {
 
     public void setBankName(String bankName) {
         this.bankName = bankName;
-    }
-
-    public String getExpandInfo() {
-        return expandInfo;
-    }
-
-    public void setExpandInfo(String expandInfo) {
-        this.expandInfo = expandInfo;
     }
 
     public String getAmount() {

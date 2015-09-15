@@ -14,15 +14,12 @@ public class DepositResult {
     private String customerId;
     private String orderId;
     private String amount;
-    private String expandInfo;
-
 
     public DepositResult(DepositOrder depositOrder, DepositResponseCode depositResponseCode) {
         this.flowId = depositOrder.getFlowId();
         this.customerId = depositOrder.getCustomerId();
         this.orderId = depositOrder.getOrderId();
         this.amount = depositOrder.getAmount();
-        this.expandInfo = depositOrder.getExpandInfo();
         this.responseCode = depositResponseCode.getCode();
         this.depositMessage = depositResponseCode.getDescription();
         this.depositAt = DateTime.now().toDate();
@@ -84,11 +81,4 @@ public class DepositResult {
         this.amount = amount;
     }
 
-    public String getExpandInfo() {
-        return expandInfo;
-    }
-
-    public void setExpandInfo(String expandInfo) {
-        this.expandInfo = expandInfo;
-    }
 }

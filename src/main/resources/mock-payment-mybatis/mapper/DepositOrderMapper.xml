@@ -13,7 +13,6 @@
           D.BANK_CODE AS D_BANK_CODE,
           D.BANK_CARD_NO AS D_BANK_CARD_NO,
           D.BANK_NAME AS D_BANK_NAME,
-          D.EXPAND_INFO AS D_EXPAND_INFO,
           D.AMOUNT AS D_AMOUNT,
           D.DEPOSIT_STATUS AS D_DEPOSIT_STATUS,
           D.DEPOSIT_MESSAGE AS D_DEPOSIT_MESSAGE,
@@ -31,7 +30,6 @@
         <result column="D_BANK_CODE" property="bankCode"/>
         <result column="D_BANK_CARD_NO" property="bankCardNo"/>
         <result column="D_BANK_NAME" property="bankName"/>
-        <result column="D_EXPAND_INFO" property="expandInfo"/>
         <result column="D_AMOUNT" property="amount"/>
         <result column="D_DEPOSIT_STATUS" property="depositStatus"/>
         <result column="D_DEPOSIT_MESSAGE" property="depositMessage"/>
@@ -41,17 +39,17 @@
     </resultMap>
 
     <insert id="insertNewOrder">
-        INSERT INTO DEPOSIT_ORDER(CUSTOMER_ID, DEPOSIT_FLOW_ID, ORDER_ID, USER_NAME, BANK_CODE, BANK_CARD_NO, BANK_NAME,
-                        EXPAND_INFO, AMOUNT, DEPOSIT_STATUS, CREATED_AT)
+        INSERT INTO DEPOSIT_ORDER(CUSTOMER_ID, FLOW_ID, ORDER_ID, USER_NAME, BANK_CODE, BANK_CARD_NO, BANK_NAME,
+                    AMOUNT, DEPOSIT_STATUS, CREATED_AT)
         VALUES (#{order.customerId}, #{order.flowId}, #{order.orderId}, #{order.userName}, #{order.bankCode},
-                #{order.bankCardNo}, #{order.bankName},#{order.expandInfo}, #{order.amount},
+                #{order.bankCardNo}, #{order.bankName}, #{order.amount},
                 #{order.depositStatus}, #{order.createdAt})
     </insert>
 
     <update id="updateDepositStatus">
         UPDATE DEPOSIT_ORDER SET DEPOSIT_STATUS=#{depositStatus},
                         DEPOSIT_MESSAGE=#{depositMessage}, RESPONSE_CODE=#{responseCode}, DEPOSIT_AT=#{depositAt}
-        WHERE DEPOSIT_FLOW_ID=#{flowId}
+        WHERE FLOW_ID=#{flowId}
     </update>
 
     <select id="findOrderByFlowIdAndCustomerId" resultMap="depositOrder">
@@ -70,10 +68,10 @@
 
     <insert id="insertNewFullOrder">
         INSERT INTO DEPOSIT_ORDER(CUSTOMER_ID, FLOW_ID, ORDER_ID, USER_NAME, BANK_CODE,
-        BANK_CARD_NO, BANK_NAME, EXPAND_INFO, AMOUNT, DEPOSIT_STATUS,
+        BANK_CARD_NO, BANK_NAME, AMOUNT, DEPOSIT_STATUS,
         DEPOSIT_MESSAGE, RESPONSE_CODE, DEPOSIT_AT, CREATED_AT)
         VALUES (#{order.customerId}, #{order.flowId}, #{order.orderId}, #{order.userName},
-        #{order.bankCode}, #{order.bankCardNo}, #{order.bankName}, #{order.expandInfo}, #{order.amount},
+        #{order.bankCode}, #{order.bankCardNo}, #{order.bankName}, #{order.amount},
         #{order.depositStatus}, #{order.depositMessage},
         #{order.responseCode}, #{order.depositAt}, #{order.createdAt})
     </insert>

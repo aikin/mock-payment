@@ -38,7 +38,6 @@ public class DepositResourceTest extends ResourceTest {
         requestData.put("bankName", "www");
         requestData.put("amount", "100");
         requestData.put("orderId", "121121121121");
-        requestData.put("expandInfo", "testExpandInfo");
     }
 
     @After

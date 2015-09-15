@@ -50,7 +50,6 @@ public class DepositQueryResourceTest extends ResourceTest {
         baseDepositOrderData.put("bankName", "www");
         baseDepositOrderData.put("amount", "100");
         baseDepositOrderData.put("orderId", "121121121121");
-        baseDepositOrderData.put("expandInfo", "testExpandInfo");
     }
 
     @After
