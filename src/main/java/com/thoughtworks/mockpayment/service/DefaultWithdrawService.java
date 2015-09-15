@@ -16,9 +16,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class DefaultWithdrawService implements WithdrawService {
-
     private static final Logger logger = LoggerFactory.getLogger(DefaultWithdrawService.class);
-    private static final int WAIT_RESPONSE_WITHDRAW_RESULT = 1000;
 
     @Inject
     private WithdrawOrderMapper withdrawOrderMapper;
@@ -40,7 +38,7 @@ public class DefaultWithdrawService implements WithdrawService {
     }
 
     @Override
-    public String handleWithdrawQueryRequest (Map<String, String> queryRequest) {
+    public String handleWithdrawQueryRequest(Map<String, String> queryRequest) {
         logger.debug("*** in handle withdraw request ***" + queryRequest);
 
         String flowId = queryRequest.get("flowId");
@@ -56,11 +54,6 @@ public class DefaultWithdrawService implements WithdrawService {
         String withdrawStatusCode = BankCardNoAndWithdrawResponseCodeMap.fetchStatusCodeByBankCardNo(withdrawOrder.getBankCardNo());
         WithdrawResponseCode withdrawResponseCode = WithdrawResponseCode.codeOf(withdrawStatusCode);
 
-
-        if (Objects.isNull(withdrawResponseCode)) {
-            withdrawResponseCode = WithdrawResponseCode.SUCCESS;
-        }
-
         if (Objects.isNull(withdrawResponseCode)) {
             withdrawResponseCode = WithdrawResponseCode.SUCCESS;
         }
@@ -71,12 +64,6 @@ public class DefaultWithdrawService implements WithdrawService {
     }
 
     private void handleWithdrawOrder(WithdrawResult withdrawResult, WithdrawResponseCode withdrawResponseCode) {
-        try {
-            Thread.sleep(WAIT_RESPONSE_WITHDRAW_RESULT);
-        } catch (InterruptedException e) {
-            logger.error(e.getLocalizedMessage(), e);
-        }
-
         this.withdrawOrderMapper.updateWithdrawStatus(
             withdrawResult.getFlowId(),
             withdrawResult.getWithdrawAt(),
@@ -84,6 +71,5 @@ public class DefaultWithdrawService implements WithdrawService {
             withdrawResponseCode.getDescription(),
             withdrawResponseCode.getCode()
         );
-
     }
 }

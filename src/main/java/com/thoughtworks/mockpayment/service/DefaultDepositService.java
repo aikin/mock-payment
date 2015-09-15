@@ -15,9 +15,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class DefaultDepositService implements DepositService {
-
     private static final Logger logger = LoggerFactory.getLogger(DefaultDepositService.class);
-    private static final int WAIT_RESPONSE_DEPOSIT_RESULT = 1000;
 
     @Inject
     private DepositOrderMapper depositOrderMapper;
@@ -67,12 +65,6 @@ public class DefaultDepositService implements DepositService {
     }
 
     private void handleDepositOrder(DepositResult depositResult, DepositResponseCode depositResponseCode) {
-        try {
-            Thread.sleep(WAIT_RESPONSE_DEPOSIT_RESULT);
-        } catch (InterruptedException e) {
-            logger.error(e.getLocalizedMessage(), e);
-        }
-
         this.depositOrderMapper.updateDepositStatus(
             depositResult.getFlowId(),
             depositResponseCode.getStatus(),
