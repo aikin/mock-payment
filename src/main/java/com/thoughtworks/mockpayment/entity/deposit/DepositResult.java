@@ -4,41 +4,36 @@ import com.thoughtworks.mockpayment.persistence.model.DepositOrder;
 import org.joda.time.DateTime;
 
 import java.util.Date;
-import java.util.UUID;
 
 public class DepositResult {
 
-    private String depositFlowId;
+    private String flowId;
     private String depositMessage;
     private String responseCode;
     private Date depositAt;
-    private String bankSerialNo;
     private String customerId;
     private String orderId;
     private String amount;
-    private String currency;
     private String expandInfo;
 
 
     public DepositResult(DepositOrder depositOrder, DepositResponseCode depositResponseCode) {
-        this.depositFlowId = depositOrder.getDepositFlowId();
+        this.flowId = depositOrder.getFlowId();
         this.customerId = depositOrder.getCustomerId();
         this.orderId = depositOrder.getOrderId();
         this.amount = depositOrder.getAmount();
-        this.currency = depositOrder.getCurrency();
         this.expandInfo = depositOrder.getExpandInfo();
         this.responseCode = depositResponseCode.getCode();
         this.depositMessage = depositResponseCode.getDescription();
         this.depositAt = DateTime.now().toDate();
-        this.bankSerialNo = UUID.randomUUID().toString();
     }
 
-    public String getDepositFlowId() {
-        return depositFlowId;
+    public String getFlowId() {
+        return flowId;
     }
 
-    public void setDepositFlowId(String depositFlowId) {
-        this.depositFlowId = depositFlowId;
+    public void setFlowId(String flowId) {
+        this.flowId = flowId;
     }
 
     public String getDepositMessage() {
@@ -65,14 +60,6 @@ public class DepositResult {
         this.depositAt = depositAt;
     }
 
-    public String getBankSerialNo() {
-        return bankSerialNo;
-    }
-
-    public void setBankSerialNo(String bankSerialNo) {
-        this.bankSerialNo = bankSerialNo;
-    }
-
     public String getCustomerId() {
         return customerId;
     }
@@ -95,14 +82,6 @@ public class DepositResult {
 
     public void setAmount(String amount) {
         this.amount = amount;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
     }
 
     public String getExpandInfo() {

@@ -3,15 +3,9 @@ package com.thoughtworks.mockpayment.entity.withdraw;
 
 import com.thoughtworks.mockpayment.persistence.model.WithdrawOrder;
 
-import java.util.Date;
-
 public class WithdrawQueryResult {
 
     private String withdrawFlowId;
-    private String queryResponseCode;
-    private String queryMessage;
-    private String queryStatus;
-    private Date queryAt;
     private String customerId;
     private String orderId;
     private Double amount;
@@ -20,11 +14,7 @@ public class WithdrawQueryResult {
     private String bankCardNo;
 
     public WithdrawQueryResult(WithdrawOrder withdrawOrder) {
-        this.withdrawFlowId = withdrawOrder.getWithdrawFlowId();
-        this.queryResponseCode = withdrawOrder.getQueryResponseCode();
-        this.queryMessage = withdrawOrder.getQueryMessage();
-        this.queryStatus = withdrawOrder.getQueryMessage();
-        this.queryAt = withdrawOrder.getQueryAt();
+        this.withdrawFlowId = withdrawOrder.getFlowId();
         this.customerId = withdrawOrder.getCustomerId();
         this.orderId = withdrawOrder.getOrderId();
         this.amount = withdrawOrder.getAmount();
@@ -39,38 +29,6 @@ public class WithdrawQueryResult {
 
     public void setWithdrawFlowId(String withdrawFlowId) {
         this.withdrawFlowId = withdrawFlowId;
-    }
-
-    public String getQueryResponseCode() {
-        return queryResponseCode;
-    }
-
-    public void setQueryResponseCode(String queryResponseCode) {
-        this.queryResponseCode = queryResponseCode;
-    }
-
-    public String getQueryMessage() {
-        return queryMessage;
-    }
-
-    public void setQueryMessage(String queryMessage) {
-        this.queryMessage = queryMessage;
-    }
-
-    public String getQueryStatus() {
-        return queryStatus;
-    }
-
-    public void setQueryStatus(String queryStatus) {
-        this.queryStatus = queryStatus;
-    }
-
-    public Date getQueryAt() {
-        return queryAt;
-    }
-
-    public void setQueryAt(Date queryAt) {
-        this.queryAt = queryAt;
     }
 
     public String getCustomerId() {

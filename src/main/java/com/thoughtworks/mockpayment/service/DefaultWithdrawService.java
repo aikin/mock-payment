@@ -2,12 +2,13 @@ package com.thoughtworks.mockpayment.service;
 
 
 import com.google.inject.Inject;
-import com.thoughtworks.mockpayment.entity.withdraw.*;
+import com.thoughtworks.mockpayment.entity.withdraw.BankCardNoAndWithdrawResponseCodeMap;
+import com.thoughtworks.mockpayment.entity.withdraw.WithdrawQueryResult;
+import com.thoughtworks.mockpayment.entity.withdraw.WithdrawResponseCode;
+import com.thoughtworks.mockpayment.entity.withdraw.WithdrawResult;
 import com.thoughtworks.mockpayment.persistence.mapper.WithdrawOrderMapper;
 import com.thoughtworks.mockpayment.persistence.model.WithdrawOrder;
-import com.thoughtworks.mockpayment.persistence.model.WithdrawOrder.WithdrawStatus;
 import com.thoughtworks.mockpayment.util.Json;
-import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,29 +56,21 @@ public class DefaultWithdrawService implements WithdrawService {
         String withdrawStatusCode = BankCardNoAndWithdrawResponseCodeMap.fetchStatusCodeByBankCardNo(withdrawOrder.getBankCardNo());
         WithdrawResponseCode withdrawResponseCode = WithdrawResponseCode.codeOf(withdrawStatusCode);
 
-        String queryStatusCode = BankCardNoAndQueryResponseCodeMap.fetchStatusCodeByBankCardNo(withdrawOrder.getBankCardNo());
-        QueryResponseCode queryResponseCode = QueryResponseCode.codeOf(queryStatusCode);
 
-        if (Objects.isNull(withdrawResponseCode) && Objects.isNull(queryResponseCode)) {
+        if (Objects.isNull(withdrawResponseCode)) {
             withdrawResponseCode = WithdrawResponseCode.SUCCESS;
-            queryResponseCode = QueryResponseCode.SUCCESS;
         }
-        if (!Objects.isNull(withdrawResponseCode) && withdrawResponseCode.getStatus() == WithdrawStatus.SUCCESS) {
-            queryResponseCode = QueryResponseCode.SUCCESS;
-        }
-        if (!Objects.isNull(withdrawResponseCode) && withdrawResponseCode.getStatus() != WithdrawStatus.SUCCESS) {
-            queryResponseCode = QueryResponseCode.FAILURE_WITHDRAW;
-        }
+
         if (Objects.isNull(withdrawResponseCode)) {
             withdrawResponseCode = WithdrawResponseCode.SUCCESS;
         }
 
         WithdrawResult withdrawResult = new WithdrawResult(withdrawOrder, withdrawResponseCode);
-        this.handleWithdrawOrder(withdrawResult, withdrawResponseCode, queryResponseCode);
+        this.handleWithdrawOrder(withdrawResult, withdrawResponseCode);
         return withdrawResult;
     }
 
-    private void handleWithdrawOrder(WithdrawResult withdrawResult, WithdrawResponseCode withdrawResponseCode, QueryResponseCode queryResponseCode) {
+    private void handleWithdrawOrder(WithdrawResult withdrawResult, WithdrawResponseCode withdrawResponseCode) {
         try {
             Thread.sleep(WAIT_RESPONSE_WITHDRAW_RESULT);
         } catch (InterruptedException e) {
@@ -85,19 +78,12 @@ public class DefaultWithdrawService implements WithdrawService {
         }
 
         this.withdrawOrderMapper.updateWithdrawStatus(
-            withdrawResult.getWithdrawFlowId(),
+            withdrawResult.getFlowId(),
             withdrawResult.getWithdrawAt(),
             withdrawResponseCode.getStatus(),
             withdrawResponseCode.getDescription(),
             withdrawResponseCode.getCode()
         );
 
-        this.withdrawOrderMapper.updateQueryStatus(
-            withdrawResult.getWithdrawFlowId(),
-            DateTime.now().toDate(),
-            queryResponseCode.getStatus(),
-            queryResponseCode.getDescription(),
-            queryResponseCode.getCode()
-        );
     }
 }

@@ -21,7 +21,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -44,7 +43,6 @@ public class DepositQueryResourceTest extends ResourceTest {
     public void setUp() throws Exception {
         super.setUp();
         authTarget = target().path("/mockpayment/deposit-query");
-        baseDepositOrderData.put("cmd", "deposit-query");
         baseDepositOrderData.put("customerId", "809080908090");
         baseDepositOrderData.put("userName", "aikin");
         baseDepositOrderData.put("idCardNo", "362329199103120018");
@@ -71,15 +69,12 @@ public class DepositQueryResourceTest extends ResourceTest {
         depositOrder.setDepositStatus(DepositResponseCode.SHORT_BALANCE.getStatus());
         depositOrder.setResponseCode(DepositResponseCode.SHORT_BALANCE.getCode());
         depositOrder.setDepositMessage(DepositResponseCode.SHORT_BALANCE.getDescription());
-        depositOrder.setBankSerialNo(UUID.randomUUID().toString());
         depositOrder.setDepositAt(DateTime.now().toDate());
         depositOrderMapper.insertNewFullOrder(depositOrder);
 
         final Map<String, String> request = new HashMap<>();
-        request.put("cmd", "deposit-query");
         request.put("customerId", depositOrder.getCustomerId());
-        request.put("flowId", depositOrder.getDepositFlowId());
-        request.put("orderId", depositOrder.getOrderId());
+        request.put("flowId", depositOrder.getFlowId());
 
         Response response = authTarget
             .request()
@@ -91,6 +86,6 @@ public class DepositQueryResourceTest extends ResourceTest {
         assertThat(respondMap.get("responseCode"), is(DepositResponseCode.SHORT_BALANCE.getCode()));
         assertThat(respondMap.get("orderId"), is(depositOrder.getOrderId()));
         assertThat(respondMap.get("customerId"), is(depositOrder.getCustomerId()));
-        assertThat(respondMap.get("flowId"), is(depositOrder.getDepositFlowId()));
+        assertThat(respondMap.get("flowId"), is(depositOrder.getFlowId()));
     }
 }

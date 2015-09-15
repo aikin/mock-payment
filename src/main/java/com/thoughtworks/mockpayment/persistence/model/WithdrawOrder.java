@@ -10,7 +10,7 @@ import java.util.UUID;
 public class WithdrawOrder {
 
     private long id;
-    private String withdrawFlowId;
+    private String flowId;
     private String customerId;
     private String orderId;
     private String bankCode;
@@ -22,10 +22,6 @@ public class WithdrawOrder {
     private String responseCode;
     private String withdrawMessage;
     private Date withdrawAt;
-    private QueryStatus queryStatus;
-    private String queryMessage;
-    private Date queryAt;
-    private String queryResponseCode;
     private Date createdAt;
 
     public WithdrawOrder() {
@@ -33,7 +29,6 @@ public class WithdrawOrder {
     }
 
     public WithdrawOrder(Map<String, String> request) {
-
         this.customerId = request.get("customerId");
         this.orderId = request.get("orderId");
         this.bankCode = request.get("bankCode");
@@ -43,8 +38,7 @@ public class WithdrawOrder {
         this.amount = Double.valueOf(request.get("amount"));
         this.createdAt = DateTime.now().toDate();
         this.withdrawStatus = WithdrawStatus.PENDING;
-        this.withdrawFlowId = UUID.randomUUID().toString();
-        this.queryStatus = QueryStatus.PENDING;
+        this.flowId = UUID.randomUUID().toString();
     }
 
     public long getId() {
@@ -55,12 +49,12 @@ public class WithdrawOrder {
         this.id = id;
     }
 
-    public String getWithdrawFlowId() {
-        return withdrawFlowId;
+    public String getFlowId() {
+        return flowId;
     }
 
-    public void setWithdrawFlowId(String withdrawFlowId) {
-        this.withdrawFlowId = withdrawFlowId;
+    public void setFlowId(String flowId) {
+        this.flowId = flowId;
     }
 
     public String getCustomerId() {
@@ -151,38 +145,6 @@ public class WithdrawOrder {
         this.withdrawAt = withdrawAt;
     }
 
-    public QueryStatus getQueryStatus() {
-        return queryStatus;
-    }
-
-    public void setQueryStatus(QueryStatus queryStatus) {
-        this.queryStatus = queryStatus;
-    }
-
-    public String getQueryMessage() {
-        return queryMessage;
-    }
-
-    public void setQueryMessage(String queryMessage) {
-        this.queryMessage = queryMessage;
-    }
-
-    public Date getQueryAt() {
-        return queryAt;
-    }
-
-    public void setQueryAt(Date queryAt) {
-        this.queryAt = queryAt;
-    }
-
-    public String getQueryResponseCode() {
-        return queryResponseCode;
-    }
-
-    public void setQueryResponseCode(String queryResponseCode) {
-        this.queryResponseCode = queryResponseCode;
-    }
-
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -192,10 +154,6 @@ public class WithdrawOrder {
     }
 
     public static enum WithdrawStatus {
-        PENDING, SUCCESS, FAILURE
-    }
-
-    public static enum QueryStatus {
         PENDING, SUCCESS, FAILURE
     }
 }

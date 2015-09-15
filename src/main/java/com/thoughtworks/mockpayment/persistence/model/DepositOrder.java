@@ -9,7 +9,7 @@ import java.util.UUID;
 public class DepositOrder {
 
     private long id;
-    private String depositFlowId;
+    private String flowId;
     private String customerId;
     private String orderId;
     private String userName;
@@ -19,9 +19,7 @@ public class DepositOrder {
     private String bankName;
     private String expandInfo;
     private String amount;
-    private String currency;
     private Date createdAt;
-    private String bankSerialNo;
     private DepositStatus depositStatus;
     private String responseCode;
     private String depositMessage;
@@ -41,12 +39,10 @@ public class DepositOrder {
         this.bankName = depositRequest.get("bankName");
         this.expandInfo = depositRequest.get("expandInfo");
         this.amount = depositRequest.get("amount");
-        this.currency = depositRequest.get("currency");
         this.createdAt = DateTime.now().toDate();
-        this.depositFlowId = UUID.randomUUID().toString();
+        this.flowId = UUID.randomUUID().toString();
         this.depositStatus = DepositStatus.PENDING;
     }
-
 
     public long getId() {
         return id;
@@ -128,20 +124,12 @@ public class DepositOrder {
         this.amount = amount;
     }
 
-    public String getCurrency() {
-        return currency;
+    public String getFlowId() {
+        return flowId;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
-    public String getDepositFlowId() {
-        return depositFlowId;
-    }
-
-    public void setDepositFlowId(String depositFlowId) {
-        this.depositFlowId = depositFlowId;
+    public void setFlowId(String flowId) {
+        this.flowId = flowId;
     }
 
     public Date getCreatedAt() {
@@ -150,14 +138,6 @@ public class DepositOrder {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public String getBankSerialNo() {
-        return bankSerialNo;
-    }
-
-    public void setBankSerialNo(String bankSerialNo) {
-        this.bankSerialNo = bankSerialNo;
     }
 
     public DepositStatus getDepositStatus() {

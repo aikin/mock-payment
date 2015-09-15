@@ -6,7 +6,7 @@
 
     <sql id="orderColumns">
           W.ID AS W_ID,
-          W.WITHDRAW_FLOW_ID AS W_WITHDRAW_FLOW_ID,
+          W.FLOW_ID AS W_FLOW_ID,
           W.CUSTOMER_ID AS W_CUSTOMER_ID,
           W.ORDER_ID AS  W_ORDER_ID,
           W.BANK_CODE AS W_BANK_CODE,
@@ -18,16 +18,12 @@
           W.WITHDRAW_MESSAGE AS W_WITHDRAW_MESSAGE,
           W.RESPONSE_CODE AS W_RESPONSE_CODE,
           W.WITHDRAW_AT AS W_WITHDRAW_AT,
-          W.QUERY_STATUS AS W_QUERY_STATUS,
-          W.QUERY_MESSAGE AS W_QUERY_MESSAGE,
-          W.QUERY_RESPONSE_CODE AS W_QUERY_RESPONSE_CODE,
-          W.QUERY_AT AS W_QUERY_AT,
           W.CREATED_AT AS W_CREATED_AT
     </sql>
 
     <resultMap id="withdrawOrder" type="com.thoughtworks.mockpayment.persistence.model.WithdrawOrder">
         <id column="W_ID" property="id"/>
-        <result column="W_WITHDRAW_FLOW_ID" property="withdrawFlowId"/>
+        <result column="W_FLOW_ID" property="flowId"/>
         <result column="W_CUSTOMER_ID" property="customerId"/>
         <result column="W_ORDER_ID" property="orderId"/>
         <result column="W_BANK_CODE" property="bankCode"/>
@@ -39,45 +35,28 @@
         <result column="W_WITHDRAW_MESSAGE" property="withdrawMessage"/>
         <result column="W_RESPONSE_CODE" property="responseCode"/>
         <result column="W_WITHDRAW_AT" property="withdrawAt"/>
-        <result column="W_QUERY_STATUS" property="queryStatus"/>
-        <result column="W_QUERY_MESSAGE" property="queryMessage"/>
-        <result column="W_QUERY_RESPONSE_CODE" property="queryResponseCode"/>
-        <result column="W_QUERY_AT" property="queryAt"/>
         <result column="W_CREATED_AT" property="createdAt"/>
     </resultMap>
 
     <insert id="insertNewOrder">
-        INSERT INTO WITHDRAW_ORDER(CUSTOMER_ID, WITHDRAW_FLOW_ID, ORDER_ID, USER_NAME, BANK_CODE, BANK_CARD_NO, BANK_NAME,
-                        AMOUNT, WITHDRAW_STATUS, QUERY_STATUS, CREATED_AT)
-        VALUES (#{order.customerId}, #{order.withdrawFlowId}, #{order.orderId}, #{order.userName}, #{order.bankCode},
+        INSERT INTO WITHDRAW_ORDER(CUSTOMER_ID, FLOW_ID, ORDER_ID, USER_NAME, BANK_CODE, BANK_CARD_NO, BANK_NAME,
+                        AMOUNT, WITHDRAW_STATUS, CREATED_AT)
+        VALUES (#{order.customerId}, #{order.flowId}, #{order.orderId}, #{order.userName}, #{order.bankCode},
                 #{order.bankCardNo}, #{order.bankName}, #{order.amount},
-                #{order.withdrawStatus}, #{order.queryStatus}, #{order.createdAt})
+                #{order.withdrawStatus}, #{order.createdAt})
     </insert>
 
     <update id="updateWithdrawStatus">
         UPDATE WITHDRAW_ORDER SET WITHDRAW_STATUS=#{withdrawStatus}, WITHDRAW_MESSAGE=#{withdrawMessage},
                                 RESPONSE_CODE=#{responseCode}, WITHDRAW_AT=#{withdrawAt}
-        WHERE WITHDRAW_FLOW_ID=#{withdrawFlowId}
-    </update>
-
-    <update id="updateQueryStatus">
-        UPDATE WITHDRAW_ORDER SET QUERY_STATUS=#{queryStatus}, QUERY_MESSAGE=#{queryMessage},
-        QUERY_RESPONSE_CODE=#{queryResponseCode}, QUERY_AT=#{queryAt}
-        WHERE WITHDRAW_FLOW_ID=#{withdrawFlowId}
+        WHERE FLOW_ID=#{flowId}
     </update>
 
     <select id="findOrderByFlowIdAndCustomerId" resultMap="withdrawOrder">
         SELECT
         <include refid="orderColumns"/>
         FROM WITHDRAW_ORDER W
-        WHERE W.WITHDRAW_FLOW_ID=#{withdrawFlowId} AND W.CUSTOMER_ID=#{customerId}
-    </select>
-
-    <select id="findOrderByFlowId" resultMap="withdrawOrder">
-        SELECT
-        <include refid="orderColumns"/>
-        FROM WITHDRAW_ORDER W
-        WHERE W.WITHDRAW_FLOW_ID=#{withdrawFlowId}
+        WHERE W.FLOW_ID=#{flowId} AND W.CUSTOMER_ID=#{customerId}
     </select>
 
     <select id="findOrderByOrderIdAndCustomerId" resultMap="withdrawOrder">

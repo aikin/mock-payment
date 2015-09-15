@@ -74,12 +74,11 @@ public class DefaultDepositService implements DepositService {
         }
 
         this.depositOrderMapper.updateDepositStatus(
-            depositResult.getDepositFlowId(),
+            depositResult.getFlowId(),
             depositResponseCode.getStatus(),
             depositResponseCode.getDescription(),
             depositResponseCode.getCode(),
-            depositResult.getDepositAt(),
-            depositResult.getBankSerialNo()
+            depositResult.getDepositAt()
         );
     }
 }

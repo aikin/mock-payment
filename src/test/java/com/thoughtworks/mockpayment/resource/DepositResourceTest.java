@@ -2,7 +2,6 @@ package com.thoughtworks.mockpayment.resource;
 
 import com.thoughtworks.mockpayment.entity.deposit.BankCardNoAndResponseCodeMap;
 import com.thoughtworks.mockpayment.entity.deposit.DepositResponseCode;
-import com.thoughtworks.mockpayment.util.Json;
 import com.thoughtworks.mockpayment.util.MockPaymentResourceRunner;
 import com.thoughtworks.mockpayment.util.ResourceTest;
 import org.junit.After;
@@ -32,7 +31,6 @@ public class DepositResourceTest extends ResourceTest {
     public void setUp() throws Exception {
         super.setUp();
         authTarget = target().path("/mockpayment/deposit");
-        requestData.put("cmd", "deposit");
         requestData.put("customerId", "809080908090");
         requestData.put("userName", "aikin");
         requestData.put("idCardNo", "362329199103120018");
@@ -58,7 +56,7 @@ public class DepositResourceTest extends ResourceTest {
         requestData.put("bankCardNo", UN_MATCH_BANK_CARD_NO);
         Response response = authTarget
             .request()
-            .post(Entity.entity(Json.toJSON(requestData), MediaType.APPLICATION_JSON));
+            .post(Entity.entity(requestData, MediaType.APPLICATION_JSON));
 
 //        Gson gson = new Gson();
 //        HashMap respondMap = gson.fromJson(response.readEntity(String.class), HashMap.class);
@@ -73,7 +71,7 @@ public class DepositResourceTest extends ResourceTest {
         requestData.put("bankCardNo", BankCardNoAndResponseCodeMap.SHORT_BALANCE.getBankCardNo());
         Response response = authTarget
             .request()
-            .post(Entity.entity(Json.toJSON(requestData), MediaType.APPLICATION_JSON));
+            .post(Entity.entity(requestData, MediaType.APPLICATION_JSON));
 
         HashMap respondMap = response.readEntity(HashMap.class);
         assertThat(respondMap.get("depositMessage"), is(DepositResponseCode.SHORT_BALANCE.getDescription()));
@@ -86,7 +84,7 @@ public class DepositResourceTest extends ResourceTest {
         requestData.put("bankCardNo", BankCardNoAndResponseCodeMap.DEPOSIT_PENDING.getBankCardNo());
         Response response = authTarget
             .request()
-            .post(Entity.entity(Json.toJSON(requestData), MediaType.APPLICATION_JSON));
+            .post(Entity.entity(requestData, MediaType.APPLICATION_JSON));
 
         HashMap respondMap = response.readEntity(HashMap.class);
         assertThat(respondMap.get("depositMessage"), is(DepositResponseCode.DEPOSIT_PENDING.getDescription()));

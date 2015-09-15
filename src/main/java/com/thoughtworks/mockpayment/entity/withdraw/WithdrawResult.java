@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class WithdrawResult {
 
-    private String withdrawFlowId;
+    private String flowId;
     private String responseCode;
     private String withdrawMessage;
     private Date withdrawAt;
@@ -19,7 +19,7 @@ public class WithdrawResult {
 
     public WithdrawResult(WithdrawOrder withdrawOrder, WithdrawResponseCode withdrawResponseCode) {
 
-        this.withdrawFlowId = withdrawOrder.getWithdrawFlowId();
+        this.flowId = withdrawOrder.getFlowId();
         this.customerId = withdrawOrder.getCustomerId();
         this.orderId = withdrawOrder.getOrderId();
         this.amount = String.valueOf(withdrawOrder.getAmount());
@@ -29,12 +29,12 @@ public class WithdrawResult {
         this.withdrawAt = DateTime.now().toDate();
     }
 
-    public String getWithdrawFlowId() {
-        return withdrawFlowId;
+    public String getFlowId() {
+        return flowId;
     }
 
-    public void setWithdrawFlowId(String withdrawFlowId) {
-        this.withdrawFlowId = withdrawFlowId;
+    public void setFlowId(String flowId) {
+        this.flowId = flowId;
     }
 
     public String getResponseCode() {

@@ -12,14 +12,13 @@ public interface DepositOrderMapper {
 
     void insertNewFullOrder(@Param("order") DepositOrder newOrder);
 
-    void updateDepositStatus(@Param("depositFlowId") String depositFlowId,
+    void updateDepositStatus(@Param("flowId") String depositFlowId,
                               @Param("depositStatus") DepositStatus depositStatus,
                               @Param("depositMessage") String depositMessage,
                               @Param("responseCode") String responseCode,
-                              @Param("depositAt") Date depositAt,
-                              @Param("bankSerialNo") String bankSerialNo);
+                              @Param("depositAt") Date depositAt);
 
-    DepositOrder findOrderByFlowIdAndCustomerId(@Param("depositFlowId") String depositFlowId,
+    DepositOrder findOrderByFlowIdAndCustomerId(@Param("flowId") String depositFlowId,
                                                 @Param("customerId") String customerId);
 
 

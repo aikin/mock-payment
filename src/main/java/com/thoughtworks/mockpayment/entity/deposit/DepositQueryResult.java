@@ -12,20 +12,18 @@ public class DepositQueryResult {
     private String message;
     private String responseCode;
     private Date depositAt;
-    private String bankSerialNo;
     private String orderId;
     private String amount;
 
     public DepositQueryResult(DepositOrder depositOrder) {
 
         this.customerId = depositOrder.getCustomerId();
-        this.flowId = depositOrder.getDepositFlowId();
+        this.flowId = depositOrder.getFlowId();
         this.orderId = depositOrder.getOrderId();
         this.amount = depositOrder.getAmount();
         this.responseCode = depositOrder.getResponseCode();
         this.message = depositOrder.getDepositMessage();
         this.depositAt = depositOrder.getDepositAt();
-        this.bankSerialNo = depositOrder.getBankSerialNo();
     }
 
     public String getCustomerId() {
@@ -66,14 +64,6 @@ public class DepositQueryResult {
 
     public void setDepositAt(Date depositAt) {
         this.depositAt = depositAt;
-    }
-
-    public String getBankSerialNo() {
-        return bankSerialNo;
-    }
-
-    public void setBankSerialNo(String bankSerialNo) {
-        this.bankSerialNo = bankSerialNo;
     }
 
     public String getOrderId() {
