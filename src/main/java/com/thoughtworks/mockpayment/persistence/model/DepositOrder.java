@@ -28,15 +28,15 @@ public class DepositOrder {
 
     }
 
-    public DepositOrder(Map<String, String> depositRequest) {
-        this.customerId = depositRequest.get("customerId");
-        this.orderId = depositRequest.get("orderId");
-        this.userName = depositRequest.get("userName");
-        this.idCardNo = depositRequest.get("idCardNo");
-        this.bankCode = depositRequest.get("bankCode");
-        this.bankCardNo = depositRequest.get("bankCardNo");
-        this.bankName = depositRequest.get("bankName");
-        this.amount = depositRequest.get("amount");
+    public DepositOrder(Map<String, Object> depositRequest) {
+        this.customerId = depositRequest.get("customerId").toString();
+        this.orderId = depositRequest.get("orderId").toString();
+        this.userName = depositRequest.get("userName").toString();
+        this.idCardNo = depositRequest.get("idCardNo").toString();
+        this.bankCode = depositRequest.get("bankCode").toString();
+        this.bankCardNo = depositRequest.get("bankCardNo").toString();
+        this.bankName = depositRequest.get("bankName").toString();
+        this.amount = depositRequest.get("amount").toString();
         this.createdAt = DateTime.now().toDate();
         this.flowId = UUID.randomUUID().toString();
         this.depositStatus = DepositStatus.PENDING;

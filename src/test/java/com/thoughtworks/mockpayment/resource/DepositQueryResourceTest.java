@@ -30,7 +30,7 @@ import static org.hamcrest.Matchers.is;
 public class DepositQueryResourceTest extends ResourceTest {
 
     protected WebTarget authTarget;
-    protected Map<String, String> baseDepositOrderData = new HashMap<>();
+    protected Map<String, Object> baseDepositOrderData = new HashMap<>();
 
     @Inject
     protected Injector injector;
@@ -48,6 +48,7 @@ public class DepositQueryResourceTest extends ResourceTest {
         baseDepositOrderData.put("idCardNo", "362329199103120018");
         baseDepositOrderData.put("bankCode", "CCB");
         baseDepositOrderData.put("bankName", "www");
+        baseDepositOrderData.put("bankCardNo", "123232");
         baseDepositOrderData.put("amount", "100");
         baseDepositOrderData.put("orderId", "121121121121");
     }

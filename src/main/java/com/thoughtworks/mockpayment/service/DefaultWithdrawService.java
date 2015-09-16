@@ -22,12 +22,12 @@ public class DefaultWithdrawService implements WithdrawService {
     private WithdrawOrderMapper withdrawOrderMapper;
 
     @Override
-    public String handleWithdrawRequest(Map<String, String> withdrawRequest) {
+    public String handleWithdrawRequest(Map<String, Object> withdrawRequest) {
         logger.debug("*** in handle withdraw request ***" + withdrawRequest);
 
         WithdrawOrder withdrawOrder = withdrawOrderMapper.findOrderByOrderIdAndCustomerId(
-            withdrawRequest.get("orderId"),
-            withdrawRequest.get("customerId"));
+            withdrawRequest.get("orderId").toString(),
+            withdrawRequest.get("customerId").toString());
 
         if (Objects.isNull(withdrawOrder)) {
             withdrawOrder = new WithdrawOrder(withdrawRequest);
@@ -38,11 +38,11 @@ public class DefaultWithdrawService implements WithdrawService {
     }
 
     @Override
-    public String handleWithdrawQueryRequest(Map<String, String> queryRequest) {
+    public String handleWithdrawQueryRequest(Map<String, Object> queryRequest) {
         logger.debug("*** in handle withdraw request ***" + queryRequest);
 
-        String flowId = queryRequest.get("flowId");
-        String customerId = queryRequest.get("customerId");
+        String flowId = queryRequest.get("flowId").toString();
+        String customerId = queryRequest.get("customerId").toString();
         WithdrawOrder withdrawOrder = withdrawOrderMapper.findOrderByFlowIdAndCustomerId(flowId, customerId);
         WithdrawQueryResult queryResult = new WithdrawQueryResult(withdrawOrder);
 

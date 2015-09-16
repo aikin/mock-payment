@@ -28,14 +28,14 @@ public class WithdrawOrder {
 
     }
 
-    public WithdrawOrder(Map<String, String> request) {
-        this.customerId = request.get("customerId");
-        this.orderId = request.get("orderId");
-        this.bankCode = request.get("bankCode");
-        this.bankName = request.get("bankName");
-        this.bankCardNo = request.get("bankCardNo");
-        this.userName = request.get("userName");
-        this.amount = Double.valueOf(request.get("amount"));
+    public WithdrawOrder(Map<String, Object> request) {
+        this.customerId = request.get("customerId").toString();
+        this.orderId = request.get("orderId").toString();
+        this.bankCode = request.get("bankCode").toString();
+        this.bankName = request.get("bankName").toString();
+        this.bankCardNo = request.get("bankCardNo").toString();
+        this.userName = request.get("userName").toString();
+        this.amount = Double.valueOf(request.get("amount").toString());
         this.createdAt = DateTime.now().toDate();
         this.withdrawStatus = WithdrawStatus.PENDING;
         this.flowId = UUID.randomUUID().toString();

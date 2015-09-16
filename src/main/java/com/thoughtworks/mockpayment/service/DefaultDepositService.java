@@ -21,12 +21,12 @@ public class DefaultDepositService implements DepositService {
     private DepositOrderMapper depositOrderMapper;
 
     @Override
-    public String handleDepositRequest(Map<String, String> depositRequest) {
+    public String handleDepositRequest(Map<String, Object> depositRequest) {
         logger.debug("*** in handle deposit request ***" + depositRequest);
 
         DepositOrder depositOrder = depositOrderMapper.findOrderByOrderIdAndCustomerId(
-            depositRequest.get("orderId"),
-            depositRequest.get("customerId"));
+            depositRequest.get("orderId").toString(),
+            depositRequest.get("customerId").toString());
 
         if (Objects.isNull(depositOrder)) {
             depositOrder = new DepositOrder(depositRequest);
@@ -39,11 +39,11 @@ public class DefaultDepositService implements DepositService {
     }
 
     @Override
-    public String handleDepositQueryRequest(Map<String, String> queryRequest) {
+    public String handleDepositQueryRequest(Map<String, Object> queryRequest) {
         logger.debug("*** in handle withdraw request ***" + queryRequest);
 
-        String flowId = queryRequest.get("flowId");
-        String customerId = queryRequest.get("customerId");
+        String flowId = queryRequest.get("flowId").toString();
+        String customerId = queryRequest.get("customerId").toString();
         DepositOrder depositOrder = depositOrderMapper.findOrderByFlowIdAndCustomerId(flowId, customerId);
         DepositQueryResult queryResult = new DepositQueryResult(depositOrder);
 

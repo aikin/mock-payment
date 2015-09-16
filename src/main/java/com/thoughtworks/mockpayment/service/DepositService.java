@@ -4,7 +4,7 @@ import java.util.Map;
 
 
 public interface DepositService {
-    String handleDepositRequest(Map<String, String> request);
+    String handleDepositRequest(Map<String, Object> request);
 
-    String handleDepositQueryRequest(Map<String, String> request);
+    String handleDepositQueryRequest(Map<String, Object> request);
 }

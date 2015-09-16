@@ -23,7 +23,7 @@ public class DepositResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response deposit(Map request) {
-        String result = depositService.handleDepositRequest((Map<String, String>) request);
+        String result = depositService.handleDepositRequest((Map<String, Object>) request);
         return Response.ok().entity(result).build();
     }
 
@@ -33,7 +33,7 @@ public class DepositResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response query(Map request) {
-        String result = depositService.handleDepositQueryRequest((Map<String, String>) request);
+        String result = depositService.handleDepositQueryRequest((Map<String, Object>) request);
         return Response.ok().entity(result).build();
     }
 }
