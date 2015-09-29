@@ -31,10 +31,10 @@ public class DepositOrder {
     public DepositOrder(Map<String, Object> depositRequest) {
         this.customerId = depositRequest.get("customerId").toString();
         this.orderId = depositRequest.get("orderId").toString();
-        this.userName = depositRequest.get("userName").toString();
-        this.idCardNo = depositRequest.get("idCardNo").toString();
+        this.userName = depositRequest.get("name").toString();
+        this.idCardNo = depositRequest.get("pin").toString();
         this.bankCode = depositRequest.get("bankCode").toString();
-        this.bankCardNo = depositRequest.get("bankCardNo").toString();
+        this.bankCardNo = depositRequest.get("cardNo").toString();
         this.bankName = depositRequest.get("bankName").toString();
         this.amount = depositRequest.get("amount").toString();
         this.createdAt = DateTime.now().toDate();
