@@ -14,7 +14,7 @@ public interface DepositOrderMapper {
 
     void updateDepositStatus(@Param("flowId") String depositFlowId,
                               @Param("depositStatus") DepositStatus depositStatus,
-                              @Param("depositMessage") String depositMessage,
+                              @Param("message") String message,
                               @Param("responseCode") String responseCode,
                               @Param("depositAt") Date depositAt);
 

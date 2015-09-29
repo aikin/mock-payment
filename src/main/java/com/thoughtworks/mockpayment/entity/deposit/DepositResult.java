@@ -8,7 +8,7 @@ import java.util.Date;
 public class DepositResult {
 
     private String flowId;
-    private String depositMessage;
+    private String message;
     private String responseCode;
     private Date depositAt;
     private String customerId;
@@ -21,7 +21,7 @@ public class DepositResult {
         this.orderId = depositOrder.getOrderId();
         this.amount = depositOrder.getAmount();
         this.responseCode = depositResponseCode.getCode();
-        this.depositMessage = depositResponseCode.getDescription();
+        this.message = depositResponseCode.getDescription();
         this.depositAt = DateTime.now().toDate();
     }
 
@@ -33,12 +33,12 @@ public class DepositResult {
         this.flowId = flowId;
     }
 
-    public String getDepositMessage() {
-        return depositMessage;
+    public String getMessage() {
+        return message;
     }
 
-    public void setDepositMessage(String depositMessage) {
-        this.depositMessage = depositMessage;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public String getResponseCode() {

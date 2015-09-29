@@ -48,7 +48,7 @@
 
     <update id="updateDepositStatus">
         UPDATE DEPOSIT_ORDER SET DEPOSIT_STATUS=#{depositStatus},
-                        DEPOSIT_MESSAGE=#{depositMessage}, RESPONSE_CODE=#{responseCode}, DEPOSIT_AT=#{depositAt}
+                        DEPOSIT_MESSAGE=#{message}, RESPONSE_CODE=#{responseCode}, DEPOSIT_AT=#{depositAt}
         WHERE FLOW_ID=#{flowId}
     </update>
 

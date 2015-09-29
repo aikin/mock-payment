@@ -32,8 +32,8 @@ public class DepositResourceTest extends ResourceTest {
         super.setUp();
         authTarget = target().path("/mockpayment/deposit");
         requestData.put("customerId", "809080908090");
-        requestData.put("userName", "aikin");
-        requestData.put("idCardNo", "362329199103120018");
+        requestData.put("name", "aikin");
+        requestData.put("pin", "362329199103120018");
         requestData.put("bankCode", "CCB");
         requestData.put("bankName", "www");
         requestData.put("amount", "100");
@@ -52,7 +52,7 @@ public class DepositResourceTest extends ResourceTest {
     public void should_client_response_success_when_bankCardNo_be_not_match() {
 
         final String UN_MATCH_BANK_CARD_NO = "123456789012345";
-        requestData.put("bankCardNo", UN_MATCH_BANK_CARD_NO);
+        requestData.put("cardNo", UN_MATCH_BANK_CARD_NO);
         Response response = authTarget
             .request()
             .post(Entity.entity(requestData, MediaType.APPLICATION_JSON));
@@ -60,33 +60,33 @@ public class DepositResourceTest extends ResourceTest {
 //        Gson gson = new Gson();
 //        HashMap respondMap = gson.fromJson(response.readEntity(String.class), HashMap.class);
         HashMap respondMap = response.readEntity(HashMap.class);
-        assertThat(respondMap.get("depositMessage"), is(DepositResponseCode.SUCCESS.getDescription()));
+        assertThat(respondMap.get("message"), is(DepositResponseCode.SUCCESS.getDescription()));
         assertThat(respondMap.get("responseCode"), is(DepositResponseCode.SUCCESS.getCode()));
     }
 
     @Test
     public void should_client_response_failure_when_bankCardNo_be_match_SHORT_BALANCE() {
 
-        requestData.put("bankCardNo", BankCardNoAndResponseCodeMap.SHORT_BALANCE.getBankCardNo());
+        requestData.put("cardNo", BankCardNoAndResponseCodeMap.SHORT_BALANCE.getBankCardNo());
         Response response = authTarget
             .request()
             .post(Entity.entity(requestData, MediaType.APPLICATION_JSON));
 
         HashMap respondMap = response.readEntity(HashMap.class);
-        assertThat(respondMap.get("depositMessage"), is(DepositResponseCode.SHORT_BALANCE.getDescription()));
+        assertThat(respondMap.get("message"), is(DepositResponseCode.SHORT_BALANCE.getDescription()));
         assertThat(respondMap.get("responseCode"), is(DepositResponseCode.SHORT_BALANCE.getCode()));
     }
 
     @Test
     public void should_client_response_failure_when_bankCardNo_be_match_DEPOSIT_PENDING() {
 
-        requestData.put("bankCardNo", BankCardNoAndResponseCodeMap.DEPOSIT_PENDING.getBankCardNo());
+        requestData.put("cardNo", BankCardNoAndResponseCodeMap.DEPOSIT_PENDING.getBankCardNo());
         Response response = authTarget
             .request()
             .post(Entity.entity(requestData, MediaType.APPLICATION_JSON));
 
         HashMap respondMap = response.readEntity(HashMap.class);
-        assertThat(respondMap.get("depositMessage"), is(DepositResponseCode.DEPOSIT_PENDING.getDescription()));
+        assertThat(respondMap.get("message"), is(DepositResponseCode.DEPOSIT_PENDING.getDescription()));
         assertThat(respondMap.get("responseCode"), is(DepositResponseCode.DEPOSIT_PENDING.getCode()));
     }
 }

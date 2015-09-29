@@ -44,11 +44,11 @@ public class DepositQueryResourceTest extends ResourceTest {
         super.setUp();
         authTarget = target().path("/mockpayment/deposit-query");
         baseDepositOrderData.put("customerId", "809080908090");
-        baseDepositOrderData.put("userName", "aikin");
-        baseDepositOrderData.put("idCardNo", "362329199103120018");
+        baseDepositOrderData.put("name", "aikin");
+        baseDepositOrderData.put("pin", "362329199103120018");
         baseDepositOrderData.put("bankCode", "CCB");
         baseDepositOrderData.put("bankName", "www");
-        baseDepositOrderData.put("bankCardNo", "123232");
+        baseDepositOrderData.put("cardNo", "123232");
         baseDepositOrderData.put("amount", "100");
         baseDepositOrderData.put("orderId", "121121121121");
     }
