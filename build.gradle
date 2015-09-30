@@ -96,4 +96,24 @@ task startServer(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
 }
 
+task standaloneJar(type: Jar, dependsOn: jar) {
+    baseName = "mockpay"
+    classifier = "standalone"
+    version = ""
+
+    from files(sourceSets.main.output.classesDir)
+    from files(sourceSets.main.output.resourcesDir)
+
+    from configurations.runtime.asFileTree.files.collect { zipTree(it) }
+
+    exclude("META-INF/*.SF")
+    exclude("META-INF/*.DSA")
+    exclude("META-INF/*.RSA")
+    exclude("META-INF/*.RSA")
+    exclude("META-INF/*.RSA")
+    exclude("db.properties")
+    exclude("log4j.properties")
+    exclude("mock-payment-mybatis.properties")
+}
+
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
