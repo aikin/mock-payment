@@ -14,7 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Map;
 
-@Path("mockpayment")
+@Path("/")
 public class WithdrawResource {
 
     private static final Logger logger = LoggerFactory.getLogger(DepositResource.class);

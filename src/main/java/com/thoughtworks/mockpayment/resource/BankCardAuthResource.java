@@ -11,7 +11,7 @@ import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.Map;
 
-@Path("mockpayment/bank-card-auth")
+@Path("bank-card-auth")
 public class BankCardAuthResource {
 
     private static final Logger logger = LoggerFactory.getLogger(BankCardAuthResource.class);
