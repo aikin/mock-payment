@@ -1,6 +1,6 @@
 flyway {
     driver = 'com.mysql.jdbc.Driver'
-    url = "jdbc:mysql://127.0.0.1:3306/mock_payment?zeroDateTimeBehavior=convertToNull&characterEncoding=UTF-8&allowMultiQueries=true"
+    url = "jdbc:mysql://127.0.0.1:3306/mock_payment?zeroDateTimeBehavior=convertToNull&characterEncoding=UTF-8&allowMultiQueries=true&useLegacyDatetimeCode=false"
     user = 'mysql'
     password = 'mysql'
     table = 'mockpayment_schema_version'
